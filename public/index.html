@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnPurpose - Hospitality Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo h1 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        button:hover {
+            background: #5a6fd8;
+        }
+        
+        .toggle-form {
+            text-align: center;
+            color: #666;
+        }
+        
+        .toggle-form a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .toggle-form a:hover {
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .dashboard {
+            display: none;
+        }
+        
+        .dashboard.active {
+            display: block;
+        }
+        
+        .user-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .logout-btn {
+            background: #dc3545;
+        }
+        
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>OnPurpose</h1>
+            <p>Your Hospitality Marketplace</p>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form">
+            <div id="message"></div>
+            <form id="login">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div class="toggle-form">
+                Don't have an account? <a href="#" id="showRegister">Register here</a>
+            </div>
+        </div>
+        
+        <!-- Register Form -->
+        <div id="registerForm" class="auth-form" style="display: none;">
+            <div id="registerMessage"></div>
+            <form id="register">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required minlength="6">
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <div class="toggle-form">
+                Already have an account? <a href="#" id="showLogin">Login here</a>
+            </div>
+        </div>
+        
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="user-info">
+                <h3>Welcome, <span id="userName"></span>!</h3>
+                <p>Email: <span id="userEmail"></span></p>
+                <p>Host Status: <span id="hostStatus"></span></p>
+            </div>
+            <button class="logout-btn" id="logout">Logout</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let authToken = localStorage.getItem('authToken');
+        
+        // DOM elements
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const dashboard = document.getElementById('dashboard');
+        const message = document.getElementById('message');
+        const registerMessage = document.getElementById('registerMessage');
+        
+        // Check if user is already logged in
+        if (authToken) {
+            showDashboard();
+        }
+        
+        // Form toggle handlers
+        document.getElementById('showRegister').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            clearMessages();
+        });
+        
+        document.getElementById('showLogin').addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            clearMessages();
+        });
+        
+        // Login form handler
+        document.getElementById('login').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    authToken = data.token;
+                    showMessage('Login successful!', 'success');
+                    setTimeout(showDashboard, 1000);
+                } else {
+                    showMessage(data.message || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showMessage('Network error. Please try again.', 'error');
+            }
+        });
+        
+        // Register form handler
+        document.getElementById('register').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                password: document.getElementById('password').value,
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    authToken = data.token;
+                    showRegisterMessage('Registration successful!', 'success');
+                    setTimeout(showDashboard, 1000);
+                } else {
+                    showRegisterMessage(data.message || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showRegisterMessage('Network error. Please try again.', 'error');
+            }
+        });
+        
+        // Logout handler
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            authToken = null;
+            showLoginForm();
+        });
+        
+        function showMessage(msg, type) {
+            message.innerHTML = `<div class="message ${type}">${msg}</div>`;
+        }
+        
+        function showRegisterMessage(msg, type) {
+            registerMessage.innerHTML = `<div class="message ${type}">${msg}</div>`;
+        }
+        
+        function clearMessages() {
+            message.innerHTML = '';
+            registerMessage.innerHTML = '';
+        }
+        
+        function showDashboard() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('hostStatus').textContent = user.isHost ? 'Host' : 'Guest';
+            
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'none';
+            dashboard.classList.add('active');
+        }
+        
+        function showLoginForm() {
+            dashboard.classList.remove('active');
+            loginForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            clearMessages();
+        }
+    </script>
+</body>
+</html>

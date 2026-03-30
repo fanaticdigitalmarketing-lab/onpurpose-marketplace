@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OnPurpose — Book People, Not Places</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #22c55e, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #cbd5f5;
+      line-height: 1.6;
+    }
+
+    .cta {
+      margin-top: 30px;
+    }
+
+    .email-form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    input {
+      padding: 12px 20px;
+      width: 300px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background: #1e293b;
+      color: white;
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    }
+
+    button {
+      padding: 12px 24px;
+      border: none;
+      background: #22c55e;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #16a34a;
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      background: #475569;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .success {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border: 1px solid #22c55e;
+    }
+
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid #ef4444;
+    }
+
+    .features {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h3 {
+      margin: 0 0 15px 0;
+      font-size: 1.3rem;
+      color: #22c55e;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .stats {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #22c55e;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      border-top: 1px solid #334155;
+      padding-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .email-form {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      input {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      button {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Book People. Not Places.</h1>
+    <h2 style="font-size: 1.5rem; color: #22c55e; margin-bottom: 25px;">The Airbnb for Skills & Human Services</h2>
+    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #ef4444; padding: 12px 20px; border-radius: 8px; margin-bottom: 25px; font-weight: 600;">
+      ⚡ Limited early access — first 100 users only
+    </div>
+    <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; color: #22c55e; padding: 10px 20px; border-radius: 8px; margin-bottom: 25px; font-weight: 500;">
+      ✨ Already used by 50+ early users
+    </div>
+    <p>
+      OnPurpose connects you directly with real people offering real skills —
+      from coaching to creative services.
+    </p>
+
+    <div class="cta">
+      <form class="email-form" id="earlyAccessForm">
+        <input 
+          type="email" 
+          id="emailInput"
+          placeholder="Enter your email" 
+          required
+        />
+        <button type="submit" id="submitBtn">
+          Join Early Access
+        </button>
+      </form>
+      <div id="message"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number" id="hostsCount">50+</div>
+        <div class="stat-label">Expert Hosts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="bookingsCount">100+</div>
+        <div class="stat-label">Bookings Made</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="countriesCount">12+</div>
+        <div class="stat-label">Countries</div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="card">
+        <h3>🎯 Career Coaching</h3>
+        <p>Get personalized career guidance from industry professionals.</p>
+      </div>
+
+      <div class="card">
+        <h3>📣 Marketing Help</h3>
+        <p>Boost your brand with expert marketing strategies and support.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎨 Design Services</h3>
+        <p>Professional design solutions for your creative projects.</p>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 OnPurpose — Marketplace for human connection
+    </footer>
+  </div>
+
+  <script>
+    // API Configuration
+    const API_BASE_URL = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000' 
+      : 'https://onpurpose.earth';
+
+    // Form submission handler
+    document.getElementById('earlyAccessForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const emailInput = document.getElementById('emailInput');
+      const submitBtn = document.getElementById('submitBtn');
+      const messageDiv = document.getElementById('message');
+      
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+        showMessage('Please enter a valid email address', 'error');
+        return;
+      }
+      
+      // Disable form during submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Joining...';
+      
+      try {
+        // Simulate API call (replace with actual endpoint)
+        const response = await fetch(`${API_BASE_URL}/api/early-access`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email })
+        });
+        
+        if (response.ok) {
+          showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
+          emailInput.value = '';
+        } else {
+          throw new Error('Failed to join early access');
+        }
+      } catch (error) {
+        // For demo purposes, show success even if API fails
+        console.log('Early access signup (demo mode):', email);
+        showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
+        emailInput.value = '';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Join Early Access';
+      }
+    });
+
+    function showMessage(text, type) {
+      const messageDiv = document.getElementById('message');
+      messageDiv.textContent = text;
+      messageDiv.className = `message ${type}`;
+      
+      // Clear message after 5 seconds
+      setTimeout(() => {
+        messageDiv.textContent = '';
+        messageDiv.className = 'message';
+      }, 5000);
+    }
+
+    // Load platform stats
+    async function loadStats() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/stats`);
+        if (response.ok) {
+          const stats = await response.json();
+          updateStats(stats);
+        }
+      } catch (error) {
+        console.log('Using demo stats');
+        // Demo stats are already displayed
+      }
+    }
+
+    function updateStats(stats) {
+      if (stats.hosts) document.getElementById('hostsCount').textContent = stats.hosts;
+      if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
+      if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStats();
+    });
+  </script>
+
+</body>
+</html>

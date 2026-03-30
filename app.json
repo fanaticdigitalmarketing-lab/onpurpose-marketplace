@@ -1,0 +1,83 @@
+{
+  "name": "onpurpose-app",
+  "description": "OnPurpose - Hospitality Marketplace",
+  "repository": "https://github.com/yourusername/onpurpose",
+  "logo": "https://your-logo-url.com/logo.png",
+  "keywords": ["node", "express", "postgresql", "hospitality", "marketplace"],
+  "image": "heroku/nodejs",
+  "stack": "heroku-22",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql:mini"
+    },
+    {
+      "plan": "sendgrid:starter"
+    },
+    {
+      "plan": "papertrail:choklad"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Environment (production)",
+      "value": "production"
+    },
+    "JWT_SECRET": {
+      "description": "Secret key for JWT tokens (minimum 32 characters)",
+      "generator": "secret"
+    },
+    "STRIPE_PUBLISHABLE_KEY": {
+      "description": "Stripe publishable key (pk_live_...)"
+    },
+    "STRIPE_SECRET_KEY": {
+      "description": "Stripe secret key (sk_live_...)"
+    },
+    "STRIPE_WEBHOOK_SECRET": {
+      "description": "Stripe webhook secret (whsec_...)"
+    },
+    "EMAIL_HOST": {
+      "description": "Email SMTP host",
+      "value": "smtp.sendgrid.net"
+    },
+    "EMAIL_PORT": {
+      "description": "Email SMTP port",
+      "value": "587"
+    },
+    "EMAIL_USER": {
+      "description": "Email username (apikey for SendGrid)"
+    },
+    "EMAIL_PASS": {
+      "description": "Email password/API key"
+    },
+    "EMAIL_FROM": {
+      "description": "From email address",
+      "value": "noreply@onpurpose.app"
+    },
+    "CORS_ORIGIN": {
+      "description": "CORS allowed origin",
+      "value": "https://your-app-name.herokuapp.com"
+    },
+    "RATE_LIMIT_MAX": {
+      "description": "Rate limit max requests per window",
+      "value": "50"
+    },
+    "LOG_LEVEL": {
+      "description": "Logging level",
+      "value": "warn"
+    }
+  },
+  "scripts": {
+    "postdeploy": "npx sequelize-cli db:seed:all"
+  }
+}

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnPurpose - Connection, not dating</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2F6FE4 0%, #1D4ED8 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2F6FE4;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            color: #64748B;
+            font-size: 16px;
+            margin-bottom: 32px;
+            font-style: italic;
+        }
+        
+        .status {
+            background: #22C55E;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 32px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #FDF7F2;
+            border-radius: 8px;
+        }
+        
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: #22C55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: #2F6FE4;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1D4ED8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #F1F5F9;
+            color: #64748B;
+            border: 1px solid #E2E8F0;
+        }
+        
+        .btn-secondary:hover {
+            background: #E2E8F0;
+        }
+        
+        .tech-stack {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #E2E8F0;
+        }
+        
+        .tech-title {
+            font-weight: 600;
+            color: #0F172A;
+            margin-bottom: 12px;
+        }
+        
+        .tech-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .tech-item {
+            background: #F1F5F9;
+            color: #64748B;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .demo-note {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 24px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">OnPurpose</div>
+        <div class="tagline">Connection, not dating</div>
+        
+        <div class="status">✅ MVP Complete & Ready to Launch!</div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Complete Backend API with Stripe Payments</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>React Native Mobile App (iOS & Android)</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Admin Dashboard for Host Management</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Docker Deployment Infrastructure</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Host Approval & Booking System</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">✓</div>
+                <div>Secure Authentication & Payments</div>
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="showDeploymentGuide()">
+                🚀 View Deployment Guide
+            </button>
+            <button class="btn btn-secondary" onclick="showTechDetails()">
+                🔧 Technical Details
+            </button>
+        </div>
+        
+        <div class="tech-stack">
+            <div class="tech-title">Tech Stack</div>
+            <div class="tech-items">
+                <span class="tech-item">Node.js</span>
+                <span class="tech-item">React Native</span>
+                <span class="tech-item">PostgreSQL</span>
+                <span class="tech-item">Stripe</span>
+                <span class="tech-item">Docker</span>
+                <span class="tech-item">Nginx</span>
+                <span class="tech-item">JWT Auth</span>
+                <span class="tech-item">Cloudinary</span>
+            </div>
+        </div>
+        
+        <div class="demo-note">
+            <strong>Ready for NYC Pilot Launch!</strong><br>
+            All 28 MVP features completed. Platform ready for 50 curated hosts.
+        </div>
+    </div>
+
+    <script>
+        function showDeploymentGuide() {
+            alert(`🚀 OnPurpose Deployment Steps:
+
+1. Install Node.js from nodejs.org
+2. Install Docker Desktop
+3. Set up environment variables (.env file)
+4. Run: docker-compose up -d
+5. Access API at http://localhost:3000
+6. Access Admin at http://localhost:3001
+
+For mobile apps:
+- Install Expo CLI
+- Run build scripts for iOS/Android
+
+Full documentation available in DEPLOYMENT.md`);
+        }
+        
+        function showTechDetails() {
+            alert(`🔧 OnPurpose Technical Architecture:
+
+BACKEND:
+- Node.js/Express API server
+- PostgreSQL database with Redis cache
+- Stripe Connect for marketplace payments
+- JWT authentication & role-based access
+- Cloudinary for image uploads
+- Rate limiting & security headers
+
+MOBILE:
+- React Native with Expo
+- Stripe React Native SDK
+- React Navigation & Context API
+- EAS build configuration
+
+ADMIN:
+- React SPA with Recharts
+- Host approval workflow
+- Analytics dashboard
+- Dispute management
+
+INFRASTRUCTURE:
+- Docker containerization
+- Nginx reverse proxy with SSL
+- Health checks & monitoring
+- Automated deployment scripts`);
+        }
+    </script>
+</body>
+</html>

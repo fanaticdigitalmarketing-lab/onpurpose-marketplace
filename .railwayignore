@@ -1,0 +1,39 @@
+# Railway ignore file - prevents unnecessary deployments
+# Only deploy when important files change
+
+# Ignore documentation and config files
+*.md
+*.txt
+.env.example
+.gitignore
+
+# Ignore development files
+.vscode/
+.idea/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore test files
+test/
+tests/
+*.test.js
+*.spec.js
+coverage/
+
+# Ignore deployment guides
+deploy/
+DEPLOY_*.md
+RAILWAY_*.md
+STRIPE_*.md
+*_GUIDE.md
+*_CHECKLIST.md
+
+# Deploy only on these changes:
+# - server.js
+# - routes/**
+# - models/**
+# - middleware/**
+# - package.json
+# - package-lock.json

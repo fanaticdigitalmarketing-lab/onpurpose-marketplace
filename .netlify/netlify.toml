@@ -1,0 +1,179 @@
+functionsDirectory = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\no-functions"
+functionsDirectoryOrigin = "config-v1"
+headersOrigin = "config"
+redirectsOrigin = "config"
+plugins = []
+
+[build]
+publish = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\frontend"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "echo 'No build step needed'"
+functions = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\no-functions"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[functions]
+
+[functions."*"]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+for = "/index.html"
+
+[headers.values]
+Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+for = "/dashboard.html"
+
+[headers.values]
+Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+for = "/provider.html"
+
+[headers.values]
+Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+for = "/contact.html"
+
+[headers.values]
+Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; connect-src 'self' https://api.stripe.com https://ydmxe6sf.up.railway.app; frame-src https://js.stripe.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+
+[[headers]]
+for = "/assets/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+for = "*.js"
+
+[headers.values]
+Cache-Control = "public, max-age=86400"
+
+[[headers]]
+for = "*.css"
+
+[headers.values]
+Cache-Control = "public, max-age=86400"
+
+[[redirects]]
+from = "/api/*"
+to = "https://ydmxe6sf.up.railway.app/api/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/health"
+to = "https://ydmxe6sf.up.railway.app/health"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/api/webhooks/stripe"
+to = "https://ydmxe6sf.up.railway.app/api/webhooks/stripe"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/dashboard.html"
+to = "/dashboard.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/provider.html"
+to = "/provider.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/contact.html"
+to = "/contact.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

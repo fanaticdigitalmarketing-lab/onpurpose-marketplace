@@ -1,0 +1,33 @@
+# 🔐 Generate Your Own Secure API Keys
+
+## Super Secure JWT Secret (Generated for you):
+JWT_SECRET=OnPurpose2025SuperSecureJWTKey#$%789ABC!@#XYZ456
+
+## Alternative JWT Secrets (Choose one):
+JWT_SECRET=OnPurpose$ecur3K3y2025#Marketplace!789
+JWT_SECRET=SuperS3cur3OnPurpos3JWT#2025@Key!456
+JWT_SECRET=OnPurpos3M4rk3tpl4c3S3cur3K3y#789!
+
+## For Stripe API Keys:
+1. Sign in to YOUR OWN Stripe account at: https://dashboard.stripe.com/login
+2. Go to Developers → API Keys
+3. Copy your live keys (pk_live_... and sk_live_...)
+4. Create webhook at: https://onpurpose.up.railway.app/api/payment/webhook
+5. Copy webhook secret (whsec_...)
+
+## For SendGrid Email:
+1. Sign up at: https://sendgrid.com
+2. Go to Settings → API Keys
+3. Create new API key
+4. Copy the key (starts with SG....)
+
+## Ready-to-use Railway Variables:
+NODE_ENV=production
+PORT=3000
+JWT_SECRET=OnPurpose2025SuperSecureJWTKey#$%789ABC!@#XYZ456
+EMAIL_HOST=smtp.sendgrid.net
+EMAIL_PORT=587
+EMAIL_USER=apikey
+EMAIL_FROM=noreply@onpurpose.app
+APP_URL=https://onpurpose.up.railway.app
+CORS_ORIGIN=https://onpurpose.up.railway.app

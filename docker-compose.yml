@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_USER=${EMAIL_USER}
+      - EMAIL_PASS=${EMAIL_PASS}
+      - EMAIL_FROM=${EMAIL_FROM}
+      - SENTRY_DSN=${SENTRY_DSN}
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./logs:/app/logs
+      - ./ssl:/app/ssl
+    restart: unless-stopped
+    networks:
+      - onpurpose-network
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: onpurpose_production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./backups:/backups
+    restart: unless-stopped
+    networks:
+      - onpurpose-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - onpurpose-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/ssl/certs
+    depends_on:
+      - app
+    restart: unless-stopped
+    networks:
+      - onpurpose-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  onpurpose-network:
+    driver: bridge

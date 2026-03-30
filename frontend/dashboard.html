@@ -1,0 +1,503 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OnPurpose — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--navy:#1a1a2e;--blue:#2563eb;--blue-light:#3b82f6;--blue-pale:#dbeafe;--blue-bg:#eff6ff;--gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#6c757d;--gray-700:#495057;--white:#fff;--green:#22c55e;--amber:#f59e0b;--red:#ef4444;--font-display:'Playfair Display',serif;--font-body:'Inter',sans-serif;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.1);--radius:12px;--radius-lg:16px}
+    body{font-family:var(--font-body);background:var(--gray-50);color:var(--navy);line-height:1.6;display:flex;flex-direction:column;min-height:100vh}
+    a{color:var(--blue);text-decoration:none}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+    .nav-brand{display:flex;align-items:center;gap:10px}
+    .nav-brand svg{width:34px;height:34px}
+    .nav-brand-text{display:flex;flex-direction:column;line-height:1.1}
+    .nav-brand-name{font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--navy)}
+    .nav-brand-tagline{font-size:9px;color:var(--blue);font-weight:600;letter-spacing:.5px}
+    .nav-right{display:flex;gap:10px;align-items:center}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 20px;border:none;border-radius:var(--radius);cursor:pointer;font-family:var(--font-body);font-size:.85rem;font-weight:600;transition:all .2s;gap:6px}
+    .btn-primary{background:var(--blue);color:var(--white)}
+    .btn-primary:hover{background:#1d4ed8}
+    .btn-outline{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
+    .btn-outline:hover{background:var(--blue-bg)}
+    .btn-sm{padding:7px 14px;font-size:.8rem}
+    .btn-pill{border-radius:50px}
+    .btn-danger{background:var(--red);color:var(--white)}
+    .btn-danger:hover{background:#dc2626}
+    .btn-success{background:var(--green);color:var(--white)}
+    .btn-amber{background:var(--amber);color:var(--navy)}
+
+    /* LAYOUT */
+    .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
+    .sidebar{width:230px;background:var(--white);border-right:1px solid var(--gray-200);padding:24px 16px;display:flex;flex-direction:column;position:fixed;top:60px;bottom:0;overflow-y:auto}
+    .main{flex:1;margin-left:230px;padding:28px 32px}
+
+    /* SIDEBAR */
+    .sidebar-user{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--gray-200)}
+    .sidebar-avatar{width:56px;height:56px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:var(--white);margin:0 auto 10px}
+    .sidebar-name{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--navy)}
+    .sidebar-role{font-size:.75rem;font-weight:600;color:var(--blue);background:var(--blue-pale);padding:2px 10px;border-radius:50px;display:inline-block;margin-top:4px}
+    .sidebar-nav{display:flex;flex-direction:column;gap:2px;flex:1}
+    .sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all .2s}
+    .sidebar-link:hover{background:var(--gray-100);color:var(--navy)}
+    .sidebar-link.active{background:var(--blue-bg);color:var(--blue);font-weight:600}
+    .sidebar-link .icon{font-size:1.05rem}
+    .sidebar-bottom{margin-top:auto;padding-top:16px;border-top:1px solid var(--gray-200);text-align:center}
+    .sidebar-bottom svg{width:24px;height:24px;opacity:.5}
+    .sidebar-bottom-text{font-size:.7rem;color:var(--gray-500);margin-top:4px}
+
+    /* PAGES */
+    .page{display:none}
+    .page.active{display:block}
+    .page-title{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--navy);margin-bottom:4px}
+    .page-sub{color:var(--gray-600);font-size:.9rem;margin-bottom:24px}
+
+    /* STATS */
+    .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+    .stat-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px}
+    .stat-card-value{font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--blue)}
+    .stat-card-label{font-size:.8rem;color:var(--gray-600);margin-top:2px}
+
+    /* BOOKING ITEMS */
+    .booking-item{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+    .booking-info h3{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:2px}
+    .booking-info p{font-size:.82rem;color:var(--gray-600)}
+    .booking-badges{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
+    .booking-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase}
+    .pill-pending{background:#fef3c7;color:#92400e}
+    .pill-confirmed{background:var(--blue-pale);color:var(--blue)}
+    .pill-completed{background:#dcfce7;color:#166534}
+    .pill-cancelled{background:#fee2e2;color:#991b1b}
+    .pill-in_progress{background:#ede9fe;color:#5b21b6}
+    .pill-paid{background:#dcfce7;color:#166534}
+    .pill-unpaid{background:#fee2e2;color:#991b1b}
+
+    /* SERVICE CARDS */
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+    .svc-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px}
+    .svc-card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--navy);margin-bottom:4px}
+    .svc-card-cat{font-size:.78rem;color:var(--gray-600);margin-bottom:8px}
+    .svc-card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .svc-card-price{font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--blue)}
+    .svc-card-bookings{font-size:.78rem;color:var(--gray-500)}
+
+    /* FORMS */
+    .form-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:28px;max-width:560px}
+    .form-group{margin-bottom:14px}
+    .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--gray-700);margin-bottom:5px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:var(--radius);border:1.5px solid var(--gray-200);color:var(--navy);font-size:.9rem;font-family:var(--font-body);transition:border-color .2s}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue)}
+    .form-group textarea{resize:vertical;min-height:80px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .danger-zone{border:1.5px solid var(--red);border-radius:var(--radius-lg);padding:20px;margin-top:28px}
+    .danger-zone h3{color:var(--red);font-size:.95rem;margin-bottom:8px}
+    .danger-zone p{color:var(--gray-600);font-size:.82rem;margin-bottom:12px}
+
+    /* EMAIL BANNER */
+    .email-banner{background:#fef3c7;border:1px solid #fbbf24;border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:.85rem;color:#92400e}
+    .email-banner strong{font-weight:700}
+
+    /* OVERLAY / MODAL */
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;justify-content:center;align-items:center;backdrop-filter:blur(3px)}
+    .overlay.active{display:flex}
+    .modal{background:var(--white);border-radius:var(--radius-lg);padding:28px;max-width:440px;width:92%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.12)}
+    .modal-close{position:absolute;top:14px;right:16px;font-size:1.2rem;cursor:pointer;color:var(--gray-500);background:none;border:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+    .modal-close:hover{background:var(--gray-100);color:var(--navy)}
+
+    /* TOAST */
+    .toast-container{position:fixed;bottom:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:8px}
+    .toast{padding:14px 20px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,.12);animation:toastIn .3s ease;max-width:360px}
+    .toast-success{background:var(--green)}
+    .toast-error{background:var(--red)}
+    .toast-info{background:var(--blue)}
+    @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    .empty{text-align:center;padding:40px;color:var(--gray-500);font-size:.9rem}
+    .hidden{display:none}
+
+    @media(max-width:768px){
+      .sidebar{display:none}
+      .main{margin-left:0}
+      .stat-row{grid-template-columns:1fr 1fr}
+      .booking-item{flex-direction:column;align-items:flex-start}
+      .form-row{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="/" class="nav-brand">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="22" fill="#2563eb"/><path d="M15 12h18v3.5L23.5 24 33 32.5V36H15v-3.5L24.5 24 15 15.5z" fill="white"/><circle cx="14" cy="38" r="5.5" fill="#3b82f6"/></svg>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">OnPurpose</span>
+        <span class="nav-brand-tagline">Connection, not dating</span>
+      </div>
+    </a>
+    <div class="nav-right">
+      <a href="/" class="btn btn-outline btn-sm btn-pill">Browse Services</a>
+      <button class="btn btn-sm btn-pill btn-primary" onclick="logout()">Log out</button>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebarAvatar">—</div>
+        <div class="sidebar-name" id="sidebarName">Loading...</div>
+        <div class="sidebar-role" id="sidebarRole">—</div>
+      </div>
+      <div class="sidebar-nav">
+        <div class="sidebar-link active" onclick="showPage('overview')"><span class="icon">&#9776;</span> Overview</div>
+        <div class="sidebar-link" onclick="showPage('bookings')"><span class="icon">&#128197;</span> My Bookings</div>
+        <div class="sidebar-link hidden" id="linkMyServices" onclick="showPage('myservices')"><span class="icon">&#128188;</span> My Services</div>
+        <div class="sidebar-link hidden" id="linkAddService" onclick="showPage('addservice')"><span class="icon">&#10133;</span> Add Service</div>
+        <div class="sidebar-link" onclick="showPage('profile')"><span class="icon">&#9881;</span> Profile</div>
+      </div>
+      <div class="sidebar-bottom">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" rx="22" fill="#2563eb"/><path d="M15 12h18v3.5L23.5 24 33 32.5V36H15v-3.5L24.5 24 15 15.5z" fill="white"/><circle cx="14" cy="38" r="5.5" fill="#3b82f6"/></svg>
+        <div class="sidebar-bottom-text">onpurpose.earth</div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div id="emailBanner" class="email-banner hidden">
+        <span>&#9888;</span> <strong>Email not verified.</strong> Check your inbox for a verification link.
+      </div>
+
+      <!-- OVERVIEW PAGE -->
+      <div id="page-overview" class="page active">
+        <h1 class="page-title" id="greeting">My Dashboard</h1>
+        <p class="page-sub" id="greetingSub">Manage your bookings, services, and profile</p>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-card-value" id="statUpcoming">0</div><div class="stat-card-label">Upcoming</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="statTotal">0</div><div class="stat-card-label">Total Bookings</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="statCompleted">0</div><div class="stat-card-label">Completed</div></div>
+          <div class="stat-card"><div class="stat-card-value" id="statMoney">$0</div><div class="stat-card-label" id="statMoneyLabel">Total Spent</div></div>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:14px">Recent Bookings</h2>
+        <div id="recentBookings"><div class="empty">Loading...</div></div>
+      </div>
+
+      <!-- BOOKINGS PAGE -->
+      <div id="page-bookings" class="page">
+        <h1 class="page-title">My Bookings</h1>
+        <p class="page-sub">All your bookings in one place</p>
+        <div id="allBookings"><div class="empty">Loading...</div></div>
+      </div>
+
+      <!-- MY SERVICES PAGE -->
+      <div id="page-myservices" class="page">
+        <h1 class="page-title">My Services</h1>
+        <p class="page-sub">Services you offer as a provider</p>
+        <div class="svc-grid" id="myServicesGrid"><div class="empty">Loading...</div></div>
+      </div>
+
+      <!-- ADD SERVICE PAGE -->
+      <div id="page-addservice" class="page">
+        <h1 class="page-title">Add New Service</h1>
+        <p class="page-sub">Create a new service offering</p>
+        <div class="form-card">
+          <div class="form-group"><label>Title</label><input type="text" id="svcTitle" placeholder="e.g. Career Coaching Session"></div>
+          <div class="form-group"><label>Description</label><textarea id="svcDesc" placeholder="Describe what you offer..."></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Price ($)</label><input type="number" id="svcPrice" min="1" step="0.01" placeholder="50"></div>
+            <div class="form-group"><label>Duration (min)</label><input type="number" id="svcDuration" value="60" min="15"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Category</label>
+              <select id="svcCategory">
+                <option value="Career Coaching">Career Coaching</option>
+                <option value="Local Expert">Local Expert</option>
+                <option value="Cultural Guide">Cultural Guide</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Business Consulting">Business Consulting</option>
+                <option value="Life Coaching">Life Coaching</option>
+                <option value="Personal Time">Personal Time</option>
+                <option value="Fitness Training">Fitness Training</option>
+                <option value="Tutoring">Tutoring</option>
+                <option value="Wellness">Wellness</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Format</label>
+              <select id="svcOnline"><option value="true">Online</option><option value="false">In Person</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label>Location</label><input type="text" id="svcLocation" placeholder="City or Remote"></div>
+          <button class="btn btn-primary btn-pill" style="width:100%;margin-top:8px" onclick="addService()">Create Service</button>
+        </div>
+      </div>
+
+      <!-- PROFILE PAGE -->
+      <div id="page-profile" class="page">
+        <h1 class="page-title">Profile</h1>
+        <p class="page-sub">Update your personal information</p>
+        <div class="form-card">
+          <div class="form-group"><label>Name</label><input type="text" id="profileName"></div>
+          <div class="form-group"><label>Bio</label><textarea id="profileBio" placeholder="Tell people about yourself..."></textarea></div>
+          <div class="form-group"><label>Location</label><input type="text" id="profileLocation" placeholder="City, State"></div>
+          <button class="btn btn-primary btn-pill" style="width:100%;margin-top:8px" onclick="saveProfile()">Save Changes</button>
+          <div class="danger-zone">
+            <h3>Danger Zone</h3>
+            <p>Permanently delete your account and all associated data. This cannot be undone.</p>
+            <button class="btn btn-danger btn-sm btn-pill" onclick="deleteAccount()">Delete My Account</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- REVIEW MODAL -->
+  <div id="reviewModal" class="overlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('reviewModal')">&times;</button>
+      <h2 style="font-family:var(--font-display);margin-bottom:16px">Leave a Review</h2>
+      <input type="hidden" id="reviewBookingId">
+      <div class="form-group"><label>Rating</label>
+        <select id="reviewRating" style="width:100%;padding:10px;border-radius:var(--radius);border:1.5px solid var(--gray-200);font-size:.9rem">
+          <option value="5">5 — Excellent</option><option value="4">4 — Great</option><option value="3">3 — Good</option><option value="2">2 — Fair</option><option value="1">1 — Poor</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Comment</label><textarea id="reviewComment" placeholder="How was your experience?"></textarea></div>
+      <button class="btn btn-primary btn-pill" style="width:100%" onclick="submitReview()">Submit Review</button>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    const API=location.origin;
+    let accessToken=localStorage.getItem('op_token')||'';
+    let currentUser=JSON.parse(localStorage.getItem('op_user')||'null');
+    if(!accessToken||!currentUser){window.location.href='/';}
+
+    /* ===== API HELPER ===== */
+    async function api(path,method,body){
+      const opts={method:method||'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+accessToken}};
+      if(body)opts.body=JSON.stringify(body);
+      const r=await fetch(API+path,opts);
+      return r.json();
+    }
+
+    /* ===== NAV / SIDEBAR ===== */
+    function initSidebar(){
+      const u=currentUser;
+      const initials=u.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+      document.getElementById('sidebarAvatar').textContent=initials;
+      document.getElementById('sidebarName').textContent=u.name;
+      document.getElementById('sidebarRole').textContent=u.role.charAt(0).toUpperCase()+u.role.slice(1);
+      document.getElementById('greeting').textContent='Welcome back, '+u.name.split(' ')[0];
+      if(u.role==='provider'||u.role==='admin'){
+        document.getElementById('linkMyServices').classList.remove('hidden');
+        document.getElementById('linkAddService').classList.remove('hidden');
+        document.getElementById('statMoneyLabel').textContent='Total Earned';
+      }
+      if(u.emailVerified===false)document.getElementById('emailBanner').classList.remove('hidden');
+    }
+    function logout(){
+      localStorage.removeItem('op_token');localStorage.removeItem('op_refresh');localStorage.removeItem('op_user');
+      window.location.href='/';
+    }
+    function showPage(name){
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      document.getElementById('page-'+name).classList.add('active');
+      document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
+      const links=document.querySelectorAll('.sidebar-link');
+      const map={overview:0,bookings:1,myservices:2,addservice:3,profile:4};
+      const idx=map[name];
+      if(idx!==undefined&&links[idx])links[idx].classList.add('active');
+      if(name==='overview')loadOverview();
+      if(name==='bookings')loadAllBookings();
+      if(name==='myservices')loadMyServices();
+      if(name==='profile')loadProfile();
+    }
+
+    /* ===== OVERVIEW ===== */
+    async function loadOverview(){
+      try{
+        const isProvider=currentUser.role==='provider'||currentUser.role==='admin';
+        const endpoint=isProvider?'/api/bookings/provider-bookings':'/api/bookings/my-bookings';
+        const r=await api(endpoint);
+        const bookings=r.success?r.data:[];
+        const upcoming=bookings.filter(b=>b.status==='confirmed'||b.status==='pending').length;
+        const completed=bookings.filter(b=>b.status==='completed').length;
+        const money=bookings.filter(b=>b.paymentStatus==='paid').reduce((s,b)=>s+parseFloat(b.totalAmount||0),0);
+        document.getElementById('statUpcoming').textContent=upcoming;
+        document.getElementById('statTotal').textContent=bookings.length;
+        document.getElementById('statCompleted').textContent=completed;
+        document.getElementById('statMoney').textContent='$'+money.toFixed(0);
+        renderBookingList('recentBookings',bookings.slice(0,5));
+      }catch(e){document.getElementById('recentBookings').innerHTML='<div class="empty">Failed to load.</div>';}
+    }
+
+    /* ===== BOOKINGS ===== */
+    async function loadAllBookings(){
+      try{
+        const isProvider=currentUser.role==='provider'||currentUser.role==='admin';
+        const endpoint=isProvider?'/api/bookings/provider-bookings':'/api/bookings/my-bookings';
+        const r=await api(endpoint);
+        renderBookingList('allBookings',r.success?r.data:[]);
+      }catch(e){document.getElementById('allBookings').innerHTML='<div class="empty">Failed to load.</div>';}
+    }
+    function renderBookingList(elId,bookings){
+      const el=document.getElementById(elId);
+      if(!bookings.length){el.innerHTML='<div class="empty">No bookings yet. <a href="/">Browse services</a></div>';return;}
+      el.innerHTML=bookings.map(b=>{
+        const svc=b.service||b.Service||{};
+        const prov=svc.provider||svc.Provider||{};
+        const actions=[];
+        if(b.paymentStatus!=='paid'&&b.status!=='cancelled')actions.push('<button class="btn btn-sm btn-pill btn-primary" onclick="payBooking(\''+b.id+'\')">Pay Now</button>');
+        if(b.status==='pending'||b.status==='confirmed')actions.push('<button class="btn btn-sm btn-pill btn-danger" onclick="cancelBooking(\''+b.id+'\')">Cancel</button>');
+        if(b.status==='completed'&&!b.review)actions.push('<button class="btn btn-sm btn-pill btn-success" onclick="openReview(\''+b.id+'\')">Review</button>');
+        return '<div class="booking-item"><div class="booking-info"><h3>'+(svc.title||'Service')+'</h3>'+
+          '<p>'+(prov.name?prov.name+' &bull; ':'')+b.date+' at '+b.time+'</p>'+
+          '<div class="booking-badges"><span class="pill pill-'+b.status+'">'+b.status+'</span>'+
+          '<span class="pill pill-'+(b.paymentStatus==='paid'?'paid':'unpaid')+'">'+(b.paymentStatus==='paid'?'Paid':'Unpaid')+'</span>'+
+          (b.totalAmount?'<span style="font-size:.8rem;color:var(--gray-600)">$'+Number(b.totalAmount).toFixed(0)+'</span>':'')+
+          '</div></div><div class="booking-actions">'+actions.join('')+'</div></div>';
+      }).join('');
+    }
+    async function cancelBooking(id){
+      if(!confirm('Cancel this booking?'))return;
+      try{
+        const r=await api('/api/bookings/'+id+'/status','PATCH',{status:'cancelled'});
+        if(r.success){toast('Booking cancelled','info');loadOverview();loadAllBookings();}
+        else toast(r.message||'Failed','error');
+      }catch(e){toast('Network error','error');}
+    }
+    async function payBooking(id){
+      try{
+        const r=await api('/api/payments/create-checkout','POST',{bookingId:id});
+        if(r.success&&r.data.url)window.location.href=r.data.url;
+        else toast(r.message||'Payment not available','info');
+      }catch(e){toast('Payment system unavailable','info');}
+    }
+
+    /* ===== REVIEWS ===== */
+    function openReview(bookingId){
+      document.getElementById('reviewBookingId').value=bookingId;
+      document.getElementById('reviewComment').value='';
+      openModal('reviewModal');
+    }
+    async function submitReview(){
+      const bookingId=document.getElementById('reviewBookingId').value;
+      const rating=parseInt(document.getElementById('reviewRating').value);
+      const comment=document.getElementById('reviewComment').value;
+      try{
+        const r=await api('/api/reviews','POST',{bookingId,rating,comment});
+        if(r.success){toast('Review submitted!','success');closeModal('reviewModal');loadOverview();}
+        else toast(r.message||'Failed','error');
+      }catch(e){toast('Network error','error');}
+    }
+
+    /* ===== MY SERVICES ===== */
+    async function loadMyServices(){
+      try{
+        const r=await api('/api/services/my-services');
+        const svcs=r.success?r.data:[];
+        const el=document.getElementById('myServicesGrid');
+        if(!svcs.length){el.innerHTML='<div class="empty">No services yet. <a href="#" onclick="showPage(\'addservice\')">Create one</a></div>';return;}
+        el.innerHTML=svcs.map(s=>
+          '<div class="svc-card"><h3>'+s.title+'</h3>'+
+          '<div class="svc-card-cat">'+s.category+' &bull; '+(s.isOnline?'Online':'In Person')+'</div>'+
+          '<div class="svc-card-meta"><span class="svc-card-price">$'+Number(s.price).toFixed(0)+'</span>'+
+          '<span class="svc-card-bookings">'+(s.bookings?s.bookings.length:0)+' bookings</span></div>'+
+          '<div style="margin-top:8px"><span class="pill '+(s.isActive?'pill-completed':'pill-cancelled')+'">'+(s.isActive?'Active':'Inactive')+'</span></div>'+
+          '</div>'
+        ).join('');
+      }catch(e){document.getElementById('myServicesGrid').innerHTML='<div class="empty">Failed to load.</div>';}
+    }
+    async function addService(){
+      const title=document.getElementById('svcTitle').value;
+      const description=document.getElementById('svcDesc').value;
+      const price=parseFloat(document.getElementById('svcPrice').value);
+      const duration=parseInt(document.getElementById('svcDuration').value);
+      const category=document.getElementById('svcCategory').value;
+      const isOnline=document.getElementById('svcOnline').value==='true';
+      const location=document.getElementById('svcLocation').value;
+      if(!title||!description||!price)return toast('Fill in title, description, and price','error');
+      try{
+        const r=await api('/api/services','POST',{title,description,price,duration,category,isOnline,location});
+        if(r.success){toast('Service created!','success');document.getElementById('svcTitle').value='';document.getElementById('svcDesc').value='';document.getElementById('svcPrice').value='';showPage('myservices');}
+        else toast(r.message||'Failed','error');
+      }catch(e){toast('Network error','error');}
+    }
+
+    /* ===== PROFILE ===== */
+    function loadProfile(){
+      document.getElementById('profileName').value=currentUser.name||'';
+      document.getElementById('profileBio').value=currentUser.bio||'';
+      document.getElementById('profileLocation').value=currentUser.location||'';
+    }
+    async function saveProfile(){
+      const name=document.getElementById('profileName').value;
+      const bio=document.getElementById('profileBio').value;
+      const location=document.getElementById('profileLocation').value;
+      try{
+        const r=await api('/api/users/profile','PATCH',{name,bio,location});
+        if(r.success){
+          currentUser={...currentUser,name,bio,location};
+          localStorage.setItem('op_user',JSON.stringify(currentUser));
+          initSidebar();toast('Profile updated!','success');
+        }else toast(r.message||'Failed','error');
+      }catch(e){toast('Network error','error');}
+    }
+    async function deleteAccount(){
+      if(!confirm('Are you sure? This permanently deletes your account and all data.'))return;
+      if(!confirm('This CANNOT be undone. Type OK to confirm.'))return;
+      try{
+        const r=await api('/api/users/me','DELETE');
+        if(r.success){toast('Account deleted','info');setTimeout(()=>{localStorage.clear();window.location.href='/';},1500);}
+        else toast(r.message||'Failed','error');
+      }catch(e){toast('Network error','error');}
+    }
+
+    /* ===== UTILS ===== */
+    function openModal(id){document.getElementById(id).classList.add('active');}
+    function closeModal(id){document.getElementById(id).classList.remove('active');}
+    function toast(msg,type){
+      const c=document.getElementById('toastContainer');
+      const t=document.createElement('div');t.className='toast toast-'+(type||'info');t.textContent=msg;
+      c.appendChild(t);setTimeout(()=>t.remove(),4000);
+    }
+
+    /* ===== INIT ===== */
+    initSidebar();
+    loadOverview();
+    if(window.location.search.includes('payment=success'))toast('Payment successful!','success');
+  </script>
+
+<!-- MINI FOOTER FOR DASHBOARD + PROVIDER PAGES -->
+<div style="background:#1a2744;padding:1.25rem 2rem;margin-top:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <div style="display:flex;align-items:center;gap:8px">
+    <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100" height="100" rx="22" fill="#2563d4"/>
+      <path d="M22 14 L78 14 L78 24 Q78 50 50 50 Q78 50 78 76 L78 86 L22 86 L22 76 Q22 50 50 50 Q22 50 22 24 Z" fill="white"/>
+      <circle cx="37" cy="77" r="5" fill="#2563d4"/>
+    </svg>
+    <span style="font-family:'Playfair Display',serif;font-size:13px;color:rgba(255,255,255,0.5)">OnPurpose · Connection, not dating</span>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <a href="https://www.instagram.com/onpurposeearth/" target="_blank" rel="noopener" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;transition:background .15s" onmouseover="this.style.background='rgba(37,99,212,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="https://x.com/onpurposeearth" target="_blank" rel="noopener" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;transition:background .15s" onmouseover="this.style.background='rgba(37,99,212,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://discord.gg/8megf4Snz" target="_blank" rel="noopener" style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;transition:background .15s" onmouseover="this.style.background='rgba(37,99,212,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.07)'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.7)"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+    </a>
+    <a href="mailto:onpurposeearth@gmail.com" style="font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none;margin-left:4px;transition:color .15s" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">onpurposeearth@gmail.com</a>
+  </div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.25)">© 2025 OnPurpose Inc.</div>
+</div>
+
+</body>
+</html>

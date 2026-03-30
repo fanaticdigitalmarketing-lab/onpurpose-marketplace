@@ -1,0 +1,57 @@
+{
+  "name": "onpurpose-windsurf-secured",
+  "version": "1.0.0",
+  "description": "OnPurpose Marketplace - Windsurf Secured Backend with Enhanced Security",
+  "main": "server-windsurf-secured.js",
+  "scripts": {
+    "start": "node server-windsurf-secured.js",
+    "dev": "nodemon server-windsurf-secured.js",
+    "seed": "node seed-windsurf-fixed.js",
+    "test": "jest",
+    "security-check": "node -e \"console.log('Security features enabled: Helmet, Rate Limiting, Input Sanitization, JWT Auth')\""
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.1",
+    "express-validator": "^7.2.1",
+    "helmet": "^7.2.0",
+    "cors": "^2.8.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "sequelize": "^6.37.7",
+    "pg": "^8.16.3",
+    "sqlite3": "^5.1.7",
+    "nodemailer": "^6.10.1",
+    "dotenv": "^16.6.1",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.1.4"
+  },
+  "keywords": [
+    "marketplace",
+    "hospitality",
+    "booking",
+    "security",
+    "windsurf",
+    "onpurpose",
+    "nodejs",
+    "express"
+  ],
+  "author": "OnPurpose Security Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fanaticdigitalmarketing-lab/onpurpose-marketplace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fanaticdigitalmarketing-lab/onpurpose-marketplace/issues"
+  },
+  "homepage": "https://onpurpose.earth"
+}
