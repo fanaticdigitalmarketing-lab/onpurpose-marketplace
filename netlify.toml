@@ -1,10 +1,10 @@
 [build]
+  base = "frontend"
   command = "npm install && npm run build"
-  publish = "build"
+  publish = "frontend/build"
 
 [build.environment]
   NODE_VERSION = "18"
-  CI = "false"
 
 [[redirects]]
   from = "/*"
