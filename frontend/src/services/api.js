@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// In production, use relative /api path so Netlify proxies to Railway backend
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -24,13 +25,13 @@ export const authAPI = {
   login: (userData) => api.post('/auth/login', userData),
 };
 
-// Listings API
+// Listings/Services API
 export const listingsAPI = {
-  getAll: () => api.get('/listings'),
-  getById: (id) => api.get(`/listings/${id}`),
-  create: (listingData) => api.post('/listings', listingData),
-  update: (id, listingData) => api.put(`/listings/${id}`, listingData),
-  delete: (id) => api.delete(`/listings/${id}`),
+  getAll: () => api.get('/services'),
+  getById: (id) => api.get(`/services/${id}`),
+  create: (listingData) => api.post('/services', listingData),
+  update: (id, listingData) => api.put(`/services/${id}`, listingData),
+  delete: (id) => api.delete(`/services/${id}`),
 };
 
 // Bookings API
