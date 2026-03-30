@@ -5,6 +5,7 @@ require('dotenv').config();
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/auth');
+const servicesRoutes = require('./routes/services-simple');
 const bookingRoutes = require('./routes/bookings');
 
 const app = express();
@@ -15,7 +16,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/bookings', bookingRoutes);
+app.use('/services', servicesRoutes);
+app.use('/bookings', bookingRoutes);
 
 // Database connection and server start
 const startServer = async () => {
