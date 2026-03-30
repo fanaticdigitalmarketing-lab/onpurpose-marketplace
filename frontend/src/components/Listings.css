@@ -1,0 +1,138 @@
+.listings-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 2rem;
+}
+
+.listings-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.listings-header h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.listings-header p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.create-listing-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.create-listing-btn:hover {
+  background: #5a67d8;
+}
+
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.listing-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.listing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.listing-header-info {
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.listing-header-info h3 {
+  color: #333;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.host-info {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.listing-description {
+  padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.listing-description p {
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.listing-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e1e5e9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.book-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.book-btn:hover {
+  background: #5a67d8;
+}
+
+.no-listings {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #666;
+}
+
+.no-listings h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #c33;
+}
