@@ -9,8 +9,8 @@ const router = express.Router();
 // Create booking request
 router.post('/', authMiddleware, [
   body('serviceId').isUUID().withMessage('Service ID must be valid'),
-  body('startDate').isISO8601().withMessage('Start date must be a valid date'),
-  body('endDate').isISO8601().withMessage('End date must be a valid date')
+  body('date').isISO8601().withMessage('Date must be a valid date'),
+  body('time').optional().isISO8601().withMessage('Time must be a valid time')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -18,7 +18,7 @@ router.post('/', authMiddleware, [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { serviceId, startDate, endDate } = req.body;
+    const { serviceId, date, time } = req.body;
 
     // Check if service exists
     const service = await Service.findByPk(serviceId);
@@ -31,12 +31,8 @@ router.post('/', authMiddleware, [
       return res.status(400).json({ message: 'Cannot book your own service' });
     }
 
-    // Validate dates
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    if (start >= end) {
-      return res.status(400).json({ message: 'End date must be after start date' });
-    }
+    // Combine date and time to create datetime
+    const bookingDateTime = new Date(`${date}T${time || '12:00:00'}`);
 
     // Check for double booking conflicts
     const conflictBooking = await Booking.findOne({
@@ -45,11 +41,8 @@ router.post('/', authMiddleware, [
         status: 'accepted',
         [Op.or]: [
           {
-            startDate: {
-              [Op.lt]: end
-            },
-            endDate: {
-              [Op.gt]: start
+            date: {
+              [Op.lt]: bookingDateTime
             }
           }
         ]
@@ -59,11 +52,11 @@ router.post('/', authMiddleware, [
     if (conflictBooking) {
       return res.status(409).json({ 
         status: "error",
-        message: "This service is already booked for the selected dates",
+        message: "This service is already booked for the selected date and time",
         code: 409,
         details: {
-          startDate: conflictBooking.startDate,
-          endDate: conflictBooking.endDate
+          date: conflictBooking.date,
+          time: conflictBooking.time
         }
       });
     }
@@ -72,8 +65,7 @@ router.post('/', authMiddleware, [
     const booking = await Booking.create({
       userId: req.user.id,
       serviceId,
-      startDate: start,
-      endDate: end,
+      date: bookingDateTime,
       status: 'pending'
     });
 
