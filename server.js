@@ -3,6 +3,7 @@ const cors = require('cors');
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/auth');
+const authSimpleRoutes = require('./routes/auth-simple');
 const serviceRoutes = require('./routes/services');
 const simpleBookingRoutes = require('./routes/simple-booking');
 const bookingRoutes = require('./routes/bookings');
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/auth-simple', authSimpleRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/simple-booking', simpleBookingRoutes);
