@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Register
 router.post('/register', [
-  body('username').notEmpty().withMessage('Username is required'),
+  body('name').notEmpty().withMessage('Name is required'),
   body('email').isEmail().withMessage('Please provide a valid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
 ], async (req, res) => {
@@ -17,7 +17,7 @@ router.post('/register', [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ where: { email } });
@@ -26,11 +26,11 @@ router.post('/register', [
     }
 
     // Create user
-    const user = await User.create({ username, email, password });
+    const user = await User.create({ name, email, password });
 
     // Create JWT token
     const token = jwt.sign(
-      { id: user.id, username: user.username },
+      { id: user.id, name: user.name },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRE }
     );
@@ -40,7 +40,7 @@ router.post('/register', [
       token,
       user: {
         id: user.id,
-        username: user.username,
+        name: user.name,
         email: user.email
       }
     });
