@@ -19,6 +19,20 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Handle API errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Handle 401 unauthorized
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/auth';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Auth API
 export const authAPI = {
   register: (userData) => api.post('/auth/register', userData),
@@ -32,13 +46,14 @@ export const listingsAPI = {
   create: (listingData) => api.post('/services', listingData),
   update: (id, listingData) => api.put(`/services/${id}`, listingData),
   delete: (id) => api.delete(`/services/${id}`),
+  getMyListings: () => api.get('/services/my-services'),
 };
 
 // Bookings API
 export const bookingsAPI = {
   create: (bookingData) => api.post('/bookings', bookingData),
   getMyBookings: () => api.get('/bookings/my-bookings'),
-  getListingBookings: (listingId) => api.get(`/bookings/listing/${listingId}`),
+  getListingBookings: (serviceId) => api.get(`/bookings/service/${serviceId}`),
   updateStatus: (id, status) => api.put(`/bookings/${id}`, { status }),
 };
 

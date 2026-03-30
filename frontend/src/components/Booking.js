@@ -8,8 +8,8 @@ const Booking = () => {
   const { listingId } = useParams();
   const [listing, setListing] = useState(null);
   const [formData, setFormData] = useState({
-    startDate: '',
-    endDate: ''
+    date: '',
+    time: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -47,12 +47,12 @@ const Booking = () => {
 
     try {
       const response = await bookingsAPI.create({
-        listingId: parseInt(listingId),
-        startDate: formData.startDate,
-        endDate: formData.endDate
+        serviceId: listingId,
+        date: formData.date,
+        time: formData.time || undefined
       });
       
-      navigate('/my-bookings');
+      navigate('/listings');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create booking');
     } finally {
@@ -81,26 +81,25 @@ const Booking = () => {
           
           <form onSubmit={handleSubmit} className="booking-form">
             <div className="form-group">
-              <label htmlFor="startDate">Start Date & Time</label>
+              <label htmlFor="date">Date</label>
               <input
-                type="datetime-local"
-                id="startDate"
-                name="startDate"
-                value={formData.startDate}
+                type="date"
+                id="date"
+                name="date"
+                value={formData.date}
                 onChange={handleChange}
                 required
               />
             </div>
-            
+
             <div className="form-group">
-              <label htmlFor="endDate">End Date & Time</label>
+              <label htmlFor="time">Time (optional)</label>
               <input
-                type="datetime-local"
-                id="endDate"
-                name="endDate"
-                value={formData.endDate}
+                type="time"
+                id="time"
+                name="time"
+                value={formData.time}
                 onChange={handleChange}
-                required
               />
             </div>
             

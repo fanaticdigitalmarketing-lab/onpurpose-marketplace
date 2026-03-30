@@ -27,7 +27,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      window.location.href = '/auth';
     }
     return Promise.reject(error);
   }
@@ -53,7 +53,7 @@ export const listingsAPI = {
 export const bookingsAPI = {
   create: (bookingData) => api.post('/bookings', bookingData),
   getMyBookings: () => api.get('/bookings/my-bookings'),
-  getListingBookings: (listingId) => api.get(`/bookings/listing/${listingId}`),
+  getListingBookings: (serviceId) => api.get(`/bookings/service/${serviceId}`),
   updateStatus: (id, status) => api.put(`/bookings/${id}`, { status }),
 };
 
