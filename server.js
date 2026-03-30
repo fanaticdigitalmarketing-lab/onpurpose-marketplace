@@ -4,6 +4,7 @@ const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/auth');
 const serviceRoutes = require('./routes/services');
+const simpleBookingRoutes = require('./routes/simple-booking');
 const bookingRoutes = require('./routes/bookings');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
+app.use('/api/simple-booking', simpleBookingRoutes);
 
 // Health check
 app.get('/', (req, res) => {
