@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # OnPurpose - Hospitality Marketplace for People
 
 A Node.js + Express backend for OnPurpose, a hospitality marketplace where guests book people, not places—connecting with hosts who offer meaningful experiences, services, and time.
@@ -189,3 +190,7 @@ curl -X PUT http://localhost:3000/api/bookings/1 \
 ## License
 
 MIT
+=======
+# onpurpose-marketplace
+ "Hospitality marketplace for booking people, not places"
+>>>>>>> 9470b396a75bbf4604d84eb9424b19ad4e765ea7
