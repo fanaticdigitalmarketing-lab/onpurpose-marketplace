@@ -3,7 +3,7 @@ const cors = require('cors');
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/auth');
-const listingRoutes = require('./routes/listings');
+const serviceRoutes = require('./routes/services');
 const bookingRoutes = require('./routes/bookings');
 
 const app = express();
@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/listings', listingRoutes);
+app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 
 // Health check

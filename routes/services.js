@@ -1,58 +1,58 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { Listing, User } = require('../models');
+const { Service, User } = require('../models');
 const authMiddleware = require('../middleware/auth');
 
 const router = express.Router();
 
-// Get user's listings
-router.get('/my-listings', authMiddleware, async (req, res) => {
+// Get user's services
+router.get('/my-services', authMiddleware, async (req, res) => {
   try {
-    const listings = await Listing.findAll({
+    const services = await Service.findAll({
       where: { userId: req.user.id },
       include: [{ model: User, attributes: ['username'] }],
       order: [['createdAt', 'DESC']]
     });
-    res.json(listings);
+    res.json(services);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Get all listings
+// Get all services
 router.get('/', async (req, res) => {
   try {
-    const listings = await Listing.findAll({
+    const services = await Service.findAll({
       include: [{ model: User, attributes: ['username'] }],
       order: [['createdAt', 'DESC']]
     });
-    res.json(listings);
+    res.json(services);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Get single listing
+// Get single service
 router.get('/:id', async (req, res) => {
   try {
-    const listing = await Listing.findByPk(req.params.id, {
+    const service = await Service.findByPk(req.params.id, {
       include: [{ model: User, attributes: ['username'] }]
     });
     
-    if (!listing) {
-      return res.status(404).json({ message: 'Listing not found' });
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
     }
     
-    res.json(listing);
+    res.json(service);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Create listing (protected)
+// Create service (protected)
 router.post('/', authMiddleware, [
   body('title').notEmpty().withMessage('Title is required'),
   body('description').notEmpty().withMessage('Description is required'),
@@ -66,25 +66,25 @@ router.post('/', authMiddleware, [
 
     const { title, description, price } = req.body;
     
-    const listing = await Listing.create({
+    const service = await Service.create({
       title,
       description,
       price,
       userId: req.user.id
     });
 
-    const listingWithUser = await Listing.findByPk(listing.id, {
+    const serviceWithUser = await Service.findByPk(service.id, {
       include: [{ model: User, attributes: ['username'] }]
     });
 
-    res.status(201).json(listingWithUser);
+    res.status(201).json(serviceWithUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Update listing (protected)
+// Update service (protected)
 router.put('/:id', authMiddleware, [
   body('title').optional().notEmpty().withMessage('Title cannot be empty'),
   body('description').optional().notEmpty().withMessage('Description cannot be empty'),
@@ -96,49 +96,49 @@ router.put('/:id', authMiddleware, [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const listing = await Listing.findByPk(req.params.id);
-    
-    if (!listing) {
-      return res.status(404).json({ message: 'Listing not found' });
+    const service = await Service.findByPk(req.params.id);
+
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
     }
 
-    // Check if user owns the listing
-    if (listing.userId !== req.user.id) {
-      return res.status(403).json({ message: 'Not authorized to update this listing' });
+    // Check if user owns the service
+    if (service.userId !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized to update this service' });
     }
 
     const { title, description, price } = req.body;
     
-    await listing.update({ title, description, price });
+    await service.update({ title, description, price });
 
-    const updatedListing = await Listing.findByPk(listing.id, {
+    const updatedService = await Service.findByPk(service.id, {
       include: [{ model: User, attributes: ['username'] }]
     });
 
-    res.json(updatedListing);
+    res.json(updatedService);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Delete listing (protected)
+// Delete service (protected)
 router.delete('/:id', authMiddleware, async (req, res) => {
   try {
-    const listing = await Listing.findByPk(req.params.id);
+    const service = await Service.findByPk(req.params.id);
     
-    if (!listing) {
-      return res.status(404).json({ message: 'Listing not found' });
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
     }
 
-    // Check if user owns the listing
-    if (listing.userId !== req.user.id) {
-      return res.status(403).json({ message: 'Not authorized to delete this listing' });
+    // Check if user owns the service
+    if (service.userId !== req.user.id) {
+      return res.status(403).json({ message: 'Not authorized to delete this service' });
     }
 
-    await listing.destroy();
+    await service.destroy();
     
-    res.json({ message: 'Listing deleted successfully' });
+    res.json({ message: 'Service deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });

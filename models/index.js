@@ -1,20 +1,20 @@
 const sequelize = require('../config/database');
 const User = require('./User');
-const Listing = require('./Listing');
+const Service = require('./Service');
 const Booking = require('./Booking');
 
-User.hasMany(Listing, { foreignKey: 'userId' });
-Listing.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Service, { foreignKey: 'userId' });
+Service.belongsTo(User, { foreignKey: 'userId' });
 
 User.hasMany(Booking, { foreignKey: 'userId' });
 Booking.belongsTo(User, { foreignKey: 'userId' });
 
-Listing.hasMany(Booking, { foreignKey: 'listingId' });
-Booking.belongsTo(Listing, { foreignKey: 'listingId' });
+Service.hasMany(Booking, { foreignKey: 'serviceId' });
+Booking.belongsTo(Service, { foreignKey: 'serviceId' });
 
 module.exports = {
   sequelize,
   User,
-  Listing,
+  Service,
   Booking
 };

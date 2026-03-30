@@ -1,6 +1,6 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
-const { Booking, Listing, User } = require('../models');
+const { Booking, Service, User } = require('../models');
 const authMiddleware = require('../middleware/auth');
 const { Op } = require('sequelize');
 
@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Create booking request
 router.post('/', authMiddleware, [
-  body('listingId').isInt().withMessage('Listing ID must be an integer'),
+  body('serviceId').isUUID().withMessage('Service ID must be valid'),
   body('startDate').isISO8601().withMessage('Start date must be a valid date'),
   body('endDate').isISO8601().withMessage('End date must be a valid date')
 ], async (req, res) => {
@@ -18,17 +18,17 @@ router.post('/', authMiddleware, [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { listingId, startDate, endDate } = req.body;
+    const { serviceId, startDate, endDate } = req.body;
 
-    // Check if listing exists
-    const listing = await Listing.findByPk(listingId);
-    if (!listing) {
-      return res.status(404).json({ message: 'Listing not found' });
+    // Check if service exists
+    const service = await Service.findByPk(serviceId);
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
     }
 
-    // Check if user is not booking their own listing
-    if (listing.userId === req.user.id) {
-      return res.status(400).json({ message: 'Cannot book your own listing' });
+    // Check if user is not booking their own service
+    if (service.userId === req.user.id) {
+      return res.status(400).json({ message: 'Cannot book your own service' });
     }
 
     // Validate dates
@@ -41,7 +41,7 @@ router.post('/', authMiddleware, [
     // Check for double booking conflicts
     const conflictBooking = await Booking.findOne({
       where: {
-        listingId,
+        serviceId,
         status: 'accepted',
         [Op.or]: [
           {
@@ -71,7 +71,7 @@ router.post('/', authMiddleware, [
     // Create booking
     const booking = await Booking.create({
       userId: req.user.id,
-      listingId,
+      serviceId,
       startDate: start,
       endDate: end,
       status: 'pending'
@@ -81,7 +81,7 @@ router.post('/', authMiddleware, [
     const bookingWithDetails = await Booking.findByPk(booking.id, {
       include: [
         { model: User, attributes: ['username', 'email'] },
-        { model: Listing, attributes: ['title', 'price'] }
+        { model: Service, attributes: ['title', 'price'] }
       ]
     });
 
@@ -109,25 +109,26 @@ router.get('/my-bookings', authMiddleware, async (req, res) => {
   }
 });
 
-// Get bookings for a listing (host only)
-router.get('/listing/:listingId', authMiddleware, async (req, res) => {
+// Get bookings for a service (host only)
+router.get('/service/:serviceId', authMiddleware, async (req, res) => {
   try {
-    const { listingId } = req.params;
+    const { serviceId } = req.params;
 
-    // Check if user owns the listing
-    const listing = await Listing.findByPk(listingId);
-    if (!listing) {
-      return res.status(404).json({ message: 'Listing not found' });
+    // Check if user owns the service
+    const service = await Service.findByPk(serviceId);
+    if (!service) {
+      return res.status(404).json({ message: 'Service not found' });
     }
 
-    if (listing.userId !== req.user.id) {
+    if (service.userId !== req.user.id) {
       return res.status(403).json({ message: 'Not authorized to view these bookings' });
     }
 
     const bookings = await Booking.findAll({
-      where: { listingId },
+      where: { serviceId },
       include: [
-        { model: User, attributes: ['username', 'email'] }
+        { model: User, attributes: ['username', 'email'] },
+        { model: Service, attributes: ['title', 'price'] }
       ],
       order: [['createdAt', 'DESC']]
     });
@@ -152,17 +153,17 @@ router.put('/:id', authMiddleware, [
     const { id } = req.params;
     const { status } = req.body;
 
-    // Find booking with listing
+    // Find booking with service
     const booking = await Booking.findByPk(id, {
-      include: [{ model: Listing }]
+      include: [{ model: Service }]
     });
 
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });
     }
 
-    // Check if user owns the listing
-    if (booking.Listing.userId !== req.user.id) {
+    // Check if user owns the service
+    if (booking.Service.userId !== req.user.id) {
       return res.status(403).json({ message: 'Not authorized to update this booking' });
     }
 
@@ -178,7 +179,7 @@ router.put('/:id', authMiddleware, [
     const updatedBooking = await Booking.findByPk(id, {
       include: [
         { model: User, attributes: ['username', 'email'] },
-        { model: Listing, attributes: ['title', 'price'] }
+        { model: Service, attributes: ['title', 'price'] }
       ]
     });
 
