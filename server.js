@@ -839,20 +839,33 @@ app.get('/api/services/:id/reviews', async (req, res) => {
 
 /* ═══════════════════ USER ROUTES ═══════════════════ */
 
-app.get('/api/users/profile', authenticate, async (req, res) => {
-  res.json({ success: true, data: req.user });
-});
-
-app.patch('/api/users/profile',
+// ── GET /api/users/profile ──────────────────────
+app.get('/api/users/profile',
   authenticate,
-  validationRules.updateProfile, validateRequest,
   async (req, res) => {
     try {
+      const user = await User.findByPk(req.userId, {
+        attributes: { exclude: ['password','verifyToken','resetToken','refreshTokenHash'] }
+      });
+      if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+      res.json({ success: true, data: user });
+    } catch (error) {
+      res.status(500).json({ success: false, message: 'Failed to load profile' });
+    }
+  }
+);
+
+// ── PATCH /api/users/profile ────────────────────
+app.patch('/api/users/profile',
+  authenticate,
+  async (req, res) => {
+    try {
+      const user = await User.findByPk(req.userId);
+      if (!user) return res.status(404).json({ success: false, message: 'User not found' });
       const allowed = ['name', 'bio', 'location', 'avatar'];
       const updates = {};
       allowed.forEach(f => { if (req.body[f] !== undefined) updates[f] = req.body[f]; });
-      await User.update(updates, { where: { id: req.userId } });
-      const user = await User.findByPk(req.userId, { attributes: { exclude: SENSITIVE_FIELDS } });
+      await user.update(updates);
       res.json({ success: true, data: user });
     } catch (error) {
       res.status(500).json({ success: false, message: 'Failed to update profile' });
@@ -871,32 +884,31 @@ app.delete('/api/users/me', authenticate, async (req, res) => {
 
 /* ═══════════════════ AVAILABILITY ROUTES ═══════════════════ */
 
+// ── GET /api/availability/:providerId ───────────
 app.get('/api/availability/:providerId', async (req, res) => {
   try {
     const availability = await Availability.findAll({
-      where: { providerId: req.params.providerId },
-      order: [['dayOfWeek', 'ASC'], ['startTime', 'ASC']]
+      where: { providerId: req.params.providerId }
     });
-    const blockedDates = await BlockedDate.findAll({
-      where: { providerId: req.params.providerId, date: { [Op.gte]: new Date() } },
-      order: [['date', 'ASC']]
-    });
-    res.json({ success: true, data: { availability, blockedDates } });
+    res.json({ success: true, data: availability });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to load availability' });
   }
 });
 
+// ── POST /api/availability ──────────────────────
 app.post('/api/availability',
-  authenticate, requireRole('provider', 'admin'),
-  validationRules.createAvailability, validateRequest,
+  authenticate,
+  requireRole('provider', 'admin'),
   async (req, res) => {
     try {
       const { dayOfWeek, startTime, endTime } = req.body;
-      const slot = await Availability.create({ providerId: req.userId, dayOfWeek, startTime, endTime });
-      res.status(201).json({ success: true, data: slot });
+      const avail = await Availability.create({
+        providerId: req.userId, dayOfWeek, startTime, endTime
+      });
+      res.status(201).json({ success: true, data: avail });
     } catch (error) {
-      res.status(500).json({ success: false, message: 'Failed to create availability' });
+      res.status(500).json({ success: false, message: 'Failed to set availability' });
     }
   }
 );
@@ -917,7 +929,18 @@ app.post('/api/availability/block',
 
 /* ═══════════════════ CHECKIN ROUTES ═══════════════════ */
 
-app.use('/api', checkinRouter);
+// ── checkin routes ──────────────────────────────
+app.use('/api/checkin', checkinRouter);
+
+// ── 404 handler ─────────────────────────────────
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ success: false, message: 'API route not found' });
+});
+
+// ── Serve frontend for all non-API routes ────────
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
+});
 
 /* ═══════════════════ ADMIN ROUTES ═══════════════════ */
 
@@ -966,18 +989,20 @@ app.patch('/api/admin/services/:id/deactivate', authenticate, requireRole('admin
 
 /* ═══════════════════ OTHER ROUTES ═══════════════════ */
 
-app.post('/api/early-access',
-  validationRules.earlyAccess, validateRequest,
-  async (req, res) => {
-    try {
-      const { email } = req.body;
-      await EarlyAccess.findOrCreate({ where: { email } });
-      res.json({ success: true, message: 'Added to early access list' });
-    } catch (error) {
-      res.status(500).json({ success: false, message: 'Failed to register' });
+// ── POST /api/early-access ──────────────────────
+app.post('/api/early-access', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ success: false, message: 'Email required' });
+    await EarlyAccess.create({ email });
+    res.json({ success: true, message: 'Added to early access list' });
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      return res.json({ success: true, message: 'Already on the list' });
     }
+    res.status(500).json({ success: false, message: 'Failed to add email' });
   }
-);
+});
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), uptime: process.uptime() });

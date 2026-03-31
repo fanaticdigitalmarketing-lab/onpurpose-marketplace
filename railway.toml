@@ -1,18 +1,9 @@
 [build]
-  buildCommand = "npm ci"
+builder = "nixpacks"
 
 [deploy]
-  preDeploy = "node -e \"const fs=require('fs'),path=require('path');const config=JSON.parse(fs.readFileSync('config/config.json','utf8'));config.production={use_env_variable:'DATABASE_URL',dialect:'postgres'};fs.writeFileSync('config/config.json',JSON.stringify(config,null,2));console.log('✅ Database config fixed!');\" && npx sequelize-cli db:migrate"
-  startCommand = "node server.js"
-  healthcheckPath = "/health"
-  healthcheckTimeout = 300
-  restartPolicyType = "on_failure"
-  restartPolicyMaxRetries = 10
-
-[env]
-NODE_ENV = "production"
-PORT = "3000"
-JWT_SECRET = "OnPurpose2025SecureJWTTokenKey789"
-
-[services.web]
-source = "."
+startCommand = "npm start"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
