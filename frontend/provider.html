@@ -75,7 +75,7 @@
 <body>
   <nav class="nav">
     <a href="/" class="nav-brand">
-      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+      <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <rect width="100" height="100" rx="22" fill="#2563d4"/>
         <path d="M22 14 L78 14 L78 24 Q78 50 50 50 Q78 50 78 76 L78 86 L22 86 L22 76 Q22 50 50 50 Q22 50 22 24 Z" fill="white"/>
         <circle cx="37" cy="77" r="5" fill="#2563d4"/>
@@ -288,10 +288,10 @@
         try{
           const r=await api('/api/auth/login','POST',{email,password});
           if(!r.success)return toast(r.message||'Invalid credentials','error');
-          accessToken=r.data.accessToken;
-          currentUser=r.data.user;
+          accessToken=r.accessToken;
+          currentUser=r.user;
           localStorage.setItem('op_token',accessToken);
-          if(r.data.refreshToken)localStorage.setItem('op_refresh',r.data.refreshToken);
+          if(r.refreshToken)localStorage.setItem('op_refresh',r.refreshToken);
           localStorage.setItem('op_user',JSON.stringify(currentUser));
           toast('Signed in! Welcome back, '+currentUser.name,'success');
           setTimeout(()=>location.reload(),1500);
@@ -306,10 +306,10 @@
       try{
         const r=await api('/api/auth/register','POST',{name,email,password,role:'provider'});
         if(!r.success)return toast(r.message||r.error||'Registration failed','error');
-        accessToken=r.data.accessToken;
-        currentUser=r.data.user;
+        accessToken=r.accessToken;
+        currentUser=r.user;
         localStorage.setItem('op_token',accessToken);
-        if(r.data.refreshToken)localStorage.setItem('op_refresh',r.data.refreshToken);
+        if(r.refreshToken)localStorage.setItem('op_refresh',r.refreshToken);
         localStorage.setItem('op_user',JSON.stringify(currentUser));
         /* Update profile with bio/location/avatar */
         const bio=document.getElementById('regBio').value;
