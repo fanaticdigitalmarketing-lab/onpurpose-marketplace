@@ -762,7 +762,7 @@ app.post('/api/bookings',
   validationRules.createBooking, validateRequest,
   async (req, res) => {
     try {
-      const { serviceId, date, time, notes, paymentIntentId } = req.body;
+      const { serviceId, date, time, notes } = req.body;
       const service = await Service.findByPk(serviceId, {
         include: [{ model: User, as: 'provider' }]
       });
@@ -777,8 +777,7 @@ app.post('/api/bookings',
       const booking = await Booking.create({
         userId: req.userId, serviceId, date, time, notes,
         totalAmount, platformFee, providerAmount,
-        status: 'confirmed', paymentStatus: paymentIntentId ? 'paid' : 'pending',
-        paymentIntentId: paymentIntentId || null
+        status: 'pending', paymentStatus: 'pending'
       });
 
       // Notify provider (non-blocking)
@@ -913,93 +912,6 @@ app.post('/api/payments/create-checkout',
     }
   }
 );
-
-// ── Create Payment Intent for Service Booking ───────────────
-app.post('/api/payments/create-payment-intent',
-  authenticate,
-  async (req, res) => {
-    try {
-      if (!stripe) {
-        return res.status(501).json({
-          success: false,
-          message: 'Stripe not configured'
-        });
-      }
-
-      const { serviceId, amount, currency = 'usd' } = req.body;
-      
-      // Validate service exists and is active
-      const service = await Service.findByPk(serviceId);
-      if (!service) {
-        return res.status(404).json({
-          success: false,
-          message: 'Service not found'
-        });
-      }
-      
-      if (!service.isActive) {
-        return res.status(400).json({
-          success: false,
-          message: 'Service is not available'
-        });
-      }
-
-      // Create payment intent
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount,
-        currency: currency,
-        metadata: {
-          serviceId: serviceId,
-          userId: req.userId,
-          serviceName: service.title
-        },
-        automatic_payment_methods: {
-          enabled: true,
-        },
-      });
-
-      res.json({
-        success: true,
-        clientSecret: paymentIntent.client_secret
-      });
-
-    } catch (error) {
-      console.error('Payment intent creation error:', error);
-      res.status(500).json({
-        success: false,
-        message: 'Failed to create payment intent'
-      });
-    }
-  }
-);
-
-// ── Stripe Config for Frontend ───────────────────────────────
-app.get('/api/stripe/config', async (req, res) => {
-  try {
-    if (!stripe) {
-      return res.status(501).json({
-        success: false,
-        message: 'Stripe not configured'
-      });
-    }
-
-    // In production, you'd use the actual publishable key
-    // For now, return a test key or environment variable
-    const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_51TH71FGoJBpwYwWhjOZlUCrgNH5UGdTbeYuw9jF6K5s6dz4TnidrubrU0o112sCXO14t9xfPqts3inT9GQ57cclY00JKrBf9gE';
-
-    res.json({
-      success: true,
-      publishableKey: publishableKey
-    });
-
-  } catch (error) {
-    console.error('Stripe config error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to get Stripe config'
-    });
-  }
-});
 
 // ── Create Stripe Connect account for provider ──────────────
 app.post('/api/payments/connect/create',

@@ -241,8 +241,8 @@
         
         if (response.ok) {
           const data = await response.json();
-          displayServices(data.services || []);
-          displayPagination(data.total || 0);
+          displayServices(data.data || []);
+          displayPagination(data.total || data.data?.length || 0);
         } else {
           displayDemoServices();
         }
@@ -271,8 +271,8 @@
             <h3>${service.title}</h3>
             <p class="description">${service.description || ''}</p>
             <p class="price">$${service.price}/${service.unit || 'hour'}</p>
-            <p class="provider">by ${service.provider_name || 'Provider'}</p>
-            ${service.rating ? `<p class="rating">⭐ ${service.rating} (${service.reviews || 0} reviews)</p>` : ''}
+            <p class="provider">by ${service.provider?.name || 'Provider'}</p>
+            ${service.averageRating ? `<p class="rating">⭐ ${service.averageRating.toFixed(1)} (${service.reviewCount || 0} reviews)</p>` : ''}
           </div>
         </div>
       `).join('');
@@ -334,7 +334,7 @@
     }
 
     function viewService(id) {
-      window.location.href = `/service.html?id=${id}`;
+      window.location.href = `/service-detail.html?id=${id}`;
     }
 
     function resetFilters() {

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title id="pageTitle">Service Details — OnPurpose</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    :root {
+      --navy:#1a2744;--navy2:#243156;--blue:#2563d4;--blue2:#3b7ef8;
+      --blue-l:rgba(37,99,212,0.10);--white:#ffffff;--off:#f7f8fc;
+      --off2:#eef1f8;--txt:#1a2744;--mut:#6b7a99;
+      --bdr:rgba(26,39,68,0.10);--bdr2:rgba(26,39,68,0.18);
+      --shadow:0 4px 24px rgba(37,99,212,0.10);
+      --shadow2:0 8px 40px rgba(37,99,212,0.16);
+      --ok:#16a34a;--warn:#d97706;--red:#dc2626;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--txt);line-height:1.6}
+    h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy)}
+    nav{position:sticky;top:0;background:var(--white);border-bottom:1px solid var(--bdr);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
+    .logo-link{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+    .logo-img{height:40px;width:auto}
+    .brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--navy)}
+    .nav-links{display:flex;gap:1.5rem;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--txt);font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--blue)}
+    .btn-primary{background:var(--blue);color:var(--white);padding:0.8rem 2rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+    .btn-primary:hover{background:var(--blue2);box-shadow:var(--shadow2)}
+    .btn-ghost{background:transparent;color:var(--blue);padding:0.8rem 2rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+    .btn-ghost:hover{background:var(--blue-l)}
+    .container{max-width:1200px;margin:0 auto;padding:2rem}
+    .service-header{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-bottom:3rem;background:var(--white);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+    .service-image{width:100%;height:400px;object-fit:cover}
+    .service-info{padding:3rem}
+    .service-title{font-size:2.5rem;margin-bottom:1rem;color:var(--navy)}
+    .service-category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.5rem 1rem;border-radius:8px;font-weight:600;margin-bottom:1rem}
+    .service-price{font-size:2rem;font-weight:700;color:var(--blue);margin-bottom:1rem}
+    .service-provider{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+    .provider-avatar{width:48px;height:48px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700}
+    .provider-info h4{color:var(--navy);margin-bottom:0.25rem}
+    .provider-info p{color:var(--mut);font-size:0.9rem}
+    .service-description{color:var(--txt);margin-bottom:2rem;line-height:1.7}
+    .service-details{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem;margin-bottom:2rem}
+    .detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
+    .detail-item h4{color:var(--navy);margin-bottom:0.5rem}
+    .detail-item p{color:var(--mut)}
+    .booking-section{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem;margin-bottom:2rem}
+    .booking-form{display:grid;gap:1.5rem}
+    .form-group label{display:block;font-weight:600;color:var(--navy);margin-bottom:0.5rem}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:0.8rem 1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue)}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .payment-section{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem}
+    .payment-methods{display:flex;gap:1rem;margin-bottom:1.5rem}
+    .payment-method{flex:1;padding:1rem;border:2px solid var(--bdr);border-radius:8px;text-align:center;cursor:pointer;transition:all 0.2s}
+    .payment-method:hover{border-color:var(--blue)}
+    .payment-method.selected{border-color:var(--blue);background:var(--blue-l)}
+    .loading{display:none;text-align:center;padding:2rem}
+    .spinner{border:3px solid var(--bdr);border-top:3px solid var(--blue);border-radius:50%;width:40px;height:40px;margin:0 auto 1rem;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    .error{color:var(--red);text-align:center;padding:1rem;background:rgba(220,38,38,0.1);border-radius:8px;margin-bottom:1rem}
+    .success{color:var(--ok);text-align:center;padding:1rem;background:rgba(22,163,74,0.1);border-radius:8px;margin-bottom:1rem}
+    .reviews-section{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem;margin-bottom:2rem}
+    .review{border-bottom:1px solid var(--bdr);padding-bottom:1rem;margin-bottom:1rem}
+    .review:last-child{border-bottom:none}
+    .review-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem}
+    .review-avatar{width:32px;height:32px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:0.8rem;font-weight:700}
+    .review-rating{color:var(--ok);font-weight:600}
+    .review-date{color:var(--mut);font-size:0.9rem;margin-left:auto}
+    @media(max-width:768px){
+      .service-header{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      .container{padding:1rem}
+      .service-info{padding:2rem}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo-link">
+      <img class="logo-img" src="https://onpurpose.earth/assets/logo.svg" alt="OnPurpose" onerror="this.style.display='none'">
+      <div class="brand">OnPurpose</div>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/services.html">Browse Services</a>
+      <a href="/provider.html">Become a Provider</a>
+      <button class="btn-ghost" onclick="openSignIn()" id="signInBtn">Sign In</button>
+      <a href="/dashboard.html" class="btn-primary" id="dashboardBtn" style="display:none">Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Loading State -->
+    <div id="loadingState" class="loading">
+      <div class="spinner"></div>
+      <p>Loading service details...</p>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="error" style="display:none">
+      Service not found or unavailable.
+    </div>
+
+    <!-- Service Content -->
+    <div id="serviceContent" style="display:none">
+      <!-- Service Header -->
+      <div class="service-header">
+        <img id="serviceImage" class="service-image" src="" alt="">
+        <div class="service-info">
+          <span id="serviceCategory" class="service-category"></span>
+          <h1 id="serviceTitle" class="service-title"></h1>
+          <div id="servicePrice" class="service-price"></div>
+          <div class="service-provider">
+            <div id="providerAvatar" class="provider-avatar"></div>
+            <div class="provider-info">
+              <h4 id="providerName"></h4>
+              <p id="providerLocation"></p>
+            </div>
+          </div>
+          <p id="serviceDescription" class="service-description"></p>
+        </div>
+      </div>
+
+      <!-- Service Details -->
+      <div class="service-details">
+        <h2>Service Details</h2>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <h4>Duration</h4>
+            <p id="serviceDuration"></p>
+          </div>
+          <div class="detail-item">
+            <h4>Format</h4>
+            <p id="serviceFormat"></p>
+          </div>
+          <div class="detail-item">
+            <h4>Location</h4>
+            <p id="serviceLocation"></p>
+          </div>
+          <div class="detail-item">
+            <h4>Rating</h4>
+            <p id="serviceRating"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Section -->
+      <div class="booking-section">
+        <h2>Book This Service</h2>
+        <form id="bookingForm" class="booking-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="bookingDate">Preferred Date</label>
+              <input type="date" id="bookingDate" required>
+            </div>
+            <div class="form-group">
+              <label for="bookingTime">Preferred Time</label>
+              <input type="time" id="bookingTime" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bookingNotes">Additional Notes (Optional)</label>
+            <textarea id="bookingNotes" rows="3" placeholder="Any special requirements or questions..."></textarea>
+          </div>
+        </form>
+      </div>
+
+      <!-- Payment Section -->
+      <div class="payment-section">
+        <h2>Payment Information</h2>
+        <div class="payment-methods">
+          <div class="payment-method selected" data-method="card">
+            <div>💳</div>
+            <div>Credit Card</div>
+          </div>
+          <div class="payment-method" data-method="google">
+            <div>🔵</div>
+            <div>Google Pay</div>
+          </div>
+          <div class="payment-method" data-method="apple">
+            <div>🍎</div>
+            <div>Apple Pay</div>
+          </div>
+        </div>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label for="cardName">Name on Card</label>
+            <input type="text" id="cardName" required>
+          </div>
+          <div class="form-group">
+            <label for="cardEmail">Email</label>
+            <input type="email" id="cardEmail" required>
+          </div>
+          <div id="cardElement"><!-- Stripe card element will be inserted here --></div>
+          <div id="cardError" class="error" style="display:none"></div>
+          <button type="submit" class="btn-primary" style="width:100%;margin-top:1rem">
+            Complete Booking & Pay <span id="totalPrice"></span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Reviews Section -->
+      <div class="reviews-section">
+        <h2>Reviews</h2>
+        <div id="reviewsList">
+          <p style="color:var(--mut);text-align:center">No reviews yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000' 
+      : 'https://onpurpose.earth';
+    
+    let serviceData = null;
+    let stripe = null;
+    let cardElement = null;
+
+    // Get service ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const serviceId = urlParams.get('id');
+
+    if (!serviceId) {
+      showError('Service ID not provided');
+    }
+
+    // Initialize Stripe
+    async function initStripe() {
+      try {
+        const response = await fetch(`${API_BASE}/api/stripe/config`);
+        const { publishableKey } = await response.json();
+        stripe = Stripe(publishableKey);
+        
+        const elements = stripe.elements();
+        cardElement = elements.create('card', {
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#1a2744',
+              '::placeholder': { color: '#6b7a99' }
+            }
+          }
+        });
+        cardElement.mount('#cardElement');
+      } catch (error) {
+        console.error('Stripe initialization failed:', error);
+      }
+    }
+
+    // Load service details
+    async function loadService() {
+      try {
+        const response = await fetch(`${API_BASE}/api/services/${serviceId}`);
+        
+        if (!response.ok) {
+          throw new Error('Service not found');
+        }
+        
+        const result = await response.json();
+        serviceData = result.data;
+        
+        displayService();
+        loadReviews();
+        
+      } catch (error) {
+        console.error('Error loading service:', error);
+        showError('Service not found or unavailable');
+      }
+    }
+
+    // Display service information
+    function displayService() {
+      if (!serviceData) return;
+      
+      document.getElementById('pageTitle').textContent = `${serviceData.title} — OnPurpose`;
+      document.getElementById('serviceImage').src = serviceData.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400';
+      document.getElementById('serviceCategory').textContent = serviceData.category;
+      document.getElementById('serviceTitle').textContent = serviceData.title;
+      document.getElementById('servicePrice').textContent = `$${serviceData.price}/${serviceData.unit || 'hour'}`;
+      document.getElementById('serviceDescription').textContent = serviceData.description;
+      
+      // Provider info
+      const provider = serviceData.provider;
+      document.getElementById('providerAvatar').textContent = provider.name.split(' ').map(n => n[0]).join('').toUpperCase();
+      document.getElementById('providerName').textContent = provider.name;
+      document.getElementById('providerLocation').textContent = provider.location || 'Remote';
+      
+      // Service details
+      document.getElementById('serviceDuration').textContent = `${serviceData.duration || 60} minutes`;
+      document.getElementById('serviceFormat').textContent = serviceData.isOnline ? 'Online' : 'In Person';
+      document.getElementById('serviceLocation').textContent = serviceData.location || 'Remote';
+      
+      const rating = serviceData.averageRating;
+      document.getElementById('serviceRating').textContent = rating 
+        ? `⭐ ${rating.toFixed(1)} (${serviceData.reviewCount || 0} reviews)`
+        : 'No reviews yet';
+      
+      document.getElementById('totalPrice').textContent = `$${serviceData.price}`;
+      
+      // Show content
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('serviceContent').style.display = 'block';
+    }
+
+    // Load reviews
+    async function loadReviews() {
+      try {
+        const response = await fetch(`${API_BASE}/api/services/${serviceId}/reviews`);
+        const reviews = await response.json();
+        
+        displayReviews(reviews.data || []);
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+      }
+    }
+
+    // Display reviews
+    function displayReviews(reviews) {
+      const reviewsList = document.getElementById('reviewsList');
+      
+      if (reviews.length === 0) {
+        reviewsList.innerHTML = '<p style="color:var(--mut);text-align:center">No reviews yet.</p>';
+        return;
+      }
+      
+      reviewsList.innerHTML = reviews.map(review => `
+        <div class="review">
+          <div class="review-header">
+            <div class="review-avatar">${review.user.name.split(' ').map(n => n[0]).join('').toUpperCase()}</div>
+            <div>
+              <div class="review-rating">⭐ ${review.rating}</div>
+              <div>${review.user.name}</div>
+            </div>
+            <div class="review-date">${new Date(review.createdAt).toLocaleDateString()}</div>
+          </div>
+          <p>${review.comment}</p>
+        </div>
+      `).join('');
+    }
+
+    // Payment method selection
+    document.querySelectorAll('.payment-method').forEach(method => {
+      method.addEventListener('click', () => {
+        document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+        method.classList.add('selected');
+      });
+    });
+
+    // Handle booking submission
+    document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!serviceData) return;
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+      
+      try {
+        // Get user token
+        const token = localStorage.getItem('op_token');
+        if (!token) {
+          throw new Error('Please sign in to book this service');
+        }
+        
+        // Create payment intent
+        const paymentResponse = await fetch(`${API_BASE}/api/payments/create-payment-intent`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            serviceId: serviceId,
+            amount: serviceData.price * 100, // Convert to cents
+            currency: 'usd'
+          })
+        });
+        
+        const paymentData = await paymentResponse.json();
+        
+        if (!paymentData.success) {
+          throw new Error(paymentData.message || 'Payment setup failed');
+        }
+        
+        // Confirm payment with Stripe
+        const { error, paymentIntent } = await stripe.confirmCardPayment(
+          paymentData.clientSecret,
+          {
+            payment_method: {
+              card: cardElement,
+              billing_details: {
+                name: document.getElementById('cardName').value,
+                email: document.getElementById('cardEmail').value
+              }
+            }
+          }
+        );
+        
+        if (error) {
+          throw new Error(error.message);
+        }
+        
+        if (paymentIntent.status === 'succeeded') {
+          // Create booking
+          const bookingResponse = await fetch(`${API_BASE}/api/bookings`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              serviceId: serviceId,
+              date: document.getElementById('bookingDate').value,
+              time: document.getElementById('bookingTime').value,
+              notes: document.getElementById('bookingNotes').value,
+              paymentIntentId: paymentIntent.id
+            })
+          });
+          
+          const bookingData = await bookingResponse.json();
+          
+          if (bookingData.success) {
+            showSuccess('Booking confirmed! You will receive a confirmation email.');
+            // Redirect to dashboard after delay
+            setTimeout(() => {
+              window.location.href = '/dashboard.html';
+            }, 3000);
+          } else {
+            throw new Error(bookingData.message || 'Booking failed');
+          }
+        }
+        
+      } catch (error) {
+        console.error('Payment error:', error);
+        showError(error.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = `Complete Booking & Pay $${serviceData.price}`;
+      }
+    });
+
+    function showError(message) {
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('errorState').textContent = message;
+      document.getElementById('errorState').style.display = 'block';
+    }
+
+    function showSuccess(message) {
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success';
+      successDiv.textContent = message;
+      document.querySelector('.payment-section').prepend(successDiv);
+    }
+
+    // Auth functions (simplified)
+    function openSignIn() {
+      window.location.href = '/dashboard.html#signin';
+    }
+
+    // Check auth status
+    function checkAuth() {
+      const token = localStorage.getItem('op_token');
+      const user = JSON.parse(localStorage.getItem('op_user') || 'null');
+      
+      if (token && user) {
+        document.getElementById('signInBtn').style.display = 'none';
+        document.getElementById('dashboardBtn').style.display = 'inline-block';
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      initStripe();
+      loadService();
+      
+      // Set minimum date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('bookingDate').setAttribute('min', today);
+    });
+  </script>
+</body>
+</html>
