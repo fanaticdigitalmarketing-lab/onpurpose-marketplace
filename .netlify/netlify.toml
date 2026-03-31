@@ -2,7 +2,6 @@ functionsDirectory = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\no-functions
 functionsDirectoryOrigin = "config-v1"
 headersOrigin = "config"
 redirectsOrigin = "config"
-plugins = []
 
 [build]
 publish = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\frontend"
@@ -29,6 +28,12 @@ NODE_VERSION = "18"
 [functions]
 
 [functions."*"]
+
+[[plugins]]
+origin = "ui"
+package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
+
+[plugins.inputs]
 
 [[headers]]
 for = "/*"
@@ -74,7 +79,7 @@ X-Content-Type-Options = "nosniff"
 Referrer-Policy = "strict-origin-when-cross-origin"
 Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; connect-src 'self' https://api.stripe.com https://ydmxe6sf.up.railway.app; frame-src https://js.stripe.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; connect-src 'self' https://api.stripe.com https://onpurpose.earth; frame-src https://js.stripe.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
 
 [[headers]]
 for = "/assets/*"
@@ -119,8 +124,32 @@ force = true
 [redirects.headers]
 
 [[redirects]]
+from = "/api/*"
+to = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/health"
+to = "https://onpurpose-backend-clean-production.up.railway.app/health"
+status = 200.0
+force = true
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
 from = "/api/webhooks/stripe"
-to = "https://ydmxe6sf.up.railway.app/api/webhooks/stripe"
+to = "https://onpurpose-backend-clean-production.up.railway.app/api/webhooks/stripe"
 status = 200.0
 force = true
 

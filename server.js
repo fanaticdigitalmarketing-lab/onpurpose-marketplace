@@ -143,6 +143,64 @@ const EarlyAccess = sequelize.define('EarlyAccess', {
   email: { type: DataTypes.STRING, allowNull: false, unique: true }
 });
 
+// ── SUBSCRIBER LOG — never delete these records ──────────────
+const Subscriber = sequelize.define('Subscriber', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
+  userId: {
+    // Links to User but NOT a foreign key constraint
+    // So record survives even if user deletes their account
+    type: DataTypes.UUID,
+    allowNull: false
+  },
+  name:      { type: DataTypes.STRING, allowNull: false },
+  email:     { type: DataTypes.STRING, allowNull: false },
+  role:      { type: DataTypes.STRING, allowNull: false },
+  location:  { type: DataTypes.STRING },
+  source:    { type: DataTypes.STRING, defaultValue: 'web-registration' },
+  userAgent: { type: DataTypes.TEXT },
+  ipAddress: { type: DataTypes.STRING },
+  signedUpAt:{ type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  isVerified:{ type: DataTypes.BOOLEAN, defaultValue: false },
+  verifiedAt:{ type: DataTypes.DATE },
+  notes:     { type: DataTypes.TEXT }
+}, {
+  tableName: 'Subscribers',
+  // NEVER add paranoid:true with cascade — these records are permanent
+  timestamps: true
+});
+
+// ── EMAIL LOG — record every email sent ──────────────────────
+const EmailLog = sequelize.define('EmailLog', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
+  recipientEmail: { type: DataTypes.STRING, allowNull: false },
+  recipientName:  { type: DataTypes.STRING },
+  emailType: {
+    // Types: verification | owner-alert | welcome | password-reset
+    //        booking-confirm | payment-confirm | re-engagement
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  subject:   { type: DataTypes.STRING },
+  status: {
+    type: DataTypes.ENUM('sent', 'failed', 'bounced'),
+    defaultValue: 'sent'
+  },
+  error:     { type: DataTypes.TEXT },
+  sentAt:    { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+  metadata:  { type: DataTypes.JSON }
+}, {
+  tableName: 'EmailLogs',
+  timestamps: true
+});
+
 /* ─────────────── ASSOCIATIONS ─────────────── */
 User.hasMany(Service, { foreignKey: 'providerId', as: 'services' });
 Service.belongsTo(User, { foreignKey: 'providerId', as: 'provider' });
@@ -171,7 +229,7 @@ BlockedDate.belongsTo(User, { foreignKey: 'providerId', as: 'provider' });
 /* ─────────────── INIT AUTH MIDDLEWARE ─────────────── */
 auth.init(User);
 
-const models = { User, Service, Booking, Review, Availability, BlockedDate, EarlyAccess };
+const models = { User, Service, Booking, Review, Availability, BlockedDate, EarlyAccess, Subscriber, EmailLog };
 
 /* ═══════════════════ EXPRESS APP ═══════════════════ */
 const app = express();
@@ -331,67 +389,134 @@ app.post('/api/auth/register',
   validationRules.register, validateRequest,
   async (req, res) => {
     try {
-      const { name, email, password, role } = req.body;
+      const { name, email, password, role = 'customer', location } = req.body;
+
+      // Check duplicate
       const existing = await User.findOne({ where: { email } });
-      if (existing) return res.status(409).json({ success: false, message: 'Email already registered' });
+      if (existing) {
+        return res.status(409).json({
+          success: false,
+          error: 'An account with this email already exists'
+        });
+      }
 
-      const hashedPw = await hashPassword(password);
-      const verifyToken = crypto.randomBytes(32).toString('hex');
+      // Hash password
+      const PEPPER = process.env.BCRYPT_PEPPER || '';
+      const hashed = await bcrypt.hash(password + PEPPER, 12);
 
+      // Generate email verification token
+      const vToken  = crypto.randomBytes(32).toString('hex');
+      const vExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+      // Create user
       const user = await User.create({
-        name, email,
-        password: hashedPw,
-        role: role || 'customer',
-        verifyToken,
-        verifyTokenExpiry: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        name, email, password: hashed,
+        role, location: location || null,
+        verifyToken: crypto.createHash('sha256').update(vToken).digest('hex'),
+        verifyTokenExpiry: vExpiry,
+        isVerified: false
       });
 
+      // Generate auth tokens
       const { accessToken, refreshToken } = generateTokens(user.id);
       await user.update({ refreshTokenHash: hashToken(refreshToken) });
 
-      // Send both emails (non-blocking)
+      // ── SAVE TO SUBSCRIBER LOG (permanent record) ──
       try {
-        const { sendVerificationEmail, sendOwnerNewSignupAlert } = require('./services/emailService');
-        
-        // Send verification email to the new user
-        await sendVerificationEmail(user.email, user.name, verifyToken);
-        
-        // Alert the owner at onpurposeearth@gmail.com
-        await sendOwnerNewSignupAlert({
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          location: user.location,
+        await Subscriber.create({
+          userId:    user.id,
+          name:      user.name,
+          email:     user.email,
+          role:      user.role,
+          location:  user.location,
+          source:    'web-registration',
+          userAgent: req.headers['user-agent'] || null,
+          ipAddress: req.headers['x-nf-client-connection-ip'] ||
+                     req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+                     req.ip || null,
+          signedUpAt: new Date(),
+          isVerified: false
         });
-      } catch (emailError) {
-        // Email failure must never block registration from completing
-        console.error('Post-registration email failed:', emailError.message);
+        console.log('[Subscriber] Saved permanently:', user.email);
+      } catch (subErr) {
+        // Log but never block registration
+        console.error('[Subscriber] Save failed:', subErr.message);
       }
 
-      console.log('User registered successfully:', { id: user.id, email: user.email, role: user.role });
-      
-      res.status(201).json({
-        success: true,
-        accessToken, 
-        refreshToken, 
-        user: { 
-          id: user.id, 
-          name: user.name, 
-          email: user.email, 
-          role: user.role,
-          isVerified: user.isVerified 
+      // ── SEND EMAILS (non-blocking) ──
+      const emailModels = { EmailLog };
+      setImmediate(async () => {
+        try {
+          const { sendVerificationEmail, sendOwnerNewSignupAlert } = require('./services/emailService');
+          await sendVerificationEmail(user.email, user.name, vToken, emailModels);
+          await sendOwnerNewSignupAlert({
+            id:       user.id,
+            name:     user.name,
+            email:    user.email,
+            role:     user.role,
+            location: user.location
+          }, emailModels);
+        } catch (emailErr) {
+          console.error('[Register] Email send failed:', emailErr.message);
         }
       });
+
+      // ── STRIPE CUSTOMER (for future payments) ──
+      // Create Stripe customer record so we can charge later
+      try {
+        if (stripe) {
+          const stripeCustomer = await stripe.customers.create({
+            email: user.email,
+            name:  user.name,
+            metadata: { userId: user.id, role: user.role }
+          });
+          await user.update({ stripeCustomerId: stripeCustomer.id });
+        }
+      } catch (stripeErr) {
+        // Non-fatal — user can still register without Stripe
+        console.error('[Stripe] Customer create failed:', stripeErr.message);
+      }
+
+      console.log('[Register] Success:', {
+        id: user.id, email: user.email, role: user.role
+      });
+
+      return res.status(201).json({
+        success: true,
+        accessToken,
+        refreshToken,
+        user: {
+          id:         user.id,
+          name:       user.name,
+          email:      user.email,
+          role:       user.role,
+          isVerified: user.isVerified,
+          location:   user.location
+        },
+        message: 'Account created! Check your email to verify.'
+      });
+
     } catch (error) {
-      console.error('Register error:', error);
+      console.error('[Register] Error:', error.name, error.message);
+
       if (error.name === 'SequelizeUniqueConstraintError') {
-        return res.status(400).json({ success: false, message: 'An account with this email already exists' });
+        return res.status(409).json({
+          success: false,
+          error: 'An account with this email already exists'
+        });
       }
       if (error.name === 'SequelizeValidationError') {
-        const messages = error.errors.map(err => err.message);
-        return res.status(400).json({ success: false, message: messages.join(', ') });
+        return res.status(400).json({
+          success: false,
+          error: error.errors.map(e => e.message).join(', ')
+        });
       }
-      res.status(500).json({ success: false, message: 'Registration failed', error: error.message });
+      return res.status(500).json({
+        success: false,
+        error: process.env.NODE_ENV === 'production'
+          ? 'Registration failed. Please try again.'
+          : error.message
+      });
     }
   }
 );
@@ -464,6 +589,13 @@ app.get('/api/auth/verify-email', async (req, res) => {
     if (!user) return res.status(400).json({ success: false, message: 'Invalid or expired token' });
 
     await user.update({ isVerified: true, verifyToken: null, verifyTokenExpiry: null });
+    
+    // Update subscriber verified status
+    await Subscriber.update(
+      { isVerified: true, verifiedAt: new Date() },
+      { where: { userId: user.id } }
+    );
+    
     res.json({ success: true, message: 'Email verified' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Verification failed' });
@@ -777,6 +909,124 @@ app.post('/api/payments/create-checkout',
     } catch (error) {
       console.error('Checkout error:', error);
       res.status(500).json({ success: false, message: 'Failed to create checkout' });
+    }
+  }
+);
+
+// ── Create Stripe Connect account for provider ──────────────
+app.post('/api/payments/connect/create',
+  authenticate,
+  requireRole('provider', 'admin'),
+  async (req, res) => {
+    try {
+      if (!stripe) {
+        return res.status(501).json({
+          success: false,
+          error: 'Stripe not configured'
+        });
+      }
+
+      const user = await User.findByPk(req.userId);
+      if (!user) return res.status(404).json({ success: false });
+
+      // If they already have a Stripe account, return onboarding link
+      if (user.stripeAccountId) {
+        const link = await stripe.accountLinks.create({
+          account: user.stripeAccountId,
+          refresh_url: `${process.env.FRONTEND_URL}/dashboard.html?stripe=refresh`,
+          return_url:  `${process.env.FRONTEND_URL}/dashboard.html?stripe=success`,
+          type: 'account_onboarding'
+        });
+        return res.json({ success: true, data: { url: link.url } });
+      }
+
+      // Create new Stripe Express account
+      const account = await stripe.accounts.create({
+        type:         'express',
+        email:        user.email,
+        display_name: user.name,
+        capabilities: {
+          card_payments:  { requested: true },
+          transfers:      { requested: true }
+        },
+        metadata: { userId: user.id }
+      });
+
+      await user.update({ stripeAccountId: account.id });
+
+      // Generate onboarding link
+      const link = await stripe.accountLinks.create({
+        account:     account.id,
+        refresh_url: `${process.env.FRONTEND_URL}/dashboard.html?stripe=refresh`,
+        return_url:  `${process.env.FRONTEND_URL}/dashboard.html?stripe=success`,
+        type:        'account_onboarding'
+      });
+
+      console.log('[Stripe Connect] Account created for:', user.email);
+      res.json({ success: true, data: { url: link.url, accountId: account.id } });
+
+    } catch (error) {
+      console.error('[Stripe Connect] Error:', error.message);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+);
+
+// ── Check Stripe Connect account status ──────────────────────
+app.get('/api/payments/connect/status',
+  authenticate,
+  requireRole('provider', 'admin'),
+  async (req, res) => {
+    try {
+      if (!stripe) return res.json({ success: true, data: { connected: false } });
+
+      const user = await User.findByPk(req.userId);
+      if (!user || !user.stripeAccountId) {
+        return res.json({ success: true, data: { connected: false, setup: false } });
+      }
+
+      const account = await stripe.accounts.retrieve(user.stripeAccountId);
+      const ready = account.details_submitted &&
+                    account.capabilities?.transfers === 'active';
+
+      res.json({
+        success: true,
+        data: {
+          connected:        true,
+          setup:            ready,
+          detailsSubmitted: account.details_submitted,
+          payoutsEnabled:   account.payouts_enabled,
+          accountId:        user.stripeAccountId
+        }
+      });
+    } catch (error) {
+      console.error('[Stripe Connect Status] Error:', error.message);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
+);
+
+// ── Admin: get all subscribers (for email campaigns) ─────────
+app.get('/api/admin/subscribers',
+  authenticate,
+  requireRole('admin'),
+  async (req, res) => {
+    try {
+      const { role, verified, limit = 100, offset = 0 } = req.query;
+      const where = {};
+      if (role)     where.role      = role;
+      if (verified) where.isVerified = verified === 'true';
+
+      const subscribers = await Subscriber.findAndCountAll({
+        where,
+        order: [['signedUpAt', 'DESC']],
+        limit: parseInt(limit),
+        offset: parseInt(offset)
+      });
+
+      res.json({ success: true, data: subscribers.rows, total: subscribers.count });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 );

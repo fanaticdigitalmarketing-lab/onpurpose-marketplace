@@ -2,12 +2,16 @@
 
 ## 🎯 Pre-Launch Validation - Complete Platform Deployment
 
-### **Phase 1: Database Schema Update** ⏳
+### **Phase 1: Database Schema Update** ⏳ IN PROGRESS
 - [ ] **Execute database schema updates in Neon Console**
-  - Upload `database-schema-update.sql` to Neon dashboard
-  - Create HostApplications, Experiences, HostAvailability tables
-  - Add sample NYC hosts data
-  - Verify all indexes and constraints
+  - Open Neon Console: https://console.neon.tech/
+  - Copy contents from `database-schema-update.sql` OR `database-schema-clean.sql`
+  - Paste into SQL Editor and execute
+  - Run `verify-database-schema.sql` to confirm success
+  - Expected: HostApplications, Experiences, HostAvailability tables created
+  - Expected: 5 sample NYC hosts inserted
+  - Expected: All indexes created successfully
+  - **Verification Guide**: See `PHASE_1_DATABASE_VERIFICATION.md`
 
 ### **Phase 2: GitHub Repository Update** 📁
 - [ ] **Upload all new files to GitHub repository**
