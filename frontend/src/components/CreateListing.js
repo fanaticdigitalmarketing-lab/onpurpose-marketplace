@@ -34,7 +34,7 @@ const CreateListing = () => {
     setLoading(true);
 
     try {
-      const response = await listingsAPI.create(formData);
+      await listingsAPI.create(formData);
       navigate('/listings');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create listing');
