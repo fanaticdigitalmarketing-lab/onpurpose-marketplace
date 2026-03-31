@@ -209,24 +209,47 @@ const emailService = {
 
   // Send owner alert for new signup
   sendOwnerNewSignupAlert: async (newUser) => {
+    const resend = getResend();
+    const emailHtml = base(`
+      <h2>New user just signed up</h2>
+      <div class="info-box">
+        <div style="margin-bottom:8px"><strong style="color:#1a2744">Name:</strong> <span style="color:#6b7a99">${newUser.name}</span></div>
+        <div style="margin-bottom:8px"><strong style="color:#1a2744">Email:</strong> <span style="color:#2563d4">${newUser.email}</span></div>
+        <div style="margin-bottom:8px"><strong style="color:#1a2744">Role:</strong> <span style="color:#6b7a99">${newUser.role}</span></div>
+        <div style="margin-bottom:8px"><strong style="color:#1a2744">Location:</strong> <span style="color:#6b7a99">${newUser.location || 'Not provided'}</span></div>
+        <div><strong style="color:#1a2744">Signed up:</strong> <span style="color:#6b7a99">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</span></div>
+      </div>
+      <a href="https://onpurpose.earth/dashboard" class="btn">View in dashboard</a>
+    `);
+    const subject = `New signup — ${newUser.name} (${newUser.role})`;
+
+    // Try verified domain first
     try {
-      const resend = getResend();
-      await resend.emails.send({
+      const { data, error } = await resend.emails.send({
         from: process.env.EMAIL_FROM || 'OnPurpose <noreply@onpurpose.earth>',
         to: 'onpurposeearth@gmail.com',
-        subject: `New signup — ${newUser.name} (${newUser.role})`,
-        html: base(`
-          <h2>New user just signed up</h2>
-          <div class="info-box">
-            <div style="margin-bottom:8px"><strong style="color:#1a2744">Name:</strong> <span style="color:#6b7a99">${newUser.name}</span></div>
-            <div style="margin-bottom:8px"><strong style="color:#1a2744">Email:</strong> <span style="color:#2563d4">${newUser.email}</span></div>
-            <div style="margin-bottom:8px"><strong style="color:#1a2744">Role:</strong> <span style="color:#6b7a99">${newUser.role}</span></div>
-            <div style="margin-bottom:8px"><strong style="color:#1a2744">Location:</strong> <span style="color:#6b7a99">${newUser.location || 'Not provided'}</span></div>
-            <div><strong style="color:#1a2744">Signed up:</strong> <span style="color:#6b7a99">${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })} ET</span></div>
-          </div>
-          <a href="https://onpurpose.earth/dashboard" class="btn">View in dashboard</a>
-        `)
+        subject,
+        html: emailHtml
       });
+      if (error && error.statusCode === 403) {
+        // Domain not verified yet — fall back to Resend test sender
+        console.log('Domain not verified yet, using Resend test sender...');
+        const fallback = await resend.emails.send({
+          from: 'OnPurpose <onboarding@resend.dev>',
+          to: process.env.RESEND_ACCOUNT_EMAIL || 'fanaticdigitalmarketing@gmail.com',
+          subject,
+          html: emailHtml
+        });
+        if (fallback.error) {
+          console.error('Fallback email error:', JSON.stringify(fallback.error));
+        } else {
+          console.log('Owner alert sent via fallback:', fallback.data?.id);
+        }
+      } else if (error) {
+        console.error('Owner alert email API error:', JSON.stringify(error));
+      } else {
+        console.log('Owner alert email sent:', data?.id);
+      }
     } catch (e) {
       console.error('Owner alert email failed:', e.message);
     }

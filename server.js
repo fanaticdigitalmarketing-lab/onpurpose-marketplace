@@ -259,8 +259,8 @@ app.use(cors({
   credentials: true,
 }));
 
-// Trust Netlify's CDN and proxy headers
-app.set('trust proxy', true);
+// Trust Railway's proxy (1 hop)
+app.set('trust proxy', 1);
 
 // Netlify passes the real client IP in x-nf-client-connection-ip
 // Use it for rate limiting so Netlify's CDN IPs don't get rate-limited
@@ -932,16 +932,6 @@ app.post('/api/availability/block',
 // ── checkin routes ──────────────────────────────
 app.use('/api/checkin', checkinRouter);
 
-// ── 404 handler ─────────────────────────────────
-app.use('/api/*', (req, res) => {
-  res.status(404).json({ success: false, message: 'API route not found' });
-});
-
-// ── Serve frontend for all non-API routes ────────
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
-});
-
 /* ═══════════════════ ADMIN ROUTES ═══════════════════ */
 
 app.get('/api/stats', authenticate, requireRole('admin'), async (req, res) => {
@@ -1008,6 +998,31 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), uptime: process.uptime() });
 });
 
+app.get('/debug/files', (_req, res) => {
+  const fs = require('fs');
+  const frontendPath = path.join(__dirname, 'frontend');
+  const rootFiles = fs.existsSync(__dirname) ? fs.readdirSync(__dirname) : ['ROOT NOT FOUND'];
+  const frontendExists = fs.existsSync(frontendPath);
+  const frontendFiles = frontendExists ? fs.readdirSync(frontendPath) : ['FRONTEND DIR NOT FOUND'];
+  res.json({ __dirname, frontendPath, frontendExists, rootFiles: rootFiles.slice(0, 30), frontendFiles });
+});
+
+// ── 404 handler ─────────────────────────────────
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ success: false, message: 'API route not found' });
+});
+
+// ── Serve frontend for all non-API routes ────────
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'frontend', 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      console.error('sendFile error:', err.message, 'path:', indexPath);
+      res.status(404).send('Frontend not found. Path: ' + indexPath);
+    }
+  });
+});
+
 /* ═══════════════════ ERROR HANDLER ═══════════════════ */
 
 app.use(securityMiddleware.handleError);
@@ -1039,6 +1054,8 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`OnPurpose server running on http://localhost:${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`RESEND_API_KEY: ${process.env.RESEND_API_KEY ? 'SET (' + process.env.RESEND_API_KEY.substring(0,6) + '...)' : 'NOT SET'}`);
+      console.log(`EMAIL_FROM: ${process.env.EMAIL_FROM || 'NOT SET'}`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
