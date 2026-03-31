@@ -16,15 +16,36 @@ const path = require('path');
 
 const auth = require('./middleware/auth');
 const { securityMiddleware, validationRules, validateRequest, sanitizeLikeQuery } = require('./middleware/security');
+const { body } = require('express-validator');
 const { rankServicesByTrust, updateProviderTrustScore } = require('./services/trustScore');
 const emailService = require('./services/emailService');
 const checkinRouter = require('./routes/checkin');
 
 /* ─────────────────── ENV VALIDATION ─────────────────── */
+if (!process.env.JWT_SECRET) {
+  console.error('═══════════════════════════════════════');
+  console.error('FATAL: JWT_SECRET is not set.');
+  console.error('Go to Railway → Variables and add it.');
+  console.error('Generate with:');
+  console.error('node -e "console.log(require(\'crypto\')');
+  console.error('         .randomBytes(64).toString(\'hex\'))"');
+  console.error('═══════════════════════════════════════');
+  process.exit(1);
+}
+if (!process.env.DATABASE_URL && process.env.NODE_ENV==='production') {
+  console.error('FATAL: DATABASE_URL is not set in production.');
+  process.exit(1);
+}
+console.log('[ENV] JWT_SECRET:', process.env.JWT_SECRET.length, 'chars ✓');
+console.log('[ENV] NODE_ENV:', process.env.NODE_ENV || 'development');
+
 const BCRYPT_PEPPER = process.env.BCRYPT_PEPPER || '';
 const BCRYPT_ROUNDS = 12;
 const PLATFORM_FEE_PERCENT = parseFloat(process.env.PLATFORM_FEE_PERCENT) || 15;
-const PORT = parseInt(process.env.PORT, 10) || 3000;
+const PORT     = parseInt(process.env.PORT, 10) || 3000;
+const PEPPER   = process.env.BCRYPT_PEPPER || '';
+const ROUNDS   = 12;
+const FEE_PCT  = parseFloat(process.env.PLATFORM_FEE_PERCENT) || 15;
 
 if (!process.env.RESEND_API_KEY) {
   console.warn('WARNING: RESEND_API_KEY is not set. Emails will not send.');
@@ -407,31 +428,43 @@ app.use((req, res, next) => {
 // Security middleware
 app.use(securityMiddleware.helmet);
 
-const origins = process.env.CORS_ORIGINS
-  ? process.env.CORS_ORIGINS.split(',').map(o => o.trim())
-  : ['http://localhost:3000', 'http://localhost:5173'];
-
-// Always allow Netlify deploy previews and production domain
-const netlifyOrigins = [
+const ALLOWED_ORIGINS = [
   'https://onpurpose.earth',
   'https://www.onpurpose.earth',
-  process.env.NETLIFY_URL,         // set automatically by Netlify
-  process.env.DEPLOY_PRIME_URL,    // Netlify deploy preview URL
+  'http://localhost:3000',
+  'http://localhost:5173',
+  ...(process.env.CORS_ORIGINS || '').split(',').map(o => o.trim()).filter(Boolean),
+  process.env.NETLIFY_URL,
+  process.env.DEPLOY_PRIME_URL,
 ].filter(Boolean);
-
-const allOrigins = [...new Set([...origins, ...netlifyOrigins])];
 
 app.use(cors({
   origin: (origin, cb) => {
-    // Allow no-origin (mobile apps, Postman, server-to-server)
     if (!origin) return cb(null, true);
-    // Allow Netlify deploy previews (*.netlify.app)
     if (origin.endsWith('.netlify.app')) return cb(null, true);
-    if (allOrigins.includes(origin)) return cb(null, true);
-    cb(new Error('CORS: origin not allowed'));
+    if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+    console.warn('[CORS BLOCKED]', origin);
+    return cb(new Error('CORS: ' + origin + ' not allowed'));
   },
   credentials: true,
+  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization',
+                   'X-Forwarded-Authorization','Stripe-Signature'],
 }));
+app.options('*', cors());
+
+// Forward Netlify auth header
+app.use((req, res, next) => {
+  const fwd = req.headers['x-forwarded-authorization'];
+  if (fwd && !req.headers['authorization']) {
+    req.headers['authorization'] = fwd;
+  }
+  const clientIP = req.headers['x-nf-client-connection-ip']
+    || req.headers['x-forwarded-for']?.split(',')[0]?.trim()
+    || req.ip;
+  if (clientIP) req.ip = clientIP;
+  next();
+});
 
 // Trust Railway's proxy (1 hop)
 app.set('trust proxy', 1);
@@ -476,24 +509,27 @@ const comparePassword = async (plain, hash) => {
 
 const { authenticate, optionalAuth, requireRole, generateTokens, verifyRefreshToken, hashToken, SENSITIVE_FIELDS } = auth;
 
-/* ═══════════════════ HEALTH CHECK ═══════════════════ */
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    time: new Date().toISOString(),
+    env: process.env.NODE_ENV || 'development'
+  });
+});
 
 app.get('/api/health', async (req, res) => {
   try {
     await sequelize.authenticate();
     res.json({
       status: 'healthy',
-      timestamp: new Date().toISOString(),
       database: 'connected',
-      environment: process.env.NODE_ENV || 'development',
-      version: '1.0.0'
+      time: new Date().toISOString()
     });
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({
       status: 'unhealthy',
-      timestamp: new Date().toISOString(),
       database: 'disconnected',
-      error: error.message
+      error: err.message
     });
   }
 });
@@ -502,12 +538,24 @@ app.get('/api/health', async (req, res) => {
 
 app.post('/api/auth/register',
   securityMiddleware.rateLimits.auth,
-  validationRules.register, validateRequest,
+  [
+    body('name').trim().notEmpty().withMessage('Name is required')
+      .isLength({ max: 100 }),
+    body('email').isEmail().normalizeEmail()
+      .withMessage('Valid email required'),
+    body('password').isLength({ min: 8 })
+      .withMessage('Password must be at least 8 characters'),
+    body('role').optional().isIn(['customer','provider'])
+      .withMessage('Role must be customer or provider'),
+    body('location').optional().trim().isLength({ max: 100 }),
+  ],
+  validateRequest,
   async (req, res) => {
     try {
-      const { name, email, password, role = 'customer', location } = req.body;
+      const { name, email, password,
+              role = 'customer', location } = req.body;
 
-      // Check duplicate
+      // 1 — Check for existing account
       const existing = await User.findOne({ where: { email } });
       if (existing) {
         return res.status(409).json({
@@ -516,87 +564,88 @@ app.post('/api/auth/register',
         });
       }
 
-      // Hash password
-      const PEPPER = process.env.BCRYPT_PEPPER || '';
-      const hashed = await bcrypt.hash(password + PEPPER, 12);
+      // 2 — Hash password with pepper
+      const hashed = await bcrypt.hash(password + PEPPER, ROUNDS);
 
-      // Generate email verification token
-      const vToken  = crypto.randomBytes(32).toString('hex');
-      const vExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+      // 3 — Generate email verification token
+      const vRaw    = crypto.randomBytes(32).toString('hex');
+      const vHashed = crypto.createHash('sha256')
+                            .update(vRaw).digest('hex');
+      const vExpiry = new Date(Date.now() + 24*60*60*1000);
 
-      // Create user
+      // 4 — Create user
       const user = await User.create({
         name, email, password: hashed,
         role, location: location || null,
-        verifyToken: crypto.createHash('sha256').update(vToken).digest('hex'),
+        verifyToken: vHashed,
         verifyTokenExpiry: vExpiry,
-        isVerified: false
+        isVerified: false,
+        isSuspended: false,
       });
 
-      // Generate auth tokens
+      // 5 — Generate JWT tokens
       const { accessToken, refreshToken } = generateTokens(user.id);
       await user.update({ refreshTokenHash: hashToken(refreshToken) });
 
-      // ── SAVE TO SUBSCRIBER LOG (permanent record) ──
+      // 6 — Save to Subscriber log (permanent — never deletes)
       try {
-        await Subscriber.create({
-          userId:    user.id,
-          name:      user.name,
-          email:     user.email,
-          role:      user.role,
-          location:  user.location,
-          source:    'web-registration',
-          userAgent: req.headers['user-agent'] || null,
-          ipAddress: req.headers['x-nf-client-connection-ip'] ||
-                     req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
-                     req.ip || null,
-          signedUpAt: new Date(),
-          isVerified: false
-        });
-        console.log('[Subscriber] Saved permanently:', user.email);
+        if (models.Subscriber) {
+          await models.Subscriber.create({
+            userId:    user.id,
+            name:      user.name,
+            email:     user.email,
+            role:      user.role,
+            location:  user.location,
+            userAgent: req.headers['user-agent'] || null,
+            ipAddress: req.ip || null,
+            signedUpAt: new Date(),
+          });
+        }
       } catch (subErr) {
-        // Log but never block registration
-        console.error('[Subscriber] Save failed:', subErr.message);
+        console.error('[Subscriber log failed]', subErr.message);
+        // Never block registration
       }
 
-      // ── SEND EMAILS (non-blocking) ──
-      const emailModels = { EmailLog };
+      // 7 — Send emails asynchronously (never block response)
       setImmediate(async () => {
         try {
-          const { sendVerificationEmail, sendOwnerNewSignupAlert } = require('./services/emailService');
-          await sendVerificationEmail(user.email, user.name, vToken, emailModels);
-          await sendOwnerNewSignupAlert({
-            id:       user.id,
-            name:     user.name,
-            email:    user.email,
-            role:     user.role,
-            location: user.location
-          }, emailModels);
+          const svc = require('./services/emailService');
+          if (svc.sendVerificationEmail) {
+            await svc.sendVerificationEmail(
+              user.email, user.name, vRaw, models
+            );
+          }
+          if (svc.sendOwnerNewSignupAlert) {
+            await svc.sendOwnerNewSignupAlert({
+              id: user.id, name: user.name,
+              email: user.email, role: user.role,
+              location: user.location,
+            }, models);
+          }
         } catch (emailErr) {
-          console.error('[Register] Email send failed:', emailErr.message);
+          console.error('[Email failed]', emailErr.message);
         }
       });
 
-      // ── STRIPE CUSTOMER (for future payments) ──
-      // Create Stripe customer record so we can charge later
-      try {
-        if (stripe) {
-          const stripeCustomer = await stripe.customers.create({
-            email: user.email,
-            name:  user.name,
-            metadata: { userId: user.id, role: user.role }
-          });
-          await user.update({ stripeCustomerId: stripeCustomer.id });
+      // 8 — Create Stripe customer (non-blocking)
+      setImmediate(async () => {
+        try {
+          if (stripe) {
+            const customer = await stripe.customers.create({
+              email: user.email,
+              name:  user.name,
+              metadata: { userId: user.id }
+            });
+            await user.update({ stripeCustomerId: customer.id });
+          }
+        } catch (stripeErr) {
+          console.error('[Stripe customer failed]', stripeErr.message);
         }
-      } catch (stripeErr) {
-        // Non-fatal — user can still register without Stripe
-        console.error('[Stripe] Customer create failed:', stripeErr.message);
-      }
-
-      console.log('[Register] Success:', {
-        id: user.id, email: user.email, role: user.role
       });
 
+      console.log('[Register] Success:', user.email, '|', user.role);
+
+      // 9 — Return success
       return res.status(201).json({
         success: true,
         accessToken,
@@ -606,32 +655,31 @@ app.post('/api/auth/register',
           name:       user.name,
           email:      user.email,
           role:       user.role,
-          isVerified: user.isVerified,
-          location:   user.location
+          isVerified: false,
+          location:   user.location || null,
         },
         message: 'Account created! Check your email to verify.'
       });
 
-    } catch (error) {
-      console.error('[Register] Error:', error.name, error.message);
-
-      if (error.name === 'SequelizeUniqueConstraintError') {
+    } catch (err) {
+      console.error('[Register error]', err.name, err.message);
+      if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(409).json({
           success: false,
           error: 'An account with this email already exists'
         });
       }
-      if (error.name === 'SequelizeValidationError') {
+      if (err.name === 'SequelizeValidationError') {
         return res.status(400).json({
           success: false,
-          error: error.errors.map(e => e.message).join(', ')
+          error: err.errors.map(e => e.message).join(', ')
         });
       }
       return res.status(500).json({
         success: false,
         error: process.env.NODE_ENV === 'production'
           ? 'Registration failed. Please try again.'
-          : error.message
+          : err.message
       });
     }
   }
@@ -639,30 +687,64 @@ app.post('/api/auth/register',
 
 app.post('/api/auth/login',
   securityMiddleware.rateLimits.auth,
-  validationRules.login, validateRequest,
+  [
+    body('email').isEmail().normalizeEmail(),
+    body('password').notEmpty().withMessage('Password required'),
+  ],
+  validateRequest,
   async (req, res) => {
     try {
       const { email, password } = req.body;
-      const user = await User.findOne({ where: { email } });
-      if (!user) return res.status(401).json({ success: false, message: 'Invalid credentials' });
-      if (user.isSuspended) return res.status(403).json({ success: false, message: 'Account suspended' });
 
-      const valid = await comparePassword(password, user.password);
-      if (!valid) return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      const user = await User.findOne({ where: { email } });
+      if (!user) {
+        // Vague message prevents email enumeration
+        return res.status(401).json({
+          success: false,
+          error: 'Invalid email or password'
+        });
+      }
+      if (user.isSuspended) {
+        return res.status(403).json({
+          success: false,
+          error: 'Account suspended. Contact support.',
+          code: 'SUSPENDED'
+        });
+      }
+
+      const valid = await bcrypt.compare(password + PEPPER, user.password);
+      if (!valid) {
+        return res.status(401).json({
+          success: false,
+          error: 'Invalid email or password'
+        });
+      }
 
       const { accessToken, refreshToken } = generateTokens(user.id);
       await user.update({ refreshTokenHash: hashToken(refreshToken) });
 
-      res.json({
+      console.log('[Login] Success:', user.email, '|', user.role);
+
+      return res.json({
         success: true,
-        data: {
-          user: { id: user.id, name: user.name, email: user.email, role: user.role },
-          accessToken, refreshToken
+        accessToken,
+        refreshToken,
+        user: {
+          id:         user.id,
+          name:       user.name,
+          email:      user.email,
+          role:       user.role,
+          isVerified: user.isVerified,
+          location:   user.location || null,
+          avatar:     user.avatar || null,
         }
       });
-    } catch (error) {
-      console.error('Login error:', error);
-      res.status(500).json({ success: false, message: 'Login failed' });
+    } catch (err) {
+      console.error('[Login error]', err.message);
+      res.status(500).json({
+        success: false,
+        error: 'Login failed. Please try again.'
+      });
     }
   }
 );
@@ -1519,9 +1601,6 @@ app.post('/api/early-access', async (req, res) => {
   }
 });
 
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString(), uptime: process.uptime() });
-});
 
 app.get('/debug/files', (_req, res) => {
   const fs = require('fs');
@@ -1552,43 +1631,24 @@ app.get('*', (req, res) => {
 
 app.use(securityMiddleware.handleError);
 
-/* ═══════════════════ START SERVER ═══════════════════ */
-
-const startServer = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Database connected.');
-
-    // Disable FK checks during sync for SQLite compatibility
-    if (sequelize.getDialect() === 'sqlite') {
-      await sequelize.query('PRAGMA foreign_keys = OFF;');
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-      await sequelize.sync({ alter: true });
-      console.log('Models synced (alter).');
-    } else {
-      await sequelize.sync();
-      console.log('Models synced.');
-
-      if (sequelize.getDialect() === 'sqlite') {
-        await sequelize.query('PRAGMA foreign_keys = ON;');
-      }
-    }
-
-  } catch (error) {
-    console.error('Failed to start server:', error);
+sequelize.sync({ force: false, alter: false })
+  .then(() => {
+    console.log('[DB] Database synced ✓');
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log('');
+      console.log('╔══════════════════════════════╗');
+      console.log('║  OnPurpose server running    ║');
+      console.log('║  Port: ' + PORT + '                  ║');
+      console.log('║  ENV:  ' + (process.env.NODE_ENV||'dev').padEnd(18) + '║');
+      console.log('╚══════════════════════════════╝');
+      console.log('[Health] http://localhost:' + PORT + '/health');
+    });
+  })
+  .catch(err => {
+    console.error('[STARTUP FAILED]', err.message);
+    console.error(err.stack);
     process.exit(1);
-  }
-
-  // Start the server
-  app.listen(PORT, () => {
-    console.log(`OnPurpose server running on http://localhost:${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`RESEND_API_KEY: ${process.env.RESEND_API_KEY ? 'SET (' + process.env.RESEND_API_KEY.substring(0,6) + '...)' : 'NOT SET'}`);
-    console.log(`EMAIL_FROM: ${process.env.EMAIL_FROM || 'NOT SET'}`);
   });
-};
 
 /* ═══════════════════ PROVIDER ANALYTICS ═══════════════════ */
 
@@ -6143,8 +6203,4 @@ function generateEnterpriseInsights(bookings, services, reviews) {
   ];
 }
 
-if (require.main === module) {
-  startServer();
-}
-
-module.exports = { app, sequelize, models };
+module.exports = app;

@@ -1,57 +1,46 @@
-# ⚠️ LOCKED CONFIG — DO NOT CHANGE OR DELETE THIS FILE ⚠️
-# Registration and all API calls depend on these proxy rules.
-# Railway backend: onpurpose-backend-clean-production.up.railway.app
-# Last verified working: Mar 31 2026
-
 [build]
   publish = "frontend"
-  command = "echo 'No build step needed'"
-  functions = "no-functions"
+  command = "echo 'static site'"
 
-[build.environment]
-  NODE_VERSION = "18"
-
-# ── Proxy ALL /api/* calls to Railway backend ──
 [[redirects]]
-  from   = "/api/*"
-  to     = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
+  from = "/api/*"
+  to   = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
+  status = 200
+  force  = true
+  [redirects.headers]
+    Authorization     = ":request_Authorization"
+    X-Forwarded-For   = ":client-ip"
+    Content-Type      = ":request_Content-Type"
+
+[[redirects]]
+  from = "/health"
+  to   = "https://onpurpose-backend-clean-production.up.railway.app/health"
   status = 200
   force  = true
 
-# ── Proxy health check ──
 [[redirects]]
-  from   = "/health"
-  to     = "https://onpurpose-backend-clean-production.up.railway.app/health"
-  status = 200
-  force  = true
-
-# ── Proxy Stripe webhook ──
-[[redirects]]
-  from   = "/api/webhooks/stripe"
-  to     = "https://onpurpose-backend-clean-production.up.railway.app/api/webhooks/stripe"
-  status = 200
-  force  = true
-
-# ── SPA/MPA fallback — fixes 404 on direct URL visits ──
-[[redirects]]
-  from   = "/dashboard.html"
-  to     = "/dashboard.html"
+  from = "/dashboard.html"
+  to   = "/dashboard.html"
   status = 200
 
 [[redirects]]
-  from   = "/provider.html"
-  to     = "/provider.html"
+  from = "/services.html"
+  to   = "/services.html"
   status = 200
 
 [[redirects]]
-  from   = "/contact.html"
-  to     = "/contact.html"
+  from = "/provider.html"
+  to   = "/provider.html"
   status = 200
 
-# Catch-all fallback
 [[redirects]]
-  from   = "/*"
-  to     = "/index.html"
+  from = "/contact.html"
+  to   = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
   status = 200
 
 # ── Security headers applied to every response ──

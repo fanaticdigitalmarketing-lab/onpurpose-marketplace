@@ -1,13 +1,6 @@
-# ⚠️ LOCKED CONFIG — DO NOT CHANGE OR DELETE THIS FILE ⚠️
-# Server start command and health check path are critical.
-# Last verified working: Mar 31 2026
-
-[build]
-builder = "nixpacks"
-
 [deploy]
-startCommand = "node server.js"
+startCommand = "npm start"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 10
+restartPolicyMaxRetries = 3
