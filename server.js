@@ -72,7 +72,9 @@ const User = sequelize.define('User', {
   stripeAccountId: { type: DataTypes.STRING },
   stripeCustomerId: { type: DataTypes.STRING },
   trustScore: { type: DataTypes.DECIMAL(5, 2), defaultValue: 0 },
-  verifiedCredential: { type: DataTypes.BOOLEAN, defaultValue: false }
+  verifiedCredential: { type: DataTypes.BOOLEAN, defaultValue: false },
+  phone: { type: DataTypes.STRING },
+  cashApp: { type: DataTypes.STRING }
 });
 
 const Service = sequelize.define('Service', {
@@ -1385,7 +1387,7 @@ app.patch('/api/users/profile',
     try {
       const user = await User.findByPk(req.userId);
       if (!user) return res.status(404).json({ success: false, message: 'User not found' });
-      const allowed = ['name', 'bio', 'location', 'avatar'];
+      const allowed = ['name', 'bio', 'location', 'avatar', 'phone', 'cashApp'];
       const updates = {};
       allowed.forEach(f => { if (req.body[f] !== undefined) updates[f] = req.body[f]; });
       await user.update(updates);

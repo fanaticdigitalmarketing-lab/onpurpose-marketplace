@@ -4201,17 +4201,114 @@
       <!-- PROFILE PAGE -->
       <div id="page-profile" class="page">
         <h1 class="page-title">Profile</h1>
-        <p class="page-sub">Update your personal information</p>
-        <div class="form-card">
-          <div class="form-group"><label>Name</label><input type="text" id="profileName"></div>
-          <div class="form-group"><label>Bio</label><textarea id="profileBio" placeholder="Tell people about yourself..."></textarea></div>
-          <div class="form-group"><label>Location</label><input type="text" id="profileLocation" placeholder="City, State"></div>
-          <button class="btn btn-primary btn-pill" style="width:100%;margin-top:8px" onclick="saveProfile()">Save Changes</button>
-          <div class="danger-zone">
-            <h3>Danger Zone</h3>
-            <p>Permanently delete your account and all associated data. This cannot be undone.</p>
-            <button class="btn btn-danger btn-sm btn-pill" onclick="deleteAccount()">Delete My Account</button>
+        <p class="page-sub">Update your personal information and payment preferences</p>
+        
+        <!-- Profile View Mode -->
+        <div id="profileView" class="form-card" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px">
+            <div style="flex:1">
+              <h2 style="font-family:var(--font-display);font-size:1.5rem;color:var(--navy);margin-bottom:8px" id="viewName">Loading...</h2>
+              <p style="color:var(--mut);margin-bottom:4px" id="viewLocation">Loading...</p>
+              <p style="color:var(--txt);line-height:1.6" id="viewBio">Loading...</p>
+            </div>
+            <button class="btn btn-primary btn-sm btn-pill" onclick="editProfile()">
+              <span>✏️</span> Edit Profile
+            </button>
           </div>
+          
+          <!-- Contact Information -->
+          <div style="background:var(--off);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+            <h3 style="font-size:1rem;margin-bottom:12px">Contact Information</h3>
+            <div style="display:grid;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:16px">📧</span>
+                <span id="viewEmail">Loading...</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px" id="viewPhoneContainer">
+                <span style="font-size:16px">📱</span>
+                <span id="viewPhone">Not provided</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Cash App Pay Information -->
+          <div style="background:#f0fdf4;border:1px solid rgba(34,197,94,0.2);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+            <h3 style="font-size:1rem;color:#16a34a;margin-bottom:12px">💰 Cash App Pay</h3>
+            <div id="viewCashApp" style="display:grid;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:16px">💵</span>
+                <span id="viewCashAppTag">Not provided</span>
+              </div>
+              <p style="font-size:12px;color:#6b7a99;margin-top:8px">
+                Customers can pay you directly via Cash App using your $cashtag
+              </p>
+            </div>
+          </div>
+          
+          <!-- Booking Actions -->
+          <div style="background:var(--blue-bg);border-radius:var(--radius);padding:16px">
+            <h3 style="font-size:1rem;margin-bottom:12px">Quick Actions</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-primary btn-sm btn-pill" onclick="bookFromProfile()">
+                <span>📅</span> Book Appointment
+              </button>
+              <button class="btn btn-outline btn-sm btn-pill" onclick="emailFromProfile()">
+                <span>📧</span> Send Email
+              </button>
+              <button class="btn btn-outline btn-sm btn-pill" onclick="callFromProfile()">
+                <span>📱</span> Call
+              </button>
+              <button class="btn btn-success btn-sm btn-pill" onclick="payViaCashApp()">
+                <span>💵</span> Pay via Cash App
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Profile Edit Mode -->
+        <div id="profileEdit" class="form-card">
+          <h3 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:16px">Edit Profile</h3>
+          
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="profileName" placeholder="Your name">
+          </div>
+          
+          <div class="form-group">
+            <label>Bio</label>
+            <textarea id="profileBio" placeholder="Tell people about yourself..." rows="3"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="profileLocation" placeholder="City, State">
+          </div>
+          
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="profilePhone" placeholder="+1 (555) 123-4567">
+          </div>
+          
+          <div class="form-group">
+            <label>Cash App $Cashtag</label>
+            <input type="text" id="profileCashApp" placeholder="$yourcashtag">
+            <small style="color:var(--mut);font-size:12px">Enter your Cash App $cashtag to receive direct payments</small>
+          </div>
+          
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-primary btn-pill" style="flex:1" onclick="saveProfile()">
+              💾 Save Changes
+            </button>
+            <button class="btn btn-outline btn-pill" onclick="cancelEditProfile()">
+              Cancel
+            </button>
+          </div>
+        </div>
+        
+        <div class="danger-zone">
+          <h3>Danger Zone</h3>
+          <p>Permanently delete your account and all associated data. This cannot be undone.</p>
+          <button class="btn btn-danger btn-sm btn-pill" onclick="deleteAccount()">Delete My Account</button>
         </div>
       </div>
 
@@ -4247,7 +4344,60 @@
       const opts={method:method||'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+accessToken}};
       if(body)opts.body=JSON.stringify(body);
       const r=await fetch(API+path,opts);
+      
+      // Handle token expired
+      if(r.status===401){
+        const errorData = await r.json();
+        if(errorData.code === 'TOKEN_EXPIRED'){
+          // Try to refresh token
+          const refreshed = await refreshAccessToken();
+          if(refreshed){
+            // Retry with new token
+            opts.headers.Authorization='Bearer '+accessToken;
+            const retryR=await fetch(API+path,opts);
+            return retryR.json();
+          } else {
+            // Redirect to login if refresh fails
+            localStorage.removeItem('op_token');
+            localStorage.removeItem('op_user');
+            window.location.href='/';
+            return;
+          }
+        }
+      }
+      
       return r.json();
+    }
+    
+    // Refresh access token
+    async function refreshAccessToken(){
+      try{
+        const refreshToken=localStorage.getItem('op_refresh');
+        if(!refreshToken) return false;
+        
+        const r=await fetch(API+'/api/auth/refresh',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({refreshToken})
+        });
+        
+        if(r.ok){
+          const data=await r.json();
+          if(data.success){
+            localStorage.setItem('op_token',data.accessToken);
+            accessToken=data.accessToken;
+            return true;
+          }
+        }
+      }catch(e){
+        console.error('Token refresh failed:', e);
+      }
+      
+      // Clear tokens and redirect to login
+      localStorage.removeItem('op_token');
+      localStorage.removeItem('op_refresh');
+      localStorage.removeItem('op_user');
+      return false;
     }
 
     /* ===== NAV / SIDEBAR ===== */
@@ -4571,22 +4721,104 @@
 
     /* ===== PROFILE ===== */
     function loadProfile(){
+      // Load edit form fields
       document.getElementById('profileName').value=currentUser.name||'';
       document.getElementById('profileBio').value=currentUser.bio||'';
       document.getElementById('profileLocation').value=currentUser.location||'';
+      document.getElementById('profilePhone').value=currentUser.phone||'';
+      document.getElementById('profileCashApp').value=currentUser.cashApp||'';
+      
+      // Update view mode
+      updateProfileView();
+      
+      // Show view mode by default
+      showProfileView();
     }
+    
+    function updateProfileView(){
+      document.getElementById('viewName').textContent=currentUser.name||'No name provided';
+      document.getElementById('viewLocation').textContent=currentUser.location||'No location provided';
+      document.getElementById('viewBio').textContent=currentUser.bio||'No bio provided';
+      document.getElementById('viewEmail').textContent=currentUser.email||'No email provided';
+      document.getElementById('viewPhone').textContent=currentUser.phone||'Not provided';
+      document.getElementById('viewCashAppTag').textContent=currentUser.cashApp||'Not provided';
+      
+      // Show/hide phone container based on availability
+      const phoneContainer = document.getElementById('viewPhoneContainer');
+      if (currentUser.phone) {
+        phoneContainer.style.display = 'flex';
+      } else {
+        phoneContainer.style.display = 'none';
+      }
+    }
+    
+    function showProfileView(){
+      document.getElementById('profileView').style.display='block';
+      document.getElementById('profileEdit').style.display='none';
+    }
+    
+    function editProfile(){
+      document.getElementById('profileView').style.display='none';
+      document.getElementById('profileEdit').style.display='block';
+    }
+    
+    function cancelEditProfile(){
+      showProfileView();
+    }
+    
     async function saveProfile(){
       const name=document.getElementById('profileName').value;
       const bio=document.getElementById('profileBio').value;
       const location=document.getElementById('profileLocation').value;
+      const phone=document.getElementById('profilePhone').value;
+      const cashApp=document.getElementById('profileCashApp').value;
+      
       try{
-        const r=await api('/api/users/profile','PATCH',{name,bio,location});
+        const r=await api('/api/users/profile','PATCH',{name,bio,location,phone,cashApp});
         if(r.success){
-          currentUser={...currentUser,name,bio,location};
+          currentUser={...currentUser,name,bio,location,phone,cashApp};
           localStorage.setItem('op_user',JSON.stringify(currentUser));
-          initSidebar();toast('Profile updated!','success');
+          initSidebar();
+          updateProfileView();
+          showProfileView();
+          toast('Profile updated successfully!','success');
         }else toast(r.message||'Failed','error');
-      }catch(e){toast('Network error','error');}
+      }catch(e){
+        console.error('Profile save error:', e);
+        toast('Network error - please try again','error');
+      }
+    }
+    
+    // Profile action functions
+    function bookFromProfile(){
+      // Redirect to services page with pre-filled contact info
+      window.location.href='/services.html?provider=' + currentUser.id;
+    }
+    
+    function emailFromProfile(){
+      if (currentUser.email) {
+        window.location.href='mailto:' + currentUser.email;
+      } else {
+        toast('No email address provided','info');
+      }
+    }
+    
+    function callFromProfile(){
+      if (currentUser.phone) {
+        window.location.href='tel:' + currentUser.phone;
+      } else {
+        toast('No phone number provided','info');
+      }
+    }
+    
+    function payViaCashApp(){
+      if (currentUser.cashApp) {
+        // Open Cash App with the user's cashtag
+        const cashAppUrl = 'https://cash.app/' + currentUser.cashApp.replace('$', '');
+        window.open(cashAppUrl, '_blank');
+      } else {
+        toast('No Cash App cashtag provided','info');
+      }
     }
     async function deleteAccount(){
       if(!confirm('Are you sure? This permanently deletes your account and all data.'))return;
