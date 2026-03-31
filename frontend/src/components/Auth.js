@@ -6,7 +6,7 @@ import './Auth.css';
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: ''
   });
@@ -59,12 +59,12 @@ const Auth = () => {
           <form onSubmit={handleSubmit} className="auth-form">
             {!isLogin && (
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="name">Name</label>
                 <input
                   type="text"
-                  id="username"
-                  name="username"
-                  value={formData.username}
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required={!isLogin}
                 />
