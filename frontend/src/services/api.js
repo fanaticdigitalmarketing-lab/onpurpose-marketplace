@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// In production, use relative /api path so Netlify proxies to Railway backend
+// Uses relative /api path to hit Netlify Functions
 const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
 
 const api = axios.create({
