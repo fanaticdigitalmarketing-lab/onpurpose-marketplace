@@ -352,6 +352,167 @@
       });
     });
 
+    // ── Payment Choice Modal ─────────────────────────────────────
+    function showPaymentModal(bookingId, serviceName, amount) {
+      // Remove existing modal if any
+      const existing = document.getElementById('pay-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'pay-modal';
+      modal.style.cssText = `
+        position:fixed;inset:0;z-index:300;
+        background:rgba(26,39,68,0.6);backdrop-filter:blur(6px);
+        display:flex;align-items:center;justify-content:center;padding:1rem`;
+
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:22px;width:100%;max-width:420px;
+                    box-shadow:0 8px 40px rgba(37,99,212,0.18);
+                    animation:mdin .2s ease;overflow:hidden">
+
+          <!-- Header -->
+          <div style="padding:1.25rem 1.75rem;border-bottom:1px solid rgba(26,39,68,0.10);
+                      display:flex;justify-content:space-between;align-items:center">
+            <div style="display:flex;align-items:center;gap:10px">
+              <img src="/assets/logo.png" alt="OnPurpose"
+                   style="width:32px;height:32px;object-fit:contain;border-radius:8px"/>
+              <div>
+                <div style="font-family:'Playfair Display',serif;font-weight:700;
+                            font-size:17px;color:#1a2744">Complete Payment</div>
+                <div style="font-size:11px;color:#2563d4;margin-top:1px">
+                  Secure checkout powered by Stripe</div>
+              </div>
+            </div>
+            <button onclick="document.getElementById('pay-modal').remove()"
+                    style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(26,39,68,0.12);
+                           background:#f7f8fc;cursor:pointer;font-size:16px;color:#6b7a99;
+                           display:flex;align-items:center;justify-content:center">×</button>
+          </div>
+
+          <!-- Amount summary -->
+          <div style="padding:1.5rem 1.75rem">
+            <div style="background:#f7f8fc;border:1px solid rgba(26,39,68,0.10);
+                        border-radius:14px;padding:1.1rem;margin-bottom:1.25rem">
+              <div style="font-size:13px;color:#6b7a99;margin-bottom:4px">
+                Booking for
+              </div>
+              <div style="font-family:'Playfair Display',serif;font-weight:700;
+                          font-size:16px;color:#1a2744;margin-bottom:8px">
+                ${serviceName || 'Service'}
+              </div>
+              <div style="display:flex;justify-content:space-between;
+                          align-items:center;padding-top:8px;
+                          border-top:1px solid rgba(26,39,68,0.08)">
+                <span style="font-size:13px;color:#6b7a99">Total due</span>
+                <span style="font-family:'Playfair Display',serif;font-size:22px;
+                             font-weight:700;color:#2563d4">
+                  $${parseFloat(amount || 0).toFixed(2)}
+                </span>
+              </div>
+            </div>
+
+            <!-- Payment options info -->
+            <div style="margin-bottom:1.25rem">
+              <div style="font-size:12px;color:#6b7a99;font-weight:500;
+                          margin-bottom:10px;text-transform:uppercase;
+                          letter-spacing:.05em">
+                Accepted payment methods
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <!-- Credit / Debit card -->
+                <div style="display:flex;align-items:center;gap:6px;
+                            background:#f7f8fc;border:1px solid rgba(26,39,68,0.10);
+                            border-radius:100px;padding:5px 12px;font-size:12px;
+                            color:#1a2744;font-weight:500">
+                  <span>💳</span> Credit &amp; Debit Card
+                </div>
+                <!-- Cash App Pay -->
+                <div style="display:flex;align-items:center;gap:6px;
+                            background:#f0fdf4;border:1px solid rgba(34,197,94,0.3);
+                            border-radius:100px;padding:5px 12px;font-size:12px;
+                            color:#16a34a;font-weight:600">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#16a34a">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+                  </svg>
+                  Cash App Pay
+                </div>
+              </div>
+              <p style="font-size:12px;color:#6b7a99;margin-top:10px;line-height:1.6">
+                You'll choose your payment method on the next page.
+                Cash App Pay lets you pay directly from your Cash App balance
+                or linked bank account — no card needed.
+              </p>
+            </div>
+
+            <!-- Pay button -->
+            <button id="pay-confirm-btn"
+                    onclick="proceedToCheckout('${bookingId}')"
+                    style="width:100%;background:#2563d4;color:#fff;border:none;
+                           padding:14px;border-radius:100px;font-size:15px;
+                           font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;
+                           transition:all .2s;box-shadow:0 2px 8px rgba(37,99,212,0.3)">
+              Continue to Secure Checkout →
+            </button>
+
+            <div style="text-align:center;margin-top:10px">
+              <div style="display:flex;align-items:center;justify-content:center;
+                          gap:5px;font-size:11px;color:#6b7a99">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                     stroke="#6b7a99" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                Secured by Stripe · PCI compliant · 256-bit SSL
+              </div>
+            </div>
+          </div>
+        </div>`;
+
+      document.body.appendChild(modal);
+
+      // Close on backdrop click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.remove();
+      });
+    }
+
+    // ── Proceed to Stripe checkout ───────────────────────────────
+    async function proceedToCheckout(bookingId) {
+      const btn = document.getElementById('pay-confirm-btn');
+      if (btn) {
+        btn.textContent = 'Redirecting to checkout...';
+        btn.disabled = true;
+      }
+      try {
+        const token = localStorage.getItem('op_token');
+        const d = await fetch(`${API_BASE}/api/payments/create-checkout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ bookingId })
+        }).then(res => res.json());
+
+        if (d.success && d.data?.url) {
+          window.location.href = d.data.url;
+        } else {
+          showError(d.error || 'Payment setup failed. Please try again.');
+          if (btn) {
+            btn.textContent = 'Continue to Secure Checkout →';
+            btn.disabled = false;
+          }
+        }
+      } catch (err) {
+        console.error('[Pay]', err);
+        showError('Cannot reach payment server. Please try again.');
+        if (btn) {
+          btn.textContent = 'Continue to Secure Checkout →';
+          btn.disabled = false;
+        }
+      }
+    }
+
     // Handle booking submission
     document.getElementById('paymentForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -359,9 +520,12 @@
       if (!serviceData) return;
       
       const submitBtn = e.target.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Processing...';
-      
+      const originalText = submitBtn?.textContent || 'Complete Booking & Pay';
+      if (submitBtn) { 
+        submitBtn.textContent = 'Creating booking...'; 
+        submitBtn.disabled = true; 
+      }
+
       try {
         // Get user token
         const token = localStorage.getItem('op_token');
@@ -369,8 +533,8 @@
           throw new Error('Please sign in to book this service');
         }
         
-        // Create payment intent
-        const paymentResponse = await fetch(`${API_BASE}/api/payments/create-payment-intent`, {
+        // Create booking first
+        const bookingResponse = await fetch(`${API_BASE}/api/bookings`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -378,71 +542,38 @@
           },
           body: JSON.stringify({
             serviceId: serviceId,
-            amount: serviceData.price * 100, // Convert to cents
-            currency: 'usd'
+            date: document.getElementById('bookingDate').value,
+            time: document.getElementById('bookingTime').value,
+            notes: document.getElementById('bookingNotes').value
           })
         });
-        
-        const paymentData = await paymentResponse.json();
-        
-        if (!paymentData.success) {
-          throw new Error(paymentData.message || 'Payment setup failed');
+
+        const bookingData = await bookingResponse.json();
+
+        if (bookingData.success) {
+          // Show payment choice
+          const booking = bookingData.data;
+          showPaymentModal(
+            booking.id,
+            serviceData.title,
+            booking.totalAmount
+          );
+
+        } else {
+          throw new Error(bookingData.message || bookingData.errors?.[0]?.message || 'Booking failed');
         }
-        
-        // Confirm payment with Stripe
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-          paymentData.clientSecret,
-          {
-            payment_method: {
-              card: cardElement,
-              billing_details: {
-                name: document.getElementById('cardName').value,
-                email: document.getElementById('cardEmail').value
-              }
-            }
-          }
-        );
-        
-        if (error) {
-          throw new Error(error.message);
+      } catch (err) {
+        console.error('Booking error:', err);
+        if (err.isNetworkError) {
+          showError('Cannot reach server. Please try again.');
+        } else {
+          showError('Booking failed. Please try again.');
         }
-        
-        if (paymentIntent.status === 'succeeded') {
-          // Create booking
-          const bookingResponse = await fetch(`${API_BASE}/api/bookings`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              serviceId: serviceId,
-              date: document.getElementById('bookingDate').value,
-              time: document.getElementById('bookingTime').value,
-              notes: document.getElementById('bookingNotes').value,
-              paymentIntentId: paymentIntent.id
-            })
-          });
-          
-          const bookingData = await bookingResponse.json();
-          
-          if (bookingData.success) {
-            showSuccess('Booking confirmed! You will receive a confirmation email.');
-            // Redirect to dashboard after delay
-            setTimeout(() => {
-              window.location.href = '/dashboard.html';
-            }, 3000);
-          } else {
-            throw new Error(bookingData.message || 'Booking failed');
-          }
-        }
-        
-      } catch (error) {
-        console.error('Payment error:', error);
-        showError(error.message);
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = `Complete Booking & Pay $${serviceData.price}`;
+        if (submitBtn) { 
+          submitBtn.textContent = originalText; 
+          submitBtn.disabled = false; 
+        }
       }
     });
 

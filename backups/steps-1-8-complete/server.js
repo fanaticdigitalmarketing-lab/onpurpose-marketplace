@@ -300,90 +300,14 @@ app.post('/api/webhooks/stripe',
     try {
       if (event.type === 'checkout.session.completed') {
         const session = event.data.object;
-
-        // Find the booking
-        const booking = await Booking.findOne({
-          where: { stripeSessionId: session.id },
-          include: [{
-            model: Service,
-            as: 'service',
-            include: [{ model: User, as: 'provider' }]
-          }, {
-            model: User,
-            as: 'customer'
-          }]
-        });
-
+        const booking = await Booking.findOne({ where: { stripeSessionId: session.id } });
         if (booking) {
-          // Update payment status
           await booking.update({
-            paymentStatus:         'paid',
-            stripePaymentIntentId: session.payment_intent,
-            status: booking.status === 'pending' ? 'confirmed' : booking.status,
-          });
-
-          // Log which payment method was used
-          const paymentMethod = session.payment_method_types?.[0] || 'card';
-          console.log(`[Webhook] Payment confirmed via ${paymentMethod}:`,
-            booking.id, '— $' + parseFloat(booking.totalAmount).toFixed(2)
-          );
-
-          // Send confirmation emails (non-blocking)
-          setImmediate(async () => {
-            try {
-              const emailService = require('./services/emailService');
-              const emailModels = { EmailLog };
-
-              // Email customer
-              if (booking.customer) {
-                await emailService.sendBookingConfirmation(
-                  booking.customer.email,
-                  booking.customer.name,
-                  booking,
-                  booking.service,
-                  emailModels
-                );
-              }
-
-              // Email provider
-              if (booking.service?.provider) {
-                await emailService.sendNewBookingNotificationToProvider(
-                  booking.service.provider.email,
-                  {
-                    service:  booking.service,
-                    customer: booking.customer || { name: 'A customer' },
-                    booking
-                  },
-                  emailModels
-                );
-              }
-            } catch (emailErr) {
-              console.error('[Webhook] Email error:', emailErr.message);
-            }
+            paymentStatus: 'paid',
+            stripePaymentIntentId: session.payment_intent
           });
         }
       }
-
-      // Handle failed payments
-      if (event.type === 'checkout.session.expired') {
-        const session = event.data.object;
-        const booking = await Booking.findOne({
-          where: { stripeSessionId: session.id }
-        });
-        if (booking && booking.paymentStatus === 'pending') {
-          console.log('[Webhook] Session expired for booking:', booking.id);
-          // Do NOT cancel the booking — just log it
-          // User can try to pay again from dashboard
-        }
-      }
-
-      if (event.type === 'payment_intent.payment_failed') {
-        const intent = event.data.object;
-        console.log('[Webhook] Payment failed:', intent.id,
-          '—', intent.last_payment_error?.message
-        );
-      }
-
       res.json({ received: true });
     } catch (err) {
       console.error('Webhook handler error:', err);
@@ -997,101 +921,30 @@ app.post('/api/payments/create-checkout',
       if (!stripe) return res.status(501).json({ success: false, message: 'Stripe not configured' });
       const { bookingId } = req.body;
       const booking = await Booking.findByPk(bookingId, {
-        include: [{
-          model: Service, 
-          as: 'service',
-          include: [{ model: User, as: 'provider' }]
-        }]
+        include: [{ model: Service, as: 'service' }]
       });
       if (!booking) return res.status(404).json({ success: false, message: 'Booking not found' });
       if (booking.userId !== req.userId) return res.status(403).json({ success: false, message: 'Not authorized' });
       if (booking.paymentStatus === 'paid') return res.status(400).json({ success: false, message: 'Already paid' });
 
-      // ── Build customer data ────────────────────
-      const user = await User.findByPk(req.userId,
-        { attributes: ['id','name','email','stripeCustomerId'] }
-      );
-
-      // ── Create Stripe Checkout Session ─────────────────
       const session = await stripe.checkout.sessions.create({
-
-        // PAYMENT METHODS — card + Cash App Pay
-        // Cash App Pay only works for USD payments
-        // which is perfect for OnPurpose
-        payment_method_types: ['card', 'cashapp'],
-
-        // Customer info
-        customer_email: user?.email || undefined,
-        ...(user?.stripeCustomerId
-          ? { customer: user.stripeCustomerId }
-          : {}),
-
-        // What they are paying for
+        payment_method_types: ['card'],
         line_items: [{
           price_data: {
             currency: 'usd',
-            product_data: {
-              name: booking.service.title,
-              description: `Session with ${
-                booking.service?.provider?.name || 'your provider'
-              } on ${booking.date} at ${
-                (booking.time || '').substring(0, 5)
-              }`,
-              images: [],
-            },
-            unit_amount: Math.round(
-              parseFloat(booking.totalAmount) * 100
-            ),
+            product_data: { name: booking.service.title, description: `Booking on ${booking.date} at ${booking.time}` },
+            unit_amount: Math.round(parseFloat(booking.totalAmount) * 100)
           },
-          quantity: 1,
+          quantity: 1
         }],
-
         mode: 'payment',
-
-        // Where to send them after payment
-        success_url: `${
-          process.env.FRONTEND_URL || 'https://onpurpose.earth'
-        }/dashboard.html?payment=success&booking=${booking.id}`,
-
-        cancel_url: `${
-          process.env.FRONTEND_URL || 'https://onpurpose.earth'
-        }/dashboard.html?payment=cancelled&booking=${booking.id}`,
-
-        // Store booking ID so webhook can find it
-        metadata: {
-          bookingId:  booking.id,
-          userId:     req.userId,
-          serviceId:  booking.serviceId,
-        },
-
-        // Expire session after 30 minutes
-        expires_at: Math.floor(Date.now() / 1000) + (30 * 60),
-
-        // Show order summary on Stripe checkout page
-        submit_type: 'pay',
-        billing_address_collection: 'auto',
-
-        // Custom text shown on the Stripe checkout page
-        custom_text: {
-          submit: {
-            message: `OnPurpose — Book People, Not Places. 
-Your booking will be confirmed instantly after payment.`
-          }
-        }
+        success_url: `${process.env.FRONTEND_URL}/dashboard.html?payment=success&booking=${booking.id}`,
+        cancel_url: `${process.env.FRONTEND_URL}/dashboard.html?payment=cancelled`,
+        metadata: { bookingId: booking.id }
       });
 
       await booking.update({ stripeSessionId: session.id });
-
-      res.json({
-        success: true,
-        data: {
-          sessionId:   session.id,
-          url:         session.url,
-          expiresAt:   session.expires_at,
-          // Return both for flexibility
-          checkoutUrl: session.url,
-        }
-      });
+      res.json({ success: true, data: { sessionId: session.id, url: session.url } });
     } catch (error) {
       console.error('Checkout error:', error);
       res.status(500).json({ success: false, message: 'Failed to create checkout' });
