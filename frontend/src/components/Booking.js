@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { listingsAPI, bookingsAPI } from '../services/api';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,22 +16,22 @@ const Booking = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/auth');
-      return;
-    }
-    fetchListing();
-  }, [listingId, user, navigate]);
-
-  const fetchListing = async () => {
+  const fetchListing = useCallback(async () => {
     try {
       const response = await listingsAPI.getById(listingId);
       setListing(response.data);
     } catch (err) {
       setError('Listing not found');
     }
-  };
+  }, [listingId]);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    fetchListing();
+  }, [listingId, user, navigate, fetchListing]);
 
   const handleChange = (e) => {
     setFormData({
@@ -46,7 +46,7 @@ const Booking = () => {
     setLoading(true);
 
     try {
-      const response = await bookingsAPI.create({
+      await bookingsAPI.create({
         serviceId: listingId,
         date: formData.date,
         time: formData.time || undefined
