@@ -1,5 +1,9 @@
+# ⚠️ LOCKED CONFIG — DO NOT CHANGE OR DELETE THIS FILE ⚠️
+# Start command must be "node server.js" — do not revert to "npm start"
+# Last verified working: Mar 31 2026
+
 [phases.build]
-cmds = []
+cmds = ["npm install"]
 
 [start]
-cmd = "npm start"
+cmd = "node server.js"

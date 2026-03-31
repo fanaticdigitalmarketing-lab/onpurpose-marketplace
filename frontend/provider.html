@@ -273,7 +273,7 @@
           try{await api('/api/users/profile','PATCH',body);}catch(e){}
         }
         toast('Account created! Welcome, '+currentUser.name,'success');
-        updateProgress(2);
+        setTimeout(()=>location.reload(),1500);
       }catch(e){toast('Network error','error');}
     }
 
@@ -289,7 +289,10 @@
       if(!accessToken)return toast('Please complete Step 1 first','error');
       try{
         const r=await api('/api/services','POST',{title,description,price,duration,category,isOnline});
-        if(r.success){toast('Service created!','success');updateProgress(3);}
+        if(r.success){toast('Service created!','success');setTimeout(()=>location.reload(),1500);}
+        else if(r.errors && r.errors.length){
+          toast(r.errors.map(e=>e.msg).join(', '),'error');
+        }
         else toast(r.message||'Failed to create service','error');
       }catch(e){toast('Network error','error');}
     }
@@ -311,7 +314,7 @@
           if(r.success)success++;
         }catch(e){}
       }
-      if(success>0){toast(success+' availability slot(s) saved!','success');setTimeout(()=>finishWizard(),1200);}
+      if(success>0){toast(success+' availability slot(s) saved!','success');setTimeout(()=>location.reload(),1500);}
       else toast('Failed to save availability','error');
     }
 

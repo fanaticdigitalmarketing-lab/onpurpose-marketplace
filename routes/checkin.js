@@ -20,14 +20,14 @@ const hashToken = (token) => crypto.createHash('sha256').update(token).digest('h
 router.post('/checkin/generate', authenticate, async (req, res) => {
   try {
     const { bookingId } = req.body;
-    const { Booking, Service, User } = req.app.locals.models;
+    const { Booking, Service } = req.app.locals.models;
     
     if (!bookingId) {
       return res.status(400).json({ success: false, message: 'Booking ID required' });
     }
     
     const booking = await Booking.findByPk(bookingId, {
-      include: [{ model: Service, as: 'service' }, { model: User, as: 'provider' }]
+      include: [{ model: Service, as: 'service' }]
     });
     
     if (!booking) {

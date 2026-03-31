@@ -75,7 +75,8 @@ async function apiFetch(url, options = {}) {
 
         if (!refreshResponse.ok) throw new Error('Refresh failed');
 
-        const { accessToken, refreshToken: newRefresh } = await refreshResponse.json();
+        const refreshData = await refreshResponse.json();
+        const { accessToken, refreshToken: newRefresh } = refreshData.data || refreshData;
         setTokens(accessToken, newRefresh);
         processQueue(null, accessToken);
 

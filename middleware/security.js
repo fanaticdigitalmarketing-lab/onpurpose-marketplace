@@ -34,7 +34,8 @@ const securityMiddleware = {
         message: 'Too many requests, please try again later'
       },
       standardHeaders: true,
-      legacyHeaders: false
+      legacyHeaders: false,
+      validate: { trustProxy: false }
     }),
 
     // Auth routes: 10/15min
@@ -44,7 +45,8 @@ const securityMiddleware = {
       message: {
         success: false,
         message: 'Too many auth attempts, please try again later'
-      }
+      },
+      validate: { trustProxy: false }
     }),
 
     // Booking routes: 20/hour
@@ -54,7 +56,8 @@ const securityMiddleware = {
       message: {
         success: false,
         message: 'Booking limit reached, please try again later'
-      }
+      },
+      validate: { trustProxy: false }
     })
   },
 

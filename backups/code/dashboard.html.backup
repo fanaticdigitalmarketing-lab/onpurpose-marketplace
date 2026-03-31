@@ -434,10 +434,7 @@
       if(!title||!description||!price)return toast('Fill in title, description, and price','error');
       try{
         const r=await api('/api/services','POST',{title,description,price,duration,category,isOnline,location});
-        if(r.success){toast('Service created!','success');setTimeout(()=>location.reload(),1500);}
-        else if(r.errors && r.errors.length){
-          toast(r.errors.map(e=>e.msg).join(', '),'error');
-        }
+        if(r.success){toast('Service created!','success');document.getElementById('svcTitle').value='';document.getElementById('svcDesc').value='';document.getElementById('svcPrice').value='';showPage('myservices');}
         else toast(r.message||'Failed','error');
       }catch(e){toast('Network error','error');}
     }
