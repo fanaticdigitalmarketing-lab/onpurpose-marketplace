@@ -206,7 +206,9 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    const API=location.origin;
+    const API=location.hostname === 'localhost' 
+      ? 'http://localhost:3000' 
+      : 'https://onpurpose-backend-clean-production.up.railway.app';
     let accessToken=localStorage.getItem('op_token')||'';
     let currentUser=JSON.parse(localStorage.getItem('op_user')||'null');
     let currentStep=1;
