@@ -42,10 +42,7 @@ console.log('[ENV] NODE_ENV:', process.env.NODE_ENV || 'development');
 const BCRYPT_PEPPER = process.env.BCRYPT_PEPPER || '';
 const BCRYPT_ROUNDS = 12;
 const PLATFORM_FEE_PERCENT = parseFloat(process.env.PLATFORM_FEE_PERCENT) || 15;
-const PORT     = parseInt(process.env.PORT, 10) || 3000;
-const PEPPER   = process.env.BCRYPT_PEPPER || '';
-const ROUNDS   = 12;
-const FEE_PCT  = parseFloat(process.env.PLATFORM_FEE_PERCENT) || 15;
+const PORT = parseInt(process.env.PORT, 10) || 3000;
 
 if (!process.env.RESEND_API_KEY) {
   console.warn('WARNING: RESEND_API_KEY is not set. Emails will not send.');
@@ -433,36 +430,57 @@ const ALLOWED_ORIGINS = [
   'https://www.onpurpose.earth',
   'http://localhost:3000',
   'http://localhost:5173',
-  ...(process.env.CORS_ORIGINS || '').split(',').map(o => o.trim()).filter(Boolean),
-  process.env.NETLIFY_URL,
-  process.env.DEPLOY_PRIME_URL,
-].filter(Boolean);
+  'http://127.0.0.1:5500',
+  'http://127.0.0.1:3000',
+];
+
+// Add any CORS_ORIGINS from environment
+if (process.env.CORS_ORIGINS) {
+  process.env.CORS_ORIGINS
+    .split(',')
+    .map(o => o.trim())
+    .filter(Boolean)
+    .forEach(o => {
+      if (!ALLOWED_ORIGINS.includes(o)) ALLOWED_ORIGINS.push(o);
+    });
+}
 
 app.use(cors({
-  origin: (origin, cb) => {
-    if (!origin) return cb(null, true);
-    if (origin.endsWith('.netlify.app')) return cb(null, true);
-    if (ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
-    console.warn('[CORS BLOCKED]', origin);
-    return cb(new Error('CORS: ' + origin + ' not allowed'));
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    // Allow any *.netlify.app subdomain (preview deploys)
+    if (origin.endsWith('.netlify.app')) return callback(null, true);
+    // Allow whitelisted origins
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    // Block everything else
+    console.warn('[CORS BLOCKED] Origin:', origin);
+    return callback(new Error('CORS: origin not allowed: ' + origin));
   },
   credentials: true,
-  methods: ['GET','POST','PUT','PATCH','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization',
-                   'X-Forwarded-Authorization','Stripe-Signature'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'X-Forwarded-Authorization',
+    'Stripe-Signature',
+    'Accept',
+    'Origin',
+  ],
+  exposedHeaders: ['Authorization'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 }));
+
+// Handle ALL OPTIONS preflight requests
 app.options('*', cors());
 
-// Forward Netlify auth header
-app.use((req, res, next) => {
-  const fwd = req.headers['x-forwarded-authorization'];
-  if (fwd && !req.headers['authorization']) {
-    req.headers['authorization'] = fwd;
+// Pass Netlify-forwarded auth header through to Express
+app.use((req, _res, next) => {
+  const forwarded = req.headers['x-forwarded-authorization'];
+  if (forwarded && !req.headers['authorization']) {
+    req.headers['authorization'] = forwarded;
   }
-  const clientIP = req.headers['x-nf-client-connection-ip']
-    || req.headers['x-forwarded-for']?.split(',')[0]?.trim()
-    || req.ip;
-  if (clientIP) req.ip = clientIP;
   next();
 });
 
@@ -565,7 +583,7 @@ app.post('/api/auth/register',
       }
 
       // 2 — Hash password with pepper
-      const hashed = await bcrypt.hash(password + PEPPER, ROUNDS);
+      const hashed = await bcrypt.hash(password + BCRYPT_PEPPER, BCRYPT_ROUNDS);
 
       // 3 — Generate email verification token
       const vRaw    = crypto.randomBytes(32).toString('hex');
@@ -648,15 +666,17 @@ app.post('/api/auth/register',
       // 9 — Return success
       return res.status(201).json({
         success: true,
-        accessToken,
-        refreshToken,
-        user: {
-          id:         user.id,
-          name:       user.name,
-          email:      user.email,
-          role:       user.role,
-          isVerified: false,
-          location:   user.location || null,
+        data: {
+          accessToken,
+          refreshToken,
+          user: {
+            id:         user.id,
+            name:       user.name,
+            email:      user.email,
+            role:       user.role,
+            isVerified: false,
+            location:   user.location || null,
+          },
         },
         message: 'Account created! Check your email to verify.'
       });
@@ -712,7 +732,7 @@ app.post('/api/auth/login',
         });
       }
 
-      const valid = await bcrypt.compare(password + PEPPER, user.password);
+      const valid = await bcrypt.compare(password + BCRYPT_PEPPER, user.password);
       if (!valid) {
         return res.status(401).json({
           success: false,
@@ -727,16 +747,18 @@ app.post('/api/auth/login',
 
       return res.json({
         success: true,
-        accessToken,
-        refreshToken,
-        user: {
-          id:         user.id,
-          name:       user.name,
-          email:      user.email,
-          role:       user.role,
-          isVerified: user.isVerified,
-          location:   user.location || null,
-          avatar:     user.avatar || null,
+        data: {
+          accessToken,
+          refreshToken,
+          user: {
+            id:         user.id,
+            name:       user.name,
+            email:      user.email,
+            role:       user.role,
+            isVerified: user.isVerified,
+            location:   user.location || null,
+            avatar:     user.avatar || null,
+          }
         }
       });
     } catch (err) {
@@ -1629,6 +1651,19 @@ app.get('*', (req, res) => {
 
 /* ═══════════════════ ERROR HANDLER ═══════════════════ */
 
+// Global error handler (must be before sequelize.sync)
+app.use((err, req, res, next) => {
+  const isDev = process.env.NODE_ENV !== 'production';
+  const status = err.status || err.statusCode || 500;
+  console.error(`[${new Date().toISOString()}] ${req.method} ${req.path}`,
+    { status, error: err.message });
+  res.status(status).json({
+    success: false,
+    error: isDev ? err.message : 'An unexpected error occurred',
+    ...(isDev ? { stack: err.stack } : {})
+  });
+});
+
 app.use(securityMiddleware.handleError);
 
 sequelize.sync({ force: false, alter: false })
@@ -1642,6 +1677,18 @@ sequelize.sync({ force: false, alter: false })
       console.log('║  ENV:  ' + (process.env.NODE_ENV||'dev').padEnd(18) + '║');
       console.log('╚══════════════════════════════╝');
       console.log('[Health] http://localhost:' + PORT + '/health');
+      
+      // Keep-alive for Railway (prevents cold-start network errors)
+      if (process.env.NODE_ENV === 'production' &&
+          process.env.RAILWAY_PUBLIC_DOMAIN) {
+        const https = require('https');
+        const pingUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/health`;
+        setInterval(() => {
+          https.get(pingUrl, r => r.resume())
+               .on('error', () => {});
+        }, 4 * 60 * 1000); // every 4 minutes
+        console.log('[KeepAlive] Pinging', pingUrl, 'every 4 minutes');
+      }
     });
   })
   .catch(err => {
