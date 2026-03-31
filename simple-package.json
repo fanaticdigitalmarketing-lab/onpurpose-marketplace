@@ -1,0 +1,17 @@
+{
+  "name": "onpurpose-simple-backend",
+  "version": "1.0.0",
+  "description": "Simple OnPurpose backend for easy deployment",
+  "main": "simple-backend.js",
+  "scripts": {
+    "start": "node simple-backend.js",
+    "dev": "nodemon simple-backend.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
