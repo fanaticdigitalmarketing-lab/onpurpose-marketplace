@@ -69,7 +69,7 @@ const Listings = () => {
               <div className="listing-header-info">
                 <h3>{listing.title}</h3>
                 <p className="host-info">
-                  by {listing.User?.name || 'Unknown Host'}
+                  by {listing.userName || listing.User?.name || 'Unknown Host'}
                 </p>
               </div>
               

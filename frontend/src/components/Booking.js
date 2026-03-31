@@ -69,7 +69,7 @@ const Booking = () => {
       <div className="booking-card">
         <div className="listing-info">
           <h1>{listing.title}</h1>
-          <p className="host">Hosted by {listing.User?.name}</p>
+          <p className="host">Hosted by {listing.userName || listing.User?.name || 'Host'}</p>
           <p className="description">{listing.description}</p>
           <div className="price">${listing.price}</div>
         </div>
