@@ -9,7 +9,24 @@ const Service = sequelize.define('Service', {
   },
   title: DataTypes.STRING,
   description: DataTypes.TEXT,
-  price: DataTypes.FLOAT
+  price: DataTypes.FLOAT,
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false
+  },
+  category: DataTypes.STRING,
+  duration: DataTypes.INTEGER,
+  isOnline: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  }
+}, {
+  indexes: [
+    {
+      fields: ['userId']
+    }
+  ],
+  underscored: false
 });
 
 module.exports = Service;

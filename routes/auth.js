@@ -31,8 +31,8 @@ router.post('/register', [
     // Create JWT token
     const token = jwt.sign(
       { id: user.id, name: user.name },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRE }
+      process.env.JWT_SECRET || 'fallback-secret-key',
+      { expiresIn: process.env.JWT_EXPIRE || '7d' }
     );
 
     res.status(201).json({
@@ -77,9 +77,9 @@ router.post('/login', [
 
     // Create JWT token
     const token = jwt.sign(
-      { id: user.id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRE }
+      { id: user.id, name: user.name },
+      process.env.JWT_SECRET || 'fallback-secret-key',
+      { expiresIn: process.env.JWT_EXPIRE || '7d' }
     );
 
     res.json({
@@ -87,7 +87,7 @@ router.post('/login', [
       token,
       user: {
         id: user.id,
-        username: user.username,
+        name: user.name,
         email: user.email
       }
     });

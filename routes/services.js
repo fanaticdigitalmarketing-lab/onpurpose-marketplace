@@ -10,7 +10,6 @@ router.get('/my-services', authMiddleware, async (req, res) => {
   try {
     const services = await Service.findAll({
       where: { userId: req.user.id },
-      include: [{ model: User, attributes: ['username'] }],
       order: [['createdAt', 'DESC']]
     });
     res.json(services);
@@ -24,7 +23,6 @@ router.get('/my-services', authMiddleware, async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const services = await Service.findAll({
-      include: [{ model: User, attributes: ['username'] }],
       order: [['createdAt', 'DESC']]
     });
     res.json(services);
