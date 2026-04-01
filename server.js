@@ -30,7 +30,12 @@ app.get('/', (req, res) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', database: 'connected' });
+});
+
+// API Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', database: 'connected' });
 });
 
 // Stats endpoint
