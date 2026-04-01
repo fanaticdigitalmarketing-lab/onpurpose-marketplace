@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Service - OnPurpose</title>
+  
+<!-- ── PWA & Mobile Meta ── -->
+<meta name="application-name" content="OnPurpose">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OnPurpose">
+<meta name="theme-color" content="#2563d4">
+<meta name="msapplication-TileColor" content="#1a2744">
+<meta name="msapplication-TileImage" content="/assets/icons/icon-144.png">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ── PWA Manifest ── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ── Apple Touch Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/icon-128.png">
+
+<!-- ── Apple Splash Screens (required for iOS standalone mode) ── -->
+<link rel="apple-touch-startup-image"
+      media="(device-width: 430px) and (device-height: 932px)"
+      href="/assets/splash/splash-430x932.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 393px) and (device-height: 852px)"
+      href="/assets/splash/splash-393x852.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 390px) and (device-height: 844px)"
+      href="/assets/splash/splash-390x844.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px)"
+      href="/assets/splash/splash-375x812.png">
+<!-- ── End PWA & Mobile Meta ── -->
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:#1a2744;--navy2:#243156;--blue:#2563d4;--blue2:#3b7ef8;
+      --blue-l:rgba(37,99,212,0.10);--white:#ffffff;--off:#f7f8fc;
+      --off2:#eef1f8;--txt:#1a2744;--mut:#6b7a99;
+      --bdr:rgba(26,39,68,0.10);--bdr2:rgba(26,39,68,0.18);
+      --shadow:0 4px 24px rgba(37,99,212,0.10);
+      --shadow2:0 8px 40px rgba(37,99,212,0.16);
+      --ok:#16a34a;--warn:#d97706;--red:#dc2626;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--txt);line-height:1.6;min-height:100vh}
+    h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy)}
+    nav{position:sticky;top:0;background:var(--white);border-bottom:1px solid var(--bdr);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
+    .logo-link{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
+    .logo-img{height:40px;width:auto}
+    .brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--navy)}
+    .nav-links{display:flex;gap:1.5rem;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--txt);font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--blue)}
+    .btn-primary{background:var(--blue);color:var(--white);padding:0.6rem 1.5rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+    .btn-primary:hover{background:var(--blue2);box-shadow:var(--shadow2)}
+    .btn-ghost{background:transparent;color:var(--blue);padding:0.6rem 1.5rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
+    .btn-ghost:hover{background:var(--blue-l)}
+    .container{max-width:800px;margin:0 auto;padding:0 2rem}
+    .page-header{text-align:center;margin:3rem 0}
+    .page-header h1{font-size:2.5rem;margin-bottom:1rem}
+    .page-header p{color:var(--mut);font-size:1.1rem;max-width:600px;margin:0 auto}
+    .service-form{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2.5rem;margin-bottom:2rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .form-group{margin-bottom:1.5rem}
+    .form-group label{display:block;font-weight:600;color:var(--navy);margin-bottom:0.5rem}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem;transition:border-color 0.2s}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue)}
+    .form-group textarea{resize:vertical;min-height:120px}
+    .idea-preview{background:var(--blue-l);border:2px solid var(--blue);border-radius:12px;padding:1.5rem;margin-bottom:2rem}
+    .idea-preview h3{color:var(--blue);margin-bottom:0.5rem}
+    .idea-preview p{color:var(--navy);margin-bottom:1rem}
+    .idea-preview .meta{display:flex;gap:1rem;font-size:0.9rem;color:var(--mut)}
+    .submit-btn{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1.2rem 2rem;border-radius:12px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(37,99,212,0.3)}
+    .submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(37,99,212,0.4)}
+    .submit-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+    .progress-bar{display:flex;gap:1rem;margin-bottom:2rem}
+    .progress-step{flex:1;text-align:center;padding:1rem;background:var(--off);border-radius:8px;border:2px solid var(--bdr)}
+    .progress-step.active{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.er{background:var(--red)}
+    .toast.suc{background:var(--ok)}
+    .loading-spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-top:3px solid white;border-radius:50%;animation:spin 1s linear infinite}
+    @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    @media(max-width:768px){
+      nav{flex-direction:column;gap:1rem}
+      .nav-links{flex-wrap:wrap;justify-content:center}
+      .page-header h1{font-size:2rem}
+      .service-form{padding:2rem;margin:0 1rem 2rem}
+      .form-row{grid-template-columns:1fr}
+      .idea-preview{margin:0 1rem 2rem}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/" class="logo-link">
+      <img src="/assets/logo.png" alt="OnPurpose" class="logo-img">
+      <span class="brand">OnPurpose</span>
+    </a>
+    <div class="nav-links" id="nav-auth">
+      <a href="/">Home</a>
+      <a href="/services.html">Browse Services</a>
+      <a href="/provider.html">Become a Provider</a>
+      <button class="btn-ghost" onclick="openSignIn()" id="signInBtn">Sign In</button>
+    </div>
+    <div class="nav-links" id="nav-user" style="display:none">
+      <a href="/">Home</a>
+      <a href="/services.html">Browse Services</a>
+      <a href="/provider.html">Become a Provider</a>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <div id="nav-av" style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px"></div>
+        <span id="nav-nm" style="font-weight:500"></span>
+        <a href="/dashboard.html" class="btn-primary">Dashboard</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Create Your Service</h1>
+      <p>Turn your expertise into a professional service that clients can book and pay for</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-step active">1. Service Details</div>
+      <div class="progress-step">2. Pricing</div>
+      <div class="progress-step">3. Launch</div>
+    </div>
+
+    <div id="ideaPreview" class="idea-preview" style="display:none;">
+      <h3>🚀 Starting from your idea</h3>
+      <p id="ideaTitle"></p>
+      <p id="ideaDescription"></p>
+      <div class="meta">
+        <span id="ideaCategory"></span>
+        <span id="ideaPrice"></span>
+        <span id="ideaTime"></span>
+      </div>
+    </div>
+
+    <form class="service-form" id="serviceForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="serviceTitle">Service Title *</label>
+          <input type="text" id="serviceTitle" name="title" required placeholder="e.g., Professional Business Coaching">
+        </div>
+        <div class="form-group">
+          <label for="serviceCategory">Category *</label>
+          <select id="serviceCategory" name="category" required>
+            <option value="">Select a category</option>
+            <option value="coaching">Coaching</option>
+            <option value="consulting">Consulting</option>
+            <option value="marketing">Marketing</option>
+            <option value="design">Design</option>
+            <option value="development">Development</option>
+            <option value="wellness">Wellness</option>
+            <option value="writing">Writing</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceDescription">Description *</label>
+        <textarea id="serviceDescription" name="description" required placeholder="Describe your service in detail. What do you offer? Who is it for? What results can clients expect?"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="servicePrice">Price per Session ($) *</label>
+          <input type="number" id="servicePrice" name="price" required min="1" placeholder="e.g., 100">
+        </div>
+        <div class="form-group">
+          <label for="serviceDuration">Session Duration *</label>
+          <select id="serviceDuration" name="duration" required>
+            <option value="">Select duration</option>
+            <option value="30 minutes">30 minutes</option>
+            <option value="1 hour">1 hour</option>
+            <option value="90 minutes">90 minutes</option>
+            <option value="2 hours">2 hours</option>
+            <option value="3 hours">3 hours</option>
+            <option value="Half day">Half day</option>
+            <option value="Full day">Full day</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="serviceFormat">Format *</label>
+          <select id="serviceFormat" name="format" required>
+            <option value="">Select format</option>
+            <option value="Online">Online (Video call)</option>
+            <option value="In-person">In-person</option>
+            <option value="Hybrid">Hybrid (Online + In-person)</option>
+            <option value="Phone">Phone call</option>
+            <option value="Email/Chat">Email/Chat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="serviceLocation">Location</label>
+          <input type="text" id="serviceLocation" name="location" placeholder="e.g., New York, NY or Worldwide">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="serviceRequirements">Client Requirements (Optional)</label>
+        <textarea id="serviceRequirements" name="requirements" placeholder="What should clients prepare or have ready for the session?"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="text">Launch My Service</span>
+        <span class="loading" style="display:none;">
+          <span class="loading-spinner"></span>
+          Creating...
+        </span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const API_BASE = window.location.hostname === 'localhost' 
+      ? 'http://localhost:3000' 
+      : 'https://onpurpose-backend-clean-production.up.railway.app';
+    
+    // Authentication functions
+    function getToken() { return localStorage.getItem('op_token'); }
+    function getUser() { 
+      try { return JSON.parse(localStorage.getItem('op_user')); } 
+      catch { return null; } 
+    }
+
+    function toast(msg, type = 'ok') {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'toast show' + (type === 'er' ? ' er' : '') + (type === 'suc' ? ' suc' : '');
+      clearTimeout(el._tid);
+      el._tid = setTimeout(() => el.className = 'toast', 3500);
+    }
+
+    function updateNav() {
+      const u = getUser();
+      const authEl = document.getElementById('nav-auth');
+      const userEl = document.getElementById('nav-user');
+      if (!authEl || !userEl) return;
+      if (u) {
+        authEl.style.display = 'none';
+        userEl.style.display = 'block';
+        const av = document.getElementById('nav-av');
+        const nm = document.getElementById('nav-nm');
+        if (av) av.textContent = (u.name||'?').charAt(0).toUpperCase();
+        if (nm) nm.textContent = (u.name||'Account').split(' ')[0];
+      } else {
+        authEl.style.display = 'flex';
+        userEl.style.display = 'none';
+      }
+    }
+
+    function openSignIn() {
+      window.location.href = '/index.html';
+    }
+
+    // Check authentication
+    function checkAuth() {
+      const token = getToken();
+      const user = getUser();
+      if (!token || !user) {
+        toast('Please sign in to create a service', 'er');
+        setTimeout(() => {
+          window.location.href = '/index.html';
+        }, 1500);
+        return false;
+      }
+      return true;
+    }
+
+    // Load idea data if coming from idea generator
+    function loadIdeaData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromIdea = urlParams.get('fromIdea');
+      
+      if (fromIdea === 'true') {
+        const ideaData = localStorage.getItem('selectedIdea');
+        if (ideaData) {
+          const idea = JSON.parse(ideaData);
+          
+          // Show idea preview
+          const ideaPreview = document.getElementById('ideaPreview');
+          document.getElementById('ideaTitle').textContent = idea.title;
+          document.getElementById('ideaDescription').textContent = idea.description;
+          document.getElementById('ideaCategory').textContent = `Category: ${idea.category}`;
+          document.getElementById('ideaPrice').textContent = `$${idea.estimatedPrice}/session`;
+          document.getElementById('ideaTime').textContent = `Time: ${idea.timeCommitment}`;
+          ideaPreview.style.display = 'block';
+          
+          // Auto-fill form fields
+          document.getElementById('serviceTitle').value = idea.title;
+          document.getElementById('serviceDescription').value = idea.description;
+          document.getElementById('serviceCategory').value = idea.category;
+          document.getElementById('servicePrice').value = idea.estimatedPrice;
+          
+          // Clear stored idea data
+          localStorage.removeItem('selectedIdea');
+        }
+      }
+    }
+
+    // Create service
+    async function createService(serviceData) {
+      try {
+        const response = await fetch(`${API_BASE}/api/services`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${getToken()}`
+          },
+          body: JSON.stringify(serviceData)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          toast('Service created successfully! 🎉', 'suc');
+          
+          // Redirect to service detail page
+          setTimeout(() => {
+            window.location.href = `/service-detail.html?id=${result.data.id}`;
+          }, 1500);
+        } else {
+          toast(result.message || 'Failed to create service', 'er');
+        }
+      } catch (error) {
+        console.error('Create service error:', error);
+        toast('Network error. Please try again.', 'er');
+      }
+    }
+
+    // Form submission
+    document.getElementById('serviceForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!checkAuth()) return;
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const formData = new FormData(e.target);
+      
+      const serviceData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        category: formData.get('category'),
+        price: parseFloat(formData.get('price')),
+        duration: formData.get('duration'),
+        format: formData.get('format'),
+        location: formData.get('location') || 'Available Worldwide',
+        requirements: formData.get('requirements') || 'No special requirements'
+      };
+
+      // Validate required fields
+      if (!serviceData.title || !serviceData.description || !serviceData.category || 
+          !serviceData.price || !serviceData.duration || !serviceData.format) {
+        toast('Please fill in all required fields', 'er');
+        return;
+      }
+
+      // Show loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      await createService(serviceData);
+
+      // Reset loading state
+      submitBtn.classList.remove('loading');
+      submitBtn.disabled = false;
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateNav();
+      
+      if (!checkAuth()) {
+        return;
+      }
+
+      loadIdeaData();
+      
+      // Focus on first input
+      document.getElementById('serviceTitle').focus();
+    });
+  </script>
+</body>
+</html>

@@ -410,11 +410,34 @@
 
       if (services.length === 0) {
         emptyState.style.display = 'block';
+        emptyState.innerHTML = `
+          <div style="text-align:center;padding:4rem 2rem">
+            <div style="width:80px;height:80px;margin:0 auto 2rem;background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:50%;display:flex;align-items:center;justify-content:center">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 11H3v10h6V11z"/>
+                <path d="M21 11h-6v10h6V11z"/>
+                <path d="M15 3H9v6h6V3z"/>
+              </svg>
+            </div>
+            <h3 style="font-size:1.5rem;margin-bottom:1rem;color:var(--navy)">No Services Found</h3>
+            <p style="color:var(--mut);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto">
+              No services match your criteria. Be the first to offer a service!
+            </p>
+            <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+              <button onclick="window.location.href='/idea-generator.html'" class="btn-primary" style="background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1rem 2rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.3s">
+                🚀 Generate My Service
+              </button>
+              <button onclick="window.location.href='/create-service.html'" class="btn-ghost" style="background:transparent;color:var(--blue);padding:1rem 2rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.3s">
+                📝 Create Directly
+              </button>
+            </div>
+          </div>
+        `;
         return;
       }
 
       servicesGrid.innerHTML = services.map(service => `
-        <div class="service-card ${service.isExample ? 'example-service' : ''}" onclick="viewService('${service.id}', ${service.isExample || false})">
+        <div class="service-card" onclick="viewService('${service.id}')">
           <img src="${service.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400'}" alt="${service.title}">
           <div class="service-card-content">
             <span class="category">${getCategoryEmoji(service.category)} ${service.category}</span>
@@ -423,29 +446,42 @@
             <p class="price">$${service.price}/${service.unit || 'hour'}</p>
             <p class="provider">by ${service.provider?.name || service.provider_name || 'Provider'}</p>
             ${service.rating || service.averageRating ? `<p class="rating">⭐ ${(service.rating || service.averageRating).toFixed(1)} (${service.reviews || service.reviewCount || 0} reviews)</p>` : ''}
-            ${service.isExample ? '<span class="example-badge">🚀 Become this provider</span>' : ''}
           </div>
         </div>
       `).join('');
     }
 
     function displayDemoServices() {
-      const demoServices = [
-        {id: '1', title: 'Career Coaching Session', category: 'coaching', price: 75, unit: 'hour', provider_name: 'Sarah Johnson', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400', rating: 4.9, reviews: 24, isExample: true},
-        {id: '2', title: 'Marketing Strategy Consultation', category: 'marketing', price: 120, unit: 'hour', provider_name: 'Mike Chen', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400', rating: 4.8, reviews: 18, isExample: true},
-        {id: '3', title: 'Brand Identity Design', category: 'design', price: 200, unit: 'project', provider_name: 'Emma Davis', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', rating: 5.0, reviews: 31, isExample: true},
-        {id: '4', title: 'Web Development Consultation', category: 'development', price: 150, unit: 'hour', provider_name: 'Alex Rivera', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400', rating: 4.7, reviews: 15, isExample: true},
-        {id: '5', title: 'Business Strategy Session', category: 'consulting', price: 180, unit: 'hour', provider_name: 'Jordan Lee', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400', rating: 4.9, reviews: 22, isExample: true},
-        {id: '6', title: 'Yoga & Meditation Class', category: 'wellness', price: 45, unit: 'session', provider_name: 'Maya Patel', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400', rating: 5.0, reviews: 42, isExample: true},
-        {id: '7', title: 'Financial Planning & Investment', category: 'consulting', price: 200, unit: 'hour', provider_name: 'David Kim', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', rating: 4.8, reviews: 29, isExample: true},
-        {id: '8', title: 'Personal Fitness Training', category: 'wellness', price: 80, unit: 'session', provider_name: 'Chris Martinez', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400', rating: 4.9, reviews: 36, isExample: true},
-        {id: '9', title: 'Content Writing & Copywriting', category: 'marketing', price: 100, unit: 'hour', provider_name: 'Sophie Turner', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400', rating: 4.7, reviews: 19, isExample: true},
-        {id: '10', title: 'Mobile App Development', category: 'development', price: 175, unit: 'hour', provider_name: 'Ryan Johnson', image: 'https://images.unsplash.com/photo-1512941937409-a4c125f792c4?w=400', rating: 4.8, reviews: 24, isExample: true},
-        {id: '11', title: 'Life Coaching & Mentoring', category: 'coaching', price: 90, unit: 'hour', provider_name: 'Lisa Anderson', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', rating: 5.0, reviews: 45, isExample: true},
-        {id: '12', title: 'Social Media Marketing', category: 'marketing', price: 85, unit: 'hour', provider_name: 'Tom Wilson', image: 'https://images.unsplash.com/photo-1611224923853-80b023f2d71b?w=400', rating: 4.6, reviews: 27, isExample: true}
-      ];
-      displayServices(demoServices);
-      displayPagination(demoServices.length);
+      // No more demo services - only user-created services
+      const servicesGrid = document.getElementById('servicesGrid');
+      const emptyState = document.getElementById('emptyState');
+      
+      servicesGrid.innerHTML = '';
+      emptyState.style.display = 'block';
+      emptyState.innerHTML = `
+        <div style="text-align:center;padding:4rem 2rem">
+          <div style="width:80px;height:80px;margin:0 auto 2rem;background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:50%;display:flex;align-items:center;justify-content:center">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 11H3v10h6V11z"/>
+              <path d="M21 11h-6v10h6V11z"/>
+              <path d="M15 3H9v6h6V3z"/>
+            </svg>
+          </div>
+          <h3 style="font-size:1.5rem;margin-bottom:1rem;color:var(--navy)">No Services Yet</h3>
+          <p style="color:var(--mut);margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto">
+            Be the first to offer a service! Use our Idea Generator to discover what you can offer, or create a service directly.
+          </p>
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <button onclick="window.location.href='/idea-generator.html'" class="btn-primary" style="background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1rem 2rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.3s">
+              🚀 Generate My Service
+            </button>
+            <button onclick="window.location.href='/create-service.html'" class="btn-ghost" style="background:transparent;color:var(--blue);padding:1rem 2rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.3s">
+              📝 Create Directly
+            </button>
+          </div>
+        </div>
+      `;
+      displayPagination(0);
     }
 
     function displayPagination(total) {
@@ -490,14 +526,9 @@
       return emojis[category?.toLowerCase()] || '📌';
     }
 
-    function viewService(id, isExample = false) {
-      if (isExample) {
-        // Redirect to provider signup for example services
-        window.location.href = `/provider.html?service=${encodeURIComponent(id)}&example=true`;
-      } else {
-        // Go to real service detail page
-        window.location.href = `/service-detail.html?id=${id}`;
-      }
+    function viewService(id) {
+      // Only handle real user services - no more example services
+      window.location.href = `/service-detail.html?id=${id}`;
     }
 
     function resetFilters() {

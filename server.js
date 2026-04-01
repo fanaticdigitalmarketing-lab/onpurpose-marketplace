@@ -1600,6 +1600,237 @@ app.put('/api/notifications/read', authenticate, async (req, res) => {
   }
 });
 
+// ===== IDEA GENERATOR ENGINE =====
+
+// Generate service ideas based on niche
+app.post('/api/ideas/generate', authenticate, async (req, res) => {
+  try {
+    const { niche } = req.body;
+    
+    // Validate input
+    if (!niche || typeof niche !== 'string' || niche.trim().length < 2) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Please provide a valid niche or skill (minimum 2 characters)' 
+      });
+    }
+
+    const cleanNiche = niche.trim().toLowerCase();
+    
+    // Dynamic idea generation templates
+    const ideaTemplates = [
+      {
+        title: `Premium ${niche} Consulting`,
+        description: `Offer expert ${niche} consulting services to help businesses and individuals achieve their goals through personalized strategies and professional guidance.`
+      },
+      {
+        title: `Personalized ${niche} Coaching`,
+        description: `Provide one-on-one ${niche} coaching sessions tailored to each client's specific needs, helping them develop skills and overcome challenges.`
+      },
+      {
+        title: `Done-for-You ${niche} Service`,
+        description: `Deliver comprehensive ${niche} solutions that handle everything from start to finish, allowing clients to enjoy results without the workload.`
+      },
+      {
+        title: `${niche} Strategy Sessions`,
+        description: `Conduct intensive strategy sessions focused on ${niche}, providing actionable insights and roadmap planning for immediate implementation.`
+      },
+      {
+        title: `${niche} Support Subscription`,
+        description: `Create a recurring subscription service offering ongoing ${niche} support, updates, and continuous improvement for long-term success.`
+      },
+      {
+        title: `${niche} Optimization Service`,
+        description: `Specialize in optimizing existing ${niche} processes and systems, helping clients improve efficiency and maximize their results.`
+      },
+      {
+        title: `${niche} Audit & Analysis`,
+        description: `Provide thorough ${niche} audits and detailed analysis reports, identifying opportunities and creating improvement plans.`
+      }
+    ];
+
+    // Generate 5-7 ideas dynamically
+    const numIdeas = Math.floor(Math.random() * 3) + 5; // 5-7 ideas
+    const selectedTemplates = ideaTemplates
+      .sort(() => Math.random() - 0.5) // Shuffle
+      .slice(0, numIdeas);
+
+    const ideas = selectedTemplates.map((template, index) => ({
+      id: index + 1,
+      title: template.title.replace(niche, niche.charAt(0).toUpperCase() + niche.slice(1)),
+      description: template.description.replace(niche, niche),
+      category: getCategoryFromNiche(cleanNiche),
+      estimatedPrice: estimatePriceFromNiche(cleanNiche),
+      difficulty: getDifficultyFromNiche(cleanNiche),
+      timeCommitment: getTimeCommitmentFromNiche(cleanNiche)
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        niche: niche,
+        ideas: ideas,
+        generatedAt: new Date().toISOString()
+      }
+    });
+
+  } catch (error) {
+    console.error('Idea generation error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to generate ideas. Please try again.' 
+    });
+  }
+});
+
+// Helper functions for idea generation
+function getCategoryFromNiche(niche) {
+  const categoryMap = {
+    'coach': 'coaching',
+    'consult': 'consulting',
+    'design': 'design',
+    'develop': 'development',
+    'market': 'marketing',
+    'write': 'marketing',
+    'fitness': 'wellness',
+    'yoga': 'wellness',
+    'meditat': 'wellness',
+    'finance': 'consulting',
+    'business': 'consulting',
+    'teach': 'coaching',
+    'train': 'coaching'
+  };
+
+  for (const [key, category] of Object.entries(categoryMap)) {
+    if (niche.includes(key)) {
+      return category;
+    }
+  }
+  
+  return 'consulting'; // Default category
+}
+
+function estimatePriceFromNiche(niche) {
+  const priceMap = {
+    'consult': 150,
+    'coach': 75,
+    'design': 200,
+    'develop': 175,
+    'market': 120,
+    'write': 85,
+    'fitness': 80,
+    'yoga': 60,
+    'meditat': 50,
+    'finance': 200,
+    'business': 180,
+    'teach': 90,
+    'train': 100
+  };
+
+  for (const [key, price] of Object.entries(priceMap)) {
+    if (niche.includes(key)) {
+      return price;
+    }
+  }
+  
+  return 100; // Default price
+}
+
+function getDifficultyFromNiche(niche) {
+  const difficultyMap = {
+    'develop': 'Advanced',
+    'design': 'Intermediate',
+    'finance': 'Advanced',
+    'consult': 'Intermediate',
+    'coach': 'Beginner',
+    'teach': 'Intermediate',
+    'train': 'Intermediate'
+  };
+
+  for (const [key, difficulty] of Object.entries(difficultyMap)) {
+    if (niche.includes(key)) {
+      return difficulty;
+    }
+  }
+  
+  return 'Intermediate'; // Default difficulty
+}
+
+function getTimeCommitmentFromNiche(niche) {
+  const timeMap = {
+    'consult': '1-3 hours',
+    'coach': '30-60 minutes',
+    'design': '2-4 weeks',
+    'develop': '4-8 weeks',
+    'market': '2-6 weeks',
+    'write': '1-2 weeks',
+    'fitness': '1 hour',
+    'yoga': '1 hour',
+    'meditat': '30 minutes',
+    'finance': '2-4 hours',
+    'business': '2-4 hours',
+    'teach': '1-2 hours',
+    'train': '2-4 hours'
+  };
+
+  for (const [key, time] of Object.entries(timeMap)) {
+    if (niche.includes(key)) {
+      return time;
+    }
+  }
+  
+  return '1-2 hours'; // Default time commitment
+}
+
+// Generate more ideas like a specific idea
+app.post('/api/ideas/generate-similar', authenticate, async (req, res) => {
+  try {
+    const { ideaId, niche } = req.body;
+    
+    if (!ideaId || !niche) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Idea ID and niche are required' 
+      });
+    }
+
+    // Generate similar ideas with variations
+    const variations = [
+      `Advanced ${niche} Solutions`,
+      `${niche} Mastery Program`,
+      `Complete ${niche} Transformation`,
+      `${niche} Accelerator`,
+      `Professional ${niche} Services`
+    ];
+
+    const similarIdeas = variations.map((title, index) => ({
+      id: Date.now() + index,
+      title: title.replace(niche, niche.charAt(0).toUpperCase() + niche.slice(1)),
+      description: `An enhanced approach to ${niche} with advanced techniques and proven methodologies for exceptional results.`,
+      category: getCategoryFromNiche(niche.toLowerCase()),
+      estimatedPrice: estimatePriceFromNiche(niche.toLowerCase()) + (index * 25),
+      difficulty: getDifficultyFromNiche(niche.toLowerCase()),
+      timeCommitment: getTimeCommitmentFromNiche(niche.toLowerCase())
+    }));
+
+    res.json({
+      success: true,
+      data: {
+        niche: niche,
+        ideas: similarIdeas,
+        generatedAt: new Date().toISOString()
+      }
+    });
+
+  } catch (error) {
+    console.error('Similar ideas generation error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to generate similar ideas. Please try again.' 
+    });
+  }
+});
+
 // ===== EMAIL ADMIN ENDPOINTS =====
 
 // Get email logs (admin only)

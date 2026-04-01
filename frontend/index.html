@@ -1,9 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>OnPurpose — Book People, Not Places</title>
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="OnPurpose — Book People, Not Places">
+<meta property="og:description" content="OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://onpurpose.earth">
+<meta property="og:image" content="https://via.placeholder.com/1200x630/2563d4/ffffff?text=OnPurpose">
+<meta property="og:site_name" content="OnPurpose">
+<meta property="og:locale" content="en_US">
+
+<!-- Additional Meta Tags -->
+<meta name="description" content="OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.">
+
+<!-- Cache Control -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://onpurpose.earth/">
+
+<!-- DNS Prefetch for Performance -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//images.unsplash.com">
+  
+<!-- ── PWA & Mobile Meta ── -->
+<meta name="application-name" content="OnPurpose">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OnPurpose">
+<meta name="theme-color" content="#2563d4">
+<meta name="msapplication-TileColor" content="#1a2744">
+<meta name="msapplication-TileImage" content="/assets/icons/icon-144.png">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ── PWA Manifest ── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ── Apple Touch Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/icon-128.png">
+
+<!-- ── Apple Splash Screens (required for iOS standalone mode) ── -->
+<link rel="apple-touch-startup-image"
+      media="(device-width: 430px) and (device-height: 932px)"
+      href="/assets/splash/splash-430x932.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 393px) and (device-height: 852px)"
+      href="/assets/splash/splash-393x852.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 390px) and (device-height: 844px)"
+      href="/assets/splash/splash-390x844.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px)"
+      href="/assets/splash/splash-375x812.png">
+<!-- ── End PWA & Mobile Meta ── -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
@@ -73,10 +133,13 @@
     .form-group input{width:100%;padding:0.75rem 1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem;transition:border-color 0.2s}
     .form-group input:focus{outline:none;border-color:var(--blue)}
     .message{padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;font-size:0.9rem;display:none}
-    .message.success{background:rgba(22,163,74,0.1);color:var(--ok);border:1px solid var(--ok);display:block}
-    .message.error{background:rgba(220,38,38,0.1);color:var(--red);border:1px solid var(--red);display:block}
+    .message.success{background:var(--blue-l);color:var(--blue);border:1px solid rgba(37,99,212,0.2)}
+    .message.error{background:#fef2f2;color:var(--red);border:1px solid rgba(220,38,38,0.2)}
     .text-link{color:var(--blue);cursor:pointer;text-decoration:underline;font-size:0.9rem}
     .text-link:hover{color:var(--blue2)}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.er{background:var(--red)}
     @media(max-width:768px){
       nav{flex-direction:column;gap:1rem}
       .nav-links{flex-wrap:wrap;justify-content:center}
@@ -86,40 +149,128 @@
       .search-form input,.search-form select{min-width:100%}
     }
   </style>
+  <link rel="stylesheet" href="/assets/css/mobile.css">
 </head>
 <body>
 
   <nav>
     <a href="/" class="logo-link">
-      <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="22" fill="#2563d4"/>
-        <path d="M22 14 L78 14 L78 24 Q78 50 50 50 Q78 50 78 76 L78 86 L22 86 L22 76 Q22 50 50 50 Q22 50 22 24 Z" fill="white"/>
-        <circle cx="37" cy="77" r="5" fill="#2563d4"/>
-      </svg>
+      <img src="/assets/logo.png" alt="OnPurpose" class="logo-img">
       <span class="brand">OnPurpose</span>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-auth">
       <a href="/">Home</a>
       <a href="/services.html">Browse Services</a>
       <a href="/provider.html">Become a Provider</a>
       <button class="btn-ghost" onclick="openSignIn()" id="signInBtn">Sign In</button>
-      <a href="/dashboard.html" class="btn-primary" id="dashboardBtn" style="display:none">Dashboard</a>
+    </div>
+    <div class="nav-links" id="nav-user" style="display:none">
+      <a href="/">Home</a>
+      <a href="/services.html">Browse Services</a>
+      <a href="/provider.html">Become a Provider</a>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <div id="nav-av" style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px"></div>
+        <span id="nav-nm" style="font-weight:500"></span>
+        <a href="/dashboard.html" class="btn-primary">Dashboard</a>
+      </div>
     </div>
   </nav>
 
   <section class="hero">
-    <h1>Book People, Not Places</h1>
-    <p class="subtitle">The Airbnb for Skills & Human Services</p>
-    <p>Connect directly with experts offering real skills — from coaching to creative services. OnPurpose makes it simple to find, book, and pay for the human expertise you need.</p>
+    <h1>Turn Your Skills Into Services</h1>
+    <p class="subtitle">Discover what you can offer, then launch it instantly</p>
+    <p>Don't know what service to offer? Our AI-powered idea generator helps you discover profitable service opportunities based on your skills and interests. Turn ideas into real services in minutes.</p>
+    
+    <!-- Idea Engine Main Entry -->
+    <div class="idea-engine-container" style="max-width:800px;margin:3rem auto;background:var(--white);border-radius:16px;box-shadow:var(--shadow2);padding:2.5rem;text-align:center">
+      <div class="idea-engine-header">
+        <div style="width:80px;height:80px;margin:0 auto 1.5rem;background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:50%;display:flex;align-items:center;justify-content:center">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11H3v10h6V11z"/>
+            <path d="M21 11h-6v10h6V11z"/>
+            <path d="M15 3H9v6h6V3z"/>
+          </svg>
+        </div>
+        <h2 style="font-size:2rem;margin-bottom:0.5rem;color:var(--navy)">Idea → Service Engine</h2>
+        <p style="color:var(--mut);margin-bottom:2rem;font-size:1.1rem">Transform your expertise into a profitable service business</p>
+      </div>
+      
+      <div class="idea-engine-actions" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem">
+        <button onclick="startIdeaGenerator()" class="idea-engine-primary" style="background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1.5rem 2rem;border-radius:12px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(37,99,212,0.3);display:flex;flex-direction:column;align-items:center;gap:0.75rem;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;right:0;width:100px;height:100px;background:rgba(255,255,255,0.1);border-radius:50%;transform:translate(30px,-30px)"></div>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          <span style="position:relative;z-index:1">Generate My Service</span>
+          <small style="font-size:0.9rem;opacity:0.9;font-weight:400;position:relative;z-index:1">AI-powered idea discovery</small>
+        </button>
+        
+        <button onclick="startManualService()" class="idea-engine-secondary" style="background:var(--off);color:var(--navy);padding:1.5rem 2rem;border-radius:12px;border:2px solid var(--bdr);font-size:1.1rem;font-weight:600;cursor:pointer;transition:all 0.3s;display:flex;flex-direction:column;align-items:center;gap:0.75rem">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14,2 14,8 20,8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10,9 9,9 8,9"/>
+          </svg>
+          <span>I Already Have a Service</span>
+          <small style="font-size:0.9rem;color:var(--mut);font-weight:400">Create directly</small>
+        </button>
+      </div>
+      
+      <div class="idea-engine-benefits" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2.5rem">
+        <div style="text-align:left">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div style="width:24px;height:24px;background:var(--blue-l);border-radius:50%;display:flex;align-items:center;justify-content:center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20,6 9,17 4,12"/>
+              </svg>
+            </div>
+            <span style="font-weight:600;color:var(--navy)">Instant Creation</span>
+          </div>
+          <p style="color:var(--mut);font-size:0.9rem;line-height:1.5">From idea to live service in under 5 minutes</p>
+        </div>
+        
+        <div style="text-align:left">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div style="width:24px;height:24px;background:var(--blue-l);border-radius:50%;display:flex;align-items:center;justify-content:center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                <path d="M2 17l10 5 10-5"/>
+              </svg>
+            </div>
+            <span style="font-weight:600;color:var(--navy)">AI-Powered Ideas</span>
+          </div>
+          <p style="color:var(--mut);font-size:0.9rem;line-height:1.5">Smart suggestions based on your skills</p>
+        </div>
+        
+        <div style="text-align:left">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <div style="width:24px;height:24px;background:var(--blue-l);border-radius:50%;display:flex;align-items:center;justify-content:center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </div>
+            <span style="font-weight:600;color:var(--navy)">Full Control</span>
+          </div>
+          <p style="color:var(--mut);font-size:0.9rem;line-height:1.5">Edit and customize every detail</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Traditional Actions (Secondary) -->
     <div style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap">
-      <a href="/services.html" class="btn-primary">Browse Services</a>
-      <a href="/provider.html" class="btn-ghost">Become a Provider</a>
+      <a href="/services.html" class="btn-ghost">Browse Existing Services</a>
+      <a href="/dashboard.html" class="btn-ghost">My Dashboard</a>
     </div>
   </section>
 
   <section class="stats">
     <div class="stat-card">
-      <div class="stat-number" id="hostsCount">50+</div>
+      <div class="stat-number" id="providersCount">50+</div>
       <div class="stat-label">Expert Providers</div>
     </div>
     <div class="stat-card">
@@ -270,6 +421,107 @@
   </div>
 
   <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000' : '';
+
+    const TOKEN_KEY   = 'op_token';
+    const REFRESH_KEY = 'op_refresh';
+    const USER_KEY    = 'op_user';
+
+    const getToken  = () => localStorage.getItem(TOKEN_KEY);
+    const getUser   = () => { try { return JSON.parse(
+      localStorage.getItem(USER_KEY)); } catch { return null; } };
+    const clearSession = () => {
+      [TOKEN_KEY, REFRESH_KEY, USER_KEY].forEach(k =>
+        localStorage.removeItem(k));
+    };
+
+    const esc = s => String(s||'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    async function api(path, opts = {}) {
+      const makeReq = async (token) => {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 30000);
+        const res  = await fetch(API + path, {
+          method:  opts.method || 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: 'Bearer ' + token } : {}),
+          },
+          body:   opts.body ? JSON.stringify(opts.body) : undefined,
+          signal: ctrl.signal,
+        });
+        clearTimeout(tid);
+        return res;
+      };
+
+      let token = getToken();
+      let res   = await makeReq(token);
+
+      if (res.status === 401) {
+        const data = await res.clone().json().catch(() => ({}));
+        const refresh = localStorage.getItem(REFRESH_KEY);
+        if (refresh) {
+          try {
+            const rr = await fetch(API + '/api/auth/refresh', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ refreshToken: refresh }),
+            });
+            const rd = await rr.json();
+            if (rd.accessToken) {
+              localStorage.setItem(TOKEN_KEY, rd.accessToken);
+              if (rd.refreshToken)
+                localStorage.setItem(REFRESH_KEY, rd.refreshToken);
+              res = await makeReq(rd.accessToken);
+            } else {
+              clearSession();
+              window.location.href = '/';
+              return {};
+            }
+          } catch {
+            clearSession();
+            window.location.href = '/';
+            return {};
+          }
+        } else {
+          clearSession();
+          window.location.href = '/';
+          return {};
+        }
+      }
+      try { return await res.json(); } catch { return {}; }
+    }
+
+    function toast(msg, type = 'ok') {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className   = 'toast show' + (type === 'er' ? ' er' : '');
+      clearTimeout(el._tid);
+      el._tid = setTimeout(() => el.className = 'toast', 3500);
+    }
+
+    function updateNav() {
+      const u = getUser();
+      const authEl = document.getElementById('nav-auth');
+      const userEl = document.getElementById('nav-user');
+      if (!authEl || !userEl) return;
+      if (u) {
+        authEl.style.display = 'none';
+        userEl.style.display = 'block';
+        const av = document.getElementById('nav-av');
+        const nm = document.getElementById('nav-nm');
+        if (av) av.textContent = (u.name||'?').charAt(0).toUpperCase();
+        if (nm) nm.textContent = (u.name||'Account').split(' ')[0];
+      } else {
+        authEl.style.display = 'flex';
+        userEl.style.display = 'none';
+      }
+    }
+
+    // Legacy API_BASE_URL for backward compatibility
     const API_BASE_URL = window.location.hostname === 'localhost' 
       ? 'http://localhost:3000' 
       : 'https://onpurpose-backend-clean-production.up.railway.app';
@@ -342,17 +594,51 @@
       }
     }
 
+    // Idea Engine Functions
+    function startIdeaGenerator() {
+      // Check if user is logged in
+      const token = localStorage.getItem('op_token');
+      if (!token) {
+        toast('Please sign in to generate service ideas', 'er');
+        setTimeout(() => openSignIn(), 500);
+        return;
+      }
+      
+      // Navigate to idea generator page
+      window.location.href = '/idea-generator.html';
+    }
+
+    function startManualService() {
+      // Check if user is logged in
+      const token = localStorage.getItem('op_token');
+      if (!token) {
+        toast('Please sign in to create a service', 'er');
+        setTimeout(() => openSignIn(), 500);
+        return;
+      }
+      
+      // Navigate to service creation page
+      window.location.href = '/create-service.html';
+    }
+
     async function loadStats() {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/stats`);
-        if (response.ok) {
-          const stats = await response.json();
-          if (stats.hosts) document.getElementById('hostsCount').textContent = stats.hosts;
-          if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
-          if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
-        }
+        // Load stats asynchronously without blocking page render
+        setTimeout(async () => {
+          try {
+            const response = await fetch(`${API_BASE_URL}/api/stats`);
+            if (response.ok) {
+              const stats = await response.json();
+              if (stats.providers) document.getElementById('providersCount').textContent = stats.providers;
+              if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
+              if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
+            }
+          } catch (error) {
+            console.log('Using demo stats - API unavailable');
+          }
+        }, 1000); // Delay 1 second after page load
       } catch (error) {
-        console.log('Using demo stats');
+        console.log('Stats loading failed');
       }
     }
 
@@ -365,10 +651,57 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-      checkAuth();
+      updateNav();
       loadStats();
     });
   </script>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast"></div>
+
+<script>
+// PWA service worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+        // Check for updates every hour
+        setInterval(() => reg.update(), 60 * 60 * 1000);
+      })
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+
+// Detect Capacitor native context
+if (window.Capacitor) {
+  document.body.classList.add('capacitor-app');
+  // Disable PWA install prompt inside native app
+  window.addEventListener('beforeinstallprompt', e => e.preventDefault());
+}
+
+// PWA install prompt (for browser users)
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install button if one exists on the page
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'flex';
+    installBtn.addEventListener('click', () => {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          if (installBtn) installBtn.style.display = 'none';
+        }
+        deferredInstallPrompt = null;
+      });
+    });
+  }
+});
+</script>
 
 </body>
 </html>
