@@ -7069,4 +7069,12 @@ function generateEnterpriseInsights(bookings, services, reviews) {
   ];
 }
 
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 OnPurpose server running on port ${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+});
+
 module.exports = app;
