@@ -40,6 +40,37 @@ body {
   background: var(--surface-1);
 }
 
+/* Alert styles */
+.alert {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-lg);
+  font-size: var(--size-13);
+  font-weight: 500;
+  margin-bottom: var(--sp-3);
+  border: 1px solid transparent;
+}
+
+.alert-urgent {
+  background: var(--amber-bg);
+  border-color: var(--amber-border);
+  color: var(--amber);
+}
+
+.alert-success {
+  background: var(--green-bg);
+  border-color: var(--green-border);
+  color: var(--green);
+}
+
+.form-message {
+  margin-top: var(--sp-3);
+  font-size: var(--size-13);
+  font-weight: 500;
+}
+
 /* Override existing styles to use design system */
 .container {
   padding-top: var(--sp-20);
