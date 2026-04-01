@@ -570,7 +570,9 @@ const hashPassword = async (plain) => {
   const peppered = plain + BCRYPT_PEPPER;
   return bcrypt.hash(peppered, BCRYPT_ROUNDS);
 };
-// // // // // // // // // // // // // // // // // // const comparePassword = async (plain, hash) => { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
+
+// Password comparison function
+const comparePassword = async (plain, hash) => {
   const peppered = plain + BCRYPT_PEPPER;
   return bcrypt.compare(peppered, hash);
 };
@@ -2067,7 +2069,7 @@ function getTimeCommitmentFromNiche(niche, deliveryMethod) {
   };
 
   // Adjust based on delivery method
-// // // // // // // // // // // // // // // // // // const deliveryAdjustments = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
+  const deliveryAdjustments = {
     'mobile service': '+ travel time',
     'virtual sessions': 'online',
     'local in-person experience': 'on-site',
@@ -2906,8 +2908,7 @@ app.post('/api/calendar/sync-availability',
         return res.status(400).json({ success: false, message: 'Calendar not connected' });
       }
       
-      // Get existing availability
-// // // // // // // // // // // // // // // // // // const existingAvailability = await Availability.findAll({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
+      const existingAvailability = await Availability.findAll({
         where: { providerId: req.userId }
       });
       
@@ -7069,4 +7070,3 @@ function generateEnterpriseInsights(bookings, services, reviews) {
 }
 
 module.exports = app;
-}
