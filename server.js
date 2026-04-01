@@ -1556,10 +1556,90 @@ app.post('/api/availability/block',
   }
 );
 
-/* ═══════════════════ CHECKIN ROUTES ═══════════════════ */
+// ===== FILE UPLOAD ENDPOINTS =====
 
-// ── checkin routes ──────────────────────────────
-app.use('/api/checkin', checkinRouter);
+// Avatar upload endpoint
+app.post('/api/users/avatar', authenticate, async (req, res) => {
+  try {
+    // Placeholder for file upload logic
+    res.status(501).json({ success: false, message: 'File upload not implemented yet' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Upload failed' });
+  }
+});
+
+// Service image upload endpoint
+app.post('/api/services/:id/image', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+  try {
+    // Placeholder for file upload logic
+    res.status(501).json({ success: false, message: 'File upload not implemented yet' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Upload failed' });
+  }
+});
+
+// ===== NOTIFICATION SYSTEM =====
+
+// Get notifications
+app.get('/api/notifications', authenticate, async (req, res) => {
+  try {
+    // Placeholder for notification logic
+    res.json({ success: true, data: [] });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to load notifications' });
+  }
+});
+
+// Mark notifications as read
+app.put('/api/notifications/read', authenticate, async (req, res) => {
+  try {
+    // Placeholder for notification logic
+    res.json({ success: true, message: 'Notifications marked as read' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to update notifications' });
+  }
+});
+
+// ===== EMAIL ADMIN ENDPOINTS =====
+
+// Get email logs (admin only)
+app.get('/api/admin/emails', authenticate, requireRole('admin'), async (req, res) => {
+  try {
+    const emails = await EmailLog.findAll({
+      order: [['sentAt', 'DESC']],
+      limit: 100
+    });
+    res.json({ success: true, data: emails });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to load email logs' });
+  }
+});
+
+// ===== PROVIDER STATS =====
+
+// Provider statistics endpoint
+app.get('/api/provider/stats', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+  try {
+    const providerId = req.userId;
+    const [services, bookings, revenue] = await Promise.all([
+      Service.count({ where: { providerId, isActive: true } }),
+      Booking.count({ where: { providerId, status: 'completed' } }),
+      Booking.sum('providerAmount', { where: { providerId, paymentStatus: 'paid' } })
+    ]);
+    
+    res.json({
+      success: true,
+      data: {
+        totalServices: services,
+        completedBookings: bookings,
+        totalRevenue: revenue || 0,
+        averageRating: 4.5 // Placeholder
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Failed to load provider stats' });
+  }
+});
 
 /* ═══════════════════ ADMIN ROUTES ═══════════════════ */
 
