@@ -736,11 +736,22 @@ const startServer = async () => {
     await sequelize.sync({ alter: true });
     console.log('Database synchronized');
     
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
       console.log(`🚀 OnPurpose server running on port ${PORT}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`🔗 API: http://localhost:${PORT}/api`);
       console.log(`🌐 Frontend: http://localhost:${PORT}`);
+      
+      // AUTO RUN ON DEPLOY
+      try {
+        console.log('🧠 Running self-learning engine on startup...');
+        const SelfLearningHotfixEngine = require('./self-learning-hotfix-engine');
+        const engine = new SelfLearningHotfixEngine();
+        await engine.executeFullCycle();
+        console.log('✅ Engine completed on deploy');
+      } catch (err) {
+        console.error('❌ Engine failed on deploy:', err.message);
+      }
     });
   } catch (error) {
     console.error('Failed to start server:', error);
