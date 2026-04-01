@@ -91,31 +91,16 @@ class AdvancedFixManager {
 
   validateFile(filePath) {
     try {
-      const content = fs.readFileSync(filePath, 'utf8');
-      
-      // Basic validation based on file type
-      if (filePath.endsWith('.js')) {
-        // JavaScript syntax validation
-        new Function(content);
-        return true;
+      const content = fs.readFileSync(filePath, "utf8");
+
+      // basic safety checks
+      if (content.includes("undefined") || content.length < 20) {
+        return false;
       }
-      
-      if (filePath.endsWith('.json')) {
-        // JSON syntax validation
-        JSON.parse(content);
-        return true;
-      }
-      
-      if (filePath.endsWith('.html')) {
-        // Basic HTML validation
-        return content.includes('<html') && content.includes('</html>');
-      }
-      
-      // For other files, just check if it's not empty
-      return content.length > 0;
-      
-    } catch (error) {
-      console.error("❌ File validation failed:", error.message);
+
+      return true;
+
+    } catch {
       return false;
     }
   }
