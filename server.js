@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { sequelize } = require('./models');
-// Railway redeploy trigger - 2024-04-01-14-25
+// Railway redeploy trigger - 2024-04-01-15-05
 
 const authRoutes = require('./routes/auth');
 const authSimpleRoutes = require('./routes/auth-simple');

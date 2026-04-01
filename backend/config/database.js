@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-// Use DATABASE_URL for production (Render) or individual variables for development
+// Use DATABASE_URL for production (Railway) or individual variables for development
 const sequelize = new Sequelize(
   process.env.DATABASE_URL || 
   (process.env.DB_NAME && process.env.DB_USER && process.env.DB_PASSWORD && process.env.DB_HOST && process.env.DB_PORT
