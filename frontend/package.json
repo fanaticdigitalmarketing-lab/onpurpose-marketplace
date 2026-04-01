@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "OnPurpose frontend - Hospitality marketplace for booking people",
   "main": "index.js",
+  "homepage": "/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
