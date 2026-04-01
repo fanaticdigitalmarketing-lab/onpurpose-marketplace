@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/auth');
@@ -13,6 +14,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files (main website)
+app.use(express.static(path.join(__dirname)));
+
 // Trust proxy for Railway deployment
 app.set('trust proxy', 1);
 
@@ -21,8 +25,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/bookings', bookingRoutes);
 
-// Health check
-app.get('/', (req, res) => {
+// Health check (API only)
+app.get('/api', (req, res) => {
   res.json({ message: 'OnPurpose API is running! Booking people, not places.' });
 });
 
