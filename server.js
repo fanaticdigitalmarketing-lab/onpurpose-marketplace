@@ -36,7 +36,7 @@ app.get('/health', (req, res) => {
 // Stats endpoint
 app.get('/api/stats', (req, res) => {
   res.json({
-    hosts: '50+',
+    providers: '50+',
     bookings: '100+', 
     countries: '12+'
   });

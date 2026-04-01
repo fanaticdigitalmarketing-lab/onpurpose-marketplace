@@ -137,6 +137,25 @@
       padding-top: 100px;
     }
 
+    /* Responsive Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     h1 {
       font-size: 3rem;
       margin-bottom: 20px;
@@ -232,9 +251,10 @@
 
     .features {
       margin-top: 60px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+    }
+
+    .services-grid {
+      margin-top: 60px;
     }
 
     .card {
@@ -615,7 +635,7 @@
       </div>
     </div>
 
-    <div class="features">
+    <div class="features services-grid">
       <div class="card">
         <h3>🎯 Career Coaching</h3>
         <p>Get personalized career guidance from industry professionals.</p>
@@ -695,17 +715,31 @@
     async function loadStats() {
       try {
         const stats = await api('/api/stats');
-        updateStats(stats);
-      } catch (error) {
-        console.log('Using demo stats');
-        // Demo stats are already displayed
+        document.getElementById('providersCount').textContent = stats.providers || '0';
+        document.getElementById('bookingsCount').textContent = stats.bookings || '0';
+        document.getElementById('countriesCount').textContent = stats.countries || '0';
+      } catch (e) {
+        console.error('Stats failed:', e);
       }
     }
 
-    function updateStats(stats) {
-      if (stats.hosts) document.getElementById('hostsCount').textContent = stats.hosts;
-      if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
-      if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
+    // Navigation auth state
+    function updateNav() {
+      const user = JSON.parse(localStorage.getItem('op_user') || 'null');
+
+      const auth = document.getElementById('nav-auth');
+      const userNav = document.getElementById('nav-user');
+
+      if (user) {
+        auth.style.display = 'none';
+        userNav.style.display = 'flex';
+
+        document.getElementById('nav-nm').textContent = user.name.split(' ')[0];
+        document.getElementById('nav-av').textContent = user.name.charAt(0).toUpperCase();
+      } else {
+        auth.style.display = 'flex';
+        userNav.style.display = 'none';
+      }
     }
 
     // Logo click handler - return to homepage
@@ -908,6 +942,7 @@
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       loadStats();
+      updateNav();
       loadSavedIdeas();
       handleUrlParameters();
     });
