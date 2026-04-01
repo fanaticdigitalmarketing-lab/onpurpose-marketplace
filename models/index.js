@@ -5,12 +5,7 @@ const Service = require('./Service');
 const Booking = require('./Booking');
 const Subscriber = require('./Subscriber');
 
-// Relationships
-User.hasMany(Booking);
-Booking.belongsTo(User);
-
-Service.hasMany(Booking);
-Booking.belongsTo(Service);
+// No automatic relationships - using manual foreign keys
 
 const db = {
   sequelize,

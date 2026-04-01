@@ -54,7 +54,9 @@ router.get('/:id', async (req, res) => {
 router.post('/', authMiddleware, [
   body('title').notEmpty().withMessage('Title is required'),
   body('description').notEmpty().withMessage('Description is required'),
-  body('price').isFloat({ gt: 0 }).withMessage('Price must be greater than 0')
+  body('price').isNumeric().withMessage('Price must be a number'),
+  body('category').notEmpty().withMessage('Category is required'),
+  body('duration').isNumeric().withMessage('Duration must be a number')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -62,20 +64,19 @@ router.post('/', authMiddleware, [
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { title, description, price } = req.body;
+    const { title, description, price, category, duration, isOnline } = req.body;
     
     const service = await Service.create({
       title,
       description,
       price,
+      category,
+      duration,
+      isOnline,
       userId: req.user.id
     });
 
-    const serviceWithUser = await Service.findByPk(service.id, {
-      include: [{ model: User, attributes: ['username'] }]
-    });
-
-    res.status(201).json(serviceWithUser);
+    res.status(201).json(service);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
