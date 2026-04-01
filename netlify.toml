@@ -1,11 +1,11 @@
 [build]
-  base = "frontend"
-  command = "npm install && npm run build"
-  publish = "frontend/build"
+  base = "."
+  command = "echo 'Static build - no command needed'"
+  publish = "."
 
 [build.environment]
   NODE_VERSION = "18"
-  # Force rebuild - 2024-04-01-14-00
+  # Force rebuild - 2024-04-01-14-05
 
 [[redirects]]
   from = "/*"
