@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">OnPurpose</string>
+    <string name="title_activity_main">OnPurpose</string>
+    <string name="package_name">earth.onpurpose.app</string>
+    <string name="custom_url_scheme">earth.onpurpose.app</string>
+</resources>
