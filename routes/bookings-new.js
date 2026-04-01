@@ -9,7 +9,8 @@ const router = express.Router();
 // Create booking request
 router.post('/', authMiddleware, [
   body('serviceId').isUUID().withMessage('Service ID must be valid'),
-  body('date').isISO8601().withMessage('Date must be a valid date')
+  body('date').isISO8601().withMessage('Date must be a valid date'),
+  body('time').optional().isISO8601().withMessage('Time must be a valid time')
 ], async (req, res) => {
   try {
     const errors = validationResult(req);
