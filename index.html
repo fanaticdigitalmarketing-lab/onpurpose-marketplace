@@ -18,6 +18,360 @@
 <meta property="og:image:alt" content="OnPurpose — Turn Your Skills Into Services - A people-first marketplace for real human connection">
 <meta property="og:site_name" content="OnPurpose">
 <meta property="og:locale" content="en_US">
+
+<!-- 1. Fonts (preconnect for speed) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- 2. Design system first (tokens) -->
+<link rel="stylesheet" href="/frontend/assets/css/design-system.css">
+
+<!-- 3. Nav second -->
+<link rel="stylesheet" href="/frontend/assets/css/nav.css">
+
+<!-- 4. Layout third -->
+<link rel="stylesheet" href="/frontend/assets/css/layout.css">
+
+<!-- 5. Page-specific CSS in a <style> tag AFTER the above -->
+<style>
+/* Page-specific styles using design system tokens */
+body {
+  background: var(--surface-1);
+}
+
+/* Override existing styles to use design system */
+.container {
+  padding-top: var(--sp-20);
+}
+
+/* Navigation integration */
+.main-nav {
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+/* Hero section integration */
+.hero-content {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-20) var(--sp-10);
+  text-align: center;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--size-hero);
+  font-weight: 900;
+  color: var(--navy);
+  margin-bottom: var(--sp-5);
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: var(--size-20);
+  color: var(--blue);
+  font-weight: 500;
+  margin-bottom: var(--sp-6);
+}
+
+/* Form integration */
+.email-form {
+  display: flex;
+  gap: var(--sp-3);
+  max-width: 500px;
+  margin: var(--sp-8) auto 0;
+}
+
+.email-input {
+  flex: 1;
+  padding: var(--sp-4);
+  border: 1.5px solid var(--border-2);
+  border-radius: var(--r-lg);
+  background: var(--white);
+  color: var(--text-1);
+  font-size: 16px;
+  font-family: var(--font-body);
+}
+
+.email-input::placeholder {
+  color: var(--text-4);
+}
+
+.email-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--blue-tint-2);
+  outline: none;
+}
+
+/* Service choice integration */
+.service-choice {
+  max-width: var(--max-w);
+  margin: var(--sp-16) auto;
+  padding: var(--sp-10);
+  background: var(--white);
+  border-radius: var(--r-3xl);
+  box-shadow: var(--shadow-3);
+  text-align: center;
+}
+
+.service-choice h3 {
+  font-family: var(--font-display);
+  font-size: var(--size-32);
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: var(--sp-4);
+}
+
+.service-choice p {
+  font-size: var(--size-16);
+  color: var(--text-2);
+  margin-bottom: var(--sp-8);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.service-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--sp-4);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.service-btn {
+  padding: var(--sp-5);
+  background: var(--blue);
+  color: var(--white);
+  border: none;
+  border-radius: var(--r-xl);
+  font-size: var(--size-16);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--t-base);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 120px;
+  justify-content: center;
+}
+
+.service-btn:hover {
+  background: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-4);
+}
+
+.service-btn-secondary {
+  background: var(--surface-2);
+  color: var(--navy);
+  border: 1.5px solid var(--border-2);
+}
+
+.service-btn-secondary:hover {
+  background: var(--surface-3);
+  border-color: var(--blue);
+}
+
+.service-btn-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--sp-2);
+}
+
+.service-btn-text {
+  font-size: var(--size-12);
+  opacity: 0.8;
+  margin-top: var(--sp-1);
+}
+
+/* AI Generator integration */
+.ai-generator {
+  max-width: var(--max-w);
+  margin: var(--sp-16) auto;
+  padding: var(--sp-10);
+  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
+  border-radius: var(--r-3xl);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-content {
+  position: relative;
+  z-index: 2;
+}
+
+.ai-title {
+  font-family: var(--font-display);
+  font-size: var(--size-40);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: var(--sp-4);
+}
+
+.ai-description {
+  font-size: var(--size-18);
+  color: rgba(255,255,255,0.9);
+  margin-bottom: var(--sp-8);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.ai-form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ai-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.ai-input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.ai-input-group label {
+  font-size: var(--size-12);
+  font-weight: 600;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: var(--sp-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ai-input {
+  padding: var(--sp-4);
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: var(--r-lg);
+  background: rgba(255,255,255,0.15);
+  color: var(--white);
+  font-size: var(--size-16);
+  font-family: var(--font-body);
+  backdrop-filter: blur(10px);
+}
+
+.ai-input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+.ai-input:focus {
+  border-color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.25);
+  outline: none;
+}
+
+.ai-generate-btn {
+  width: 100%;
+  padding: var(--sp-5);
+  background: rgba(255,255,255,0.2);
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: var(--r-xl);
+  font-size: var(--size-18);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-base);
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
+}
+
+.ai-generate-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Sections integration */
+section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: var(--sp-16) var(--sp-10);
+}
+
+section h2 {
+  font-family: var(--font-display);
+  font-size: var(--size-36);
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: var(--sp-4);
+  text-align: center;
+}
+
+section p {
+  font-size: var(--size-16);
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: var(--sp-6);
+}
+
+/* Footer integration */
+footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.6);
+  padding: var(--sp-12) var(--sp-10);
+  text-align: center;
+  margin-top: var(--sp-20);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .email-form {
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  
+  .ai-input-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+  
+  .service-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-content {
+    padding: var(--sp-12) var(--sp-6);
+  }
+  
+  section {
+    padding: var(--sp-12) var(--sp-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: var(--size-32);
+  }
+  
+  .ai-title {
+    font-size: var(--size-28);
+  }
+  
+  .service-choice {
+    padding: var(--sp-6);
+  }
+  
+  .ai-generator {
+    padding: var(--sp-6);
+  }
+}
+</style>
+
+<!-- 6. Mobile last (has highest specificity — overrides are safe) -->
+<link rel="stylesheet" href="/frontend/assets/css/mobile.css">
 <meta property="fb:app_id" content="0">
 
 <!-- Additional OG Tags for Better Caching -->
@@ -954,8 +1308,67 @@
 </head>
 <body>
 
-  <!-- Bouncing Logo -->
-  <div class="logo-container">
+<!-- Navigation -->
+<nav id="main-nav" class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <div style="width: 40px; height: 40px; background: var(--blue); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-family: var(--font-display); font-size: 1.2rem;">OP</div>
+      <div class="nav-logo-text">
+        <div class="nav-logo-name">OnPurpose</div>
+        <div class="nav-logo-sub">Book People</div>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div id="nav-auth-row" class="nav-auth">
+        <button class="btn btn-secondary">Login</button>
+        <button class="btn btn-primary">Sign Up</button>
+      </div>
+      <button id="nav-user-btn" class="nav-user-btn" style="display: none;">
+        <div id="nav-av" class="nav-avatar">U</div>
+        <span id="nav-name">User</span>
+      </button>
+      <button id="nav-ham" class="nav-hamburger" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Drawer -->
+<div id="nav-drawer" class="nav-drawer">
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#services" class="nav-link">Services</a>
+  <a href="#about" class="nav-link">About</a>
+  <a href="#contact" class="nav-link">Contact</a>
+  <div class="nav-drawer-divider"></div>
+  <div id="drawer-auth" class="nav-drawer-footer">
+    <button class="btn btn-secondary btn-full">Login</button>
+    <button class="btn btn-primary btn-full">Sign Up</button>
+  </div>
+  <div id="drawer-user" class="nav-drawer-footer" style="display: none;">
+    <div style="display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3);">
+      <div class="nav-avatar">U</div>
+      <div>
+        <div style="font-weight: 600; color: var(--navy);">User</div>
+        <div style="font-size: var(--size-12); color: var(--text-3);">Account</div>
+      </div>
+    </div>
+    <button class="btn btn-ghost btn-full">Logout</button>
+  </div>
+</div>
+
+<!-- Page wrapper -->
+<div class="page-wrap">
     <div class="logo">OP</div>
   </div>
 
@@ -1542,6 +1955,114 @@
       }
     }
   </script>
+
+<!-- Navigation JavaScript -->
+<script>
+(function() {
+  'use strict';
+
+  /* ── Nav scroll shadow ─────────────────────────────────────────── */
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    window.addEventListener('scroll', function() {
+      nav.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive: true });
+  }
+
+  /* ── Hamburger + drawer ────────────────────────────────────────── */
+  const ham    = document.getElementById('nav-ham');
+  const drawer = document.getElementById('nav-drawer');
+
+  function closeDrawer() {
+    if (!ham || !drawer) return;
+    ham.setAttribute('aria-expanded', 'false');
+    drawer.classList.remove('open');
+    document.body.classList.remove('no-scroll');
+  }
+
+  if (ham && drawer) {
+    ham.addEventListener('click', function() {
+      const open = drawer.classList.toggle('open');
+      ham.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('no-scroll', open);
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!ham.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+  }
+
+  /* ── updateNav: reflect auth state everywhere ──────────────────── */
+  window.updateNav = function() {
+    var user = null;
+    try { user = JSON.parse(localStorage.getItem('op_user')); } catch {}
+    var token = localStorage.getItem('op_token');
+
+    var authRow   = document.getElementById('nav-auth-row');
+    var userBtn   = document.getElementById('nav-user-btn');
+    var navAv     = document.getElementById('nav-av');
+    var navName   = document.getElementById('nav-name');
+    var drawerAuth = document.getElementById('drawer-auth');
+    var drawerUser = document.getElementById('drawer-user');
+
+    if (user && token) {
+      if (authRow)    authRow.style.display    = 'none';
+      if (userBtn)    userBtn.style.display    = 'flex';
+      if (drawerAuth) drawerAuth.style.display = 'none';
+      if (drawerUser) drawerUser.style.display = 'flex';
+      var initial = (user.name || '?').charAt(0).toUpperCase();
+      var first   = (user.name || 'Account').split(' ')[0];
+      if (navAv)   navAv.textContent   = initial;
+      if (navName) navName.textContent = first;
+    } else {
+      if (authRow)    authRow.style.display    = 'flex';
+      if (userBtn)    userBtn.style.display    = 'none';
+      if (drawerAuth) drawerAuth.style.display = 'flex';
+      if (drawerUser) drawerUser.style.display = 'none';
+    }
+  };
+
+  /* ── Toast ─────────────────────────────────────────────────────── */
+  window.toast = function(msg, type) {
+    var t = document.getElementById('toast');
+    if (!t) return;
+    t.querySelector('.toast-msg').textContent = msg;
+    t.className = 'toast show' + (type === 'er' ? ' error' : '');
+    clearTimeout(t._tid);
+    t._tid = setTimeout(function() { t.className = 'toast'; }, 3800);
+  };
+
+  /* ── Run on load ────────────────────────────────────────────────── */
+  document.addEventListener('DOMContentLoaded', function() {
+    updateNav();
+
+    /* Mark active nav link */
+    var path = window.location.pathname;
+    document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(function(a) {
+      if (a.getAttribute('href') === path ||
+          (path !== '/' && a.getAttribute('href') && path.includes(a.getAttribute('href')))) {
+        a.classList.add('active');
+      }
+    });
+
+    /* Detect Capacitor */
+    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+      document.body.classList.add('capacitor-app');
+    }
+  });
+
+})();
+</script>
+
+<!-- Toast HTML -->
+<div id="toast" role="status" aria-live="polite" aria-atomic="true">
+  <span class="toast-icon">✓</span>
+  <span class="toast-msg"></span>
+</div>
 
 </body>
 </html>
