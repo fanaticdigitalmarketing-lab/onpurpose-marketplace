@@ -1,0 +1,61 @@
+/* ── Universal mobile baseline ───────────────────────────────────── */
+* { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+input, textarea, select, button { font-size: 16px !important; }
+
+/* ── Tap feedback ────────────────────────────────────────────────── */
+.btn:active, .svc-card:active, .cat-pill:active, .sb-link:active,
+.card:active, .social-btn:active { transform: scale(0.97); }
+
+/* ── Prevent horizontal bleed ────────────────────────────────────── */
+body { overflow-x: hidden; }
+
+/* ── iOS safe area body padding ──────────────────────────────────── */
+body { padding-bottom: var(--safe-bottom); }
+
+/* ── Scrollable horizontal rows ──────────────────────────────────── */
+.scroll-x {
+  display: flex;
+  gap: var(--sp-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--sp-2);
+}
+.scroll-x::-webkit-scrollbar { display: none; }
+.scroll-x > * { scroll-snap-align: start; flex-shrink: 0; }
+
+/* ── Better mobile hero ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero-section { gap: var(--sp-6); }
+  .hero-eyebrow { font-size: 10px; }
+}
+
+/* ── Service grid mobile ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .svc-card-media { height: 148px; }
+  .svc-card-title { font-size: var(--size-15); }
+  .svc-card-body { padding: var(--sp-3) var(--sp-4); }
+  .svc-price { font-size: var(--size-20); }
+}
+
+/* ── Dashboard mobile padding ────────────────────────────────────── */
+@media (max-width: 360px) {
+  .sb-link { min-width: 52px; font-size: 8px; }
+}
+
+/* ── Capacitor native app adjustments ───────────────────────────── */
+.capacitor-app .nav {
+  padding-top: var(--safe-top);
+  height: calc(var(--nav-h) + var(--safe-top));
+}
+.capacitor-app .page-wrap {
+  padding-top: calc(var(--nav-h) + var(--safe-top));
+}
+.capacitor-app #toast {
+  bottom: calc(var(--sp-8) + var(--safe-bottom) + 20px);
+}
+/* Never show install prompt inside the native app */
+.capacitor-app .pwa-install-prompt { display: none !important; }
