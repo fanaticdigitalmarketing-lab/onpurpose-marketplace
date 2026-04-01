@@ -622,31 +622,9 @@
 
   <script>
     // API Configuration
-    const CONFIG = {
-      API_URL: window.location.hostname === 'localhost'
-        ? 'http://localhost:3000'
-        : 'https://onpurpose-backend-clean-production.up.railway.app'
-    };
-
-    // API helper function
-    async function api(path, options = {}) {
-      const token = localStorage.getItem('op_token');
-
-      const res = await fetch(`${CONFIG.API_URL}${path}`, {
-        method: options.method || 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` })
-        },
-        body: options.body ? JSON.stringify(options.body) : undefined
-      });
-
-      if (!res.ok) {
-        throw new Error('API Error');
-      }
-
-      return res.json();
-    }
+    const API_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000'
+      : 'https://onpurpose-backend-clean-production.up.railway.app';
 
     // Form submission handler
     document.getElementById('earlyAccessForm').addEventListener('submit', async (e) => {
@@ -668,13 +646,21 @@
       submitBtn.textContent = 'Joining...';
       
       try {
-        await api('/api/early-access', { 
-          method: 'POST', 
-          body: { email } 
+        const response = await fetch(`${API_URL}/api/early-access`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email })
         });
         
-        showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
-        emailInput.value = '';
+        if (response.ok) {
+          const data = await response.json();
+          showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
+          emailInput.value = '';
+        } else {
+          throw new Error('Failed to join early access');
+        }
       } catch (error) {
         // For demo purposes, show success even if API fails
         console.log('Early access signup (demo mode):', email);
@@ -701,8 +687,11 @@
     // Load platform stats
     async function loadStats() {
       try {
-        const stats = await api('/api/stats');
-        updateStats(stats);
+        const response = await fetch(`${API_URL}/api/stats`);
+        if (response.ok) {
+          const stats = await response.json();
+          updateStats(stats);
+        }
       } catch (error) {
         console.log('Using demo stats');
         // Demo stats are already displayed
@@ -780,18 +769,26 @@
         }
         
         // Call AI API
-        const data = await api('/api/ideas/generate', {
+        const response = await fetch(`${API_URL}/api/ideas/generate`, {
           method: 'POST',
-          body: { skill, niche }
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ skill, niche })
         });
         
-        if (data.success && data.data && data.data.ideas) {
-          currentIdeas = data.data.ideas;
-          // Cache the results
-          ideaCache.set(cacheKey, currentIdeas);
-          displayIdeas(currentIdeas);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data && data.data.ideas) {
+            currentIdeas = data.data.ideas;
+            // Cache the results
+            ideaCache.set(cacheKey, currentIdeas);
+            displayIdeas(currentIdeas);
+          } else {
+            throw new Error('Invalid response format');
+          }
         } else {
-          throw new Error('Invalid response format');
+          throw new Error('API request failed');
         }
       } catch (error) {
         console.log('AI API error, using fallback ideas:', error);
