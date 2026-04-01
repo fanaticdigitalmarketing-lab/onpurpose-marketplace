@@ -71,164 +71,61 @@ body {
   font-weight: 500;
 }
 
-/* Override existing styles to use design system */
-.container {
-  padding-top: var(--sp-20);
+.form-message.success {
+  color: var(--green);
 }
 
-/* Navigation integration */
-.main-nav {
-  background: rgba(255,255,255,0.94);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+.form-message.error {
+  color: var(--red);
 }
 
-/* Hero section integration */
-.hero-content {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: var(--sp-20) var(--sp-10);
-  text-align: center;
-}
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: var(--size-hero);
-  font-weight: 900;
-  color: var(--navy);
-  margin-bottom: var(--sp-5);
-  line-height: 1.1;
-}
-
-.hero-subtitle {
-  font-size: var(--size-20);
-  color: var(--blue);
-  font-weight: 500;
-  margin-bottom: var(--sp-6);
-}
-
-/* Form integration */
+/* Email form styles */
 .email-form {
   display: flex;
   gap: var(--sp-3);
   max-width: 500px;
-  margin: var(--sp-8) auto 0;
+  margin: 0 auto;
 }
 
 .email-input {
   flex: 1;
-  padding: var(--sp-4);
-  border: 1.5px solid var(--border-2);
-  border-radius: var(--r-lg);
-  background: var(--white);
-  color: var(--text-1);
-  font-size: 16px;
-  font-family: var(--font-body);
 }
 
-.email-input::placeholder {
-  color: var(--text-4);
-}
-
-.email-input:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px var(--blue-tint-2);
-  outline: none;
-}
-
-/* Service choice integration */
-.service-choice {
-  max-width: var(--max-w);
-  margin: var(--sp-16) auto;
-  padding: var(--sp-10);
-  background: var(--white);
-  border-radius: var(--r-3xl);
-  box-shadow: var(--shadow-3);
-  text-align: center;
-}
-
-.service-choice h3 {
-  font-family: var(--font-display);
-  font-size: var(--size-32);
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: var(--sp-4);
-}
-
-.service-choice p {
-  font-size: var(--size-16);
-  color: var(--text-2);
-  margin-bottom: var(--sp-8);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.service-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--sp-4);
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.service-btn {
-  padding: var(--sp-5);
-  background: var(--blue);
-  color: var(--white);
-  border: none;
-  border-radius: var(--r-xl);
-  font-size: var(--size-16);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--t-base);
-  font-family: var(--font-body);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--sp-2);
-  min-height: 120px;
-  justify-content: center;
-}
-
-.service-btn:hover {
-  background: var(--navy);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-4);
-}
-
-.service-btn-secondary {
-  background: var(--surface-2);
-  color: var(--navy);
-  border: 1.5px solid var(--border-2);
-}
-
-.service-btn-secondary:hover {
-  background: var(--surface-3);
-  border-color: var(--blue);
-}
-
-.service-btn-icon {
-  font-size: 2.5rem;
-  margin-bottom: var(--sp-2);
-}
-
-.service-btn-text {
-  font-size: var(--size-12);
-  opacity: 0.8;
-  margin-top: var(--sp-1);
-}
-
-/* AI Generator integration */
+/* AI Generator specific styles */
 .ai-generator {
-  max-width: var(--max-w);
-  margin: var(--sp-16) auto;
-  padding: var(--sp-10);
-  background: linear-gradient(135deg, var(--blue), var(--blue-bright));
-  border-radius: var(--r-3xl);
-  text-align: center;
+  background: linear-gradient(135deg, var(--navy), var(--navy-deep));
+  border: 2px solid var(--blue);
   position: relative;
   overflow: hidden;
+}
+
+.ai-generator::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 250px;
+  height: 250px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  animation: float 6s ease-in-out infinite;
+}
+
+.ai-generator::after {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: -40px;
+  width: 180px;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
 
 .ai-content {
@@ -237,188 +134,113 @@ body {
 }
 
 .ai-title {
-  font-family: var(--font-display);
-  font-size: var(--size-40);
-  font-weight: 700;
   color: var(--white);
-  margin-bottom: var(--sp-4);
+  text-align: center;
 }
 
 .ai-description {
-  font-size: var(--size-18);
-  color: rgba(255,255,255,0.9);
-  margin-bottom: var(--sp-8);
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
   line-height: 1.6;
+}
+
+.ai-description strong {
+  color: var(--white);
 }
 
 .ai-form {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
-.ai-input-grid {
+.ai-input-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-4);
   margin-bottom: var(--sp-6);
 }
 
-.ai-input-group {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+.ideas-result {
+  display: none;
 }
 
-.ai-input-group label {
-  font-size: var(--size-12);
-  font-weight: 600;
-  color: rgba(255,255,255,0.9);
-  margin-bottom: var(--sp-2);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.ai-input {
-  padding: var(--sp-4);
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: var(--r-lg);
-  background: rgba(255,255,255,0.15);
-  color: var(--white);
-  font-size: var(--size-16);
-  font-family: var(--font-body);
-  backdrop-filter: blur(10px);
-}
-
-.ai-input::placeholder {
-  color: rgba(255,255,255,0.6);
-}
-
-.ai-input:focus {
-  border-color: rgba(255,255,255,0.6);
-  background: rgba(255,255,255,0.25);
-  outline: none;
-}
-
-.ai-generate-btn {
-  width: 100%;
-  padding: var(--sp-5);
-  background: rgba(255,255,255,0.2);
-  color: var(--white);
-  border: 2px solid rgba(255,255,255,0.4);
-  border-radius: var(--r-xl);
-  font-size: var(--size-18);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--t-base);
-  font-family: var(--font-body);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  backdrop-filter: blur(10px);
-}
-
-.ai-generate-btn:hover {
-  background: rgba(255,255,255,0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* Sections integration */
-section {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: var(--sp-16) var(--sp-10);
-}
-
-section h2 {
-  font-family: var(--font-display);
-  font-size: var(--size-36);
-  font-weight: 700;
-  color: var(--navy);
-  margin-bottom: var(--sp-4);
-  text-align: center;
-}
-
-section p {
-  font-size: var(--size-16);
-  color: var(--text-2);
-  line-height: 1.7;
+.ideas-container {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--r-2xl);
+  padding: var(--sp-8);
   margin-bottom: var(--sp-6);
+  backdrop-filter: blur(15px);
 }
 
-/* Footer integration */
-footer {
-  background: var(--navy-deep);
-  color: rgba(255,255,255,0.6);
-  padding: var(--sp-12) var(--sp-10);
+.ideas-title {
+  color: var(--white);
   text-align: center;
-  margin-top: var(--sp-20);
+  margin-bottom: var(--sp-4);
 }
 
-/* Responsive adjustments */
+.idea-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-4);
+}
+
+.idea-title {
+  color: var(--white);
+  margin-bottom: var(--sp-3);
+}
+
+.idea-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: var(--sp-4);
+}
+
+.loading-state {
+  display: none;
+  text-align: center;
+  padding: var(--sp-8);
+}
+
+.loading-text {
+  color: var(--white);
+  margin-bottom: var(--sp-3);
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid var(--white);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mobile responsive */
 @media (max-width: 768px) {
-  .email-form {
-    flex-direction: column;
-    gap: var(--sp-4);
-  }
-  
-  .ai-input-grid {
+  .ai-input-group {
     grid-template-columns: 1fr;
     gap: var(--sp-3);
   }
   
-  .service-buttons {
-    grid-template-columns: 1fr;
-  }
-  
-  .hero-content {
-    padding: var(--sp-12) var(--sp-6);
-  }
-  
-  section {
-    padding: var(--sp-12) var(--sp-6);
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: var(--size-32);
-  }
-  
-  .ai-title {
-    font-size: var(--size-28);
-  }
-  
-  .service-choice {
-    padding: var(--sp-6);
-  }
-  
-  .ai-generator {
-    padding: var(--sp-6);
+  .ideas-container {
+    padding: var(--sp-5);
   }
 }
 </style>
 
 <!-- 6. Mobile last (has highest specificity — overrides are safe) -->
 <link rel="stylesheet" href="/assets/css/mobile.css">
-<meta property="fb:app_id" content="0">
-
-<!-- Additional OG Tags for Better Caching -->
-<meta property="og:image:alt" content="OnPurpose — Turn Your Skills Into Services - A people-first marketplace for real human connection">
-<meta property="og:image:alt" content="Professional marketplace for skills and human services">
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow">
-
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OnPurpose — Turn Your Skills Into Services">
-<meta name="twitter:description" content="Discover what you can offer, then launch it instantly.">
-<meta name="twitter:image" content="https://onpurpose.earth/og-image.jpg" />
-<meta name="twitter:url" content="https://onpurpose.earth">
-<meta name="twitter:site" content="@onpurpose">
-<meta name="twitter:creator" content="@onpurpose">
 
 <!-- Additional Meta Tags -->
 <meta name="description" content="OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.">
@@ -512,7 +334,7 @@ footer {
 <div class="page-wrap">
 
 <!-- Home Section -->
-<section id="home">
+<section id="home" class="hero-section">
   <div class="hero-content">
     <h1 class="hero-title">Book People. Not Places.</h1>
     <h2 class="hero-subtitle">Connection, not dating for skills & human services</h2>
@@ -535,7 +357,7 @@ footer {
         <input 
           type="email" 
           id="emailInput"
-          class="email-input"
+          class="input input-lg"
           placeholder="Enter your email" 
           required
         />
@@ -547,1495 +369,261 @@ footer {
     </div>
   </div>
 </section>
-      color: white;
-      text-decoration: none;
-      padding: 0.75rem 1rem;
-      display: block;
-      transition: color 0.3s;
-    }
 
-    .nav-link:hover {
-      color: #22c55e;
-    }
-
-    .nav-auth, .nav-user {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      padding: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .nav-user {
-      justify-content: space-between;
-    }
-
-    .nav-name {
-      color: white;
-      font-weight: 500;
-    }
-
-    .nav-avatar {
-      width: 32px;
-      height: 32px;
-      background: #22c55e;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 0.875rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 500;
-      transition: all 0.3s;
-    }
-
-    .btn-primary {
-      background: #22c55e;
-      color: white;
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    /* Hero Content Styles */
-    .hero-content {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .hero-title {
-      font-size: 3rem;
-      font-weight: 900;
-      margin-bottom: 1rem;
-      background: linear-gradient(45deg, #22c55e, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-      color: #22c55e;
-      margin-bottom: 2rem;
-      font-weight: 500;
-    }
-
-    .hero-description {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    .alert {
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      border: 1px solid;
-    }
-
-    .alert-urgent {
-      background: rgba(239, 68, 68, 0.1);
-      border-color: #ef4444;
-      color: #ef4444;
-    }
-
-    .alert-success {
-      background: rgba(34, 197, 94, 0.1);
-      border-color: #22c55e;
-      color: #22c55e;
-    }
-
-    .cta-section {
-      margin-top: 2rem;
-    }
-
-    .email-form {
-      display: flex;
-      gap: 1rem;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .email-input {
-      flex: 1;
-      padding: 1rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1rem;
-    }
-
-    .email-input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .btn-large {
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-    }
-
-    .form-message {
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    /* Service Choice Section */
-    .service-choice {
-      margin: 3rem 0;
-      padding: 2rem;
-      background: linear-gradient(135deg, #1e293b, #334155);
-      border-radius: 16px;
-      border: 1px solid #334155;
-      text-align: center;
-    }
-
-    .service-choice h3 {
-      color: white;
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-
-    .service-choice p {
-      color: #cbd5f5;
-      margin-bottom: 2rem;
-      font-size: 1.1rem;
-    }
-
-    .service-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .service-btn {
-      padding: 1.5rem;
-      background: linear-gradient(45deg, #22c55e, #3b82f6);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-align: center;
-    }
-
-    .service-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(34, 197, 94, 0.4);
-    }
-
-    .service-btn-secondary {
-      background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-    }
-
-    .service-btn-secondary:hover {
-      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
-    }
-
-    .service-btn-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-
-    .service-btn-text {
-      font-size: 0.9rem;
-      margin-top: 0.5rem;
-      opacity: 0.9;
-    }
-
-    /* AI Generator Section */
-    .ai-generator {
-      margin: 3rem 0;
-      padding: 4rem;
-      background: linear-gradient(135deg, #22c55e, #3b82f6);
-      border-radius: 25px;
-      border: 3px solid #22c55e;
-      box-shadow: 0 25px 50px rgba(34, 197, 94, 0.4);
-      position: relative;
-      overflow: hidden;
-      min-height: 600px;
-    }
-
-    .ai-bg-decoration {
-      position: absolute;
-      border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .ai-bg-decoration-1 {
-      top: -60px;
-      right: -60px;
-      width: 250px;
-      height: 250px;
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .ai-bg-decoration-2 {
-      bottom: -40px;
-      left: -40px;
-      width: 180px;
-      height: 180px;
-      background: rgba(255, 255, 255, 0.08);
-      animation: float 8s ease-in-out infinite reverse;
-    }
-
-    .ai-bg-decoration-3 {
-      top: 50%;
-      left: -20px;
-      width: 100px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.05);
-      animation: float 4s ease-in-out infinite;
-    }
-
-    .ai-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .ai-title {
-      font-size: 3rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      color: white;
-      font-weight: 900;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .ai-description {
-      color: rgba(255, 255, 255, 0.95);
-      margin-bottom: 3rem;
-      font-size: 1.3rem;
-      text-align: center;
-      line-height: 1.6;
-      font-weight: 500;
-    }
-
-    .ai-form {
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .ai-input-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .ai-input-group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .ai-input-group label {
-      display: block;
-      text-align: left;
-      margin-bottom: 0.75rem;
-      color: rgba(255, 255, 255, 0.95);
-      font-weight: 800;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .ai-input {
-      padding: 1.125rem;
-      border: 3px solid rgba(255, 255, 255, 0.4);
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.15);
-      color: white;
-      font-size: 1.1rem;
-      backdrop-filter: blur(15px);
-      transition: all 0.3s;
-      font-weight: 500;
-    }
-
-    .ai-input:focus {
-      border-color: rgba(255, 255, 255, 0.8);
-      background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-    }
-
-    .ai-generate-btn {
-      width: 100%;
-      padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.25);
-      color: white;
-      border: 3px solid rgba(255, 255, 255, 0.5);
-      border-radius: 18px;
-      font-size: 1.4rem;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.3s;
-      backdrop-filter: blur(15px);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 2.5rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .ai-generate-btn:hover {
-      background: rgba(255, 255, 255, 0.35);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-
-    /* Mobile Responsive Styles */
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 2rem;
-      }
-      
-      .hero-subtitle {
-        font-size: 1.2rem;
-      }
-      
-      .email-form {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      .service-buttons {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      
-      .service-btn {
-        padding: 1rem;
-      }
-    }
-
-    /* Tablet Navigation */
-    @media (min-width: 768px) {
-      .nav-toggle {
-        display: none;
-      }
-
-      .nav-menu {
-        display: flex;
-        position: static;
-        background: none;
-        flex-direction: row;
-        padding: 0;
-        border: none;
-        align-items: center;
-      }
-
-      .nav-link {
-        padding: 0 1rem;
-      }
-
-      .nav-auth, .nav-user {
-        border: none;
-        padding: 0;
-      }
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1200px) {
-      .services-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      background: linear-gradient(45deg, #22c55e, #3b82f6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      -webkit-user-select: none;
-      user-select: none;
-    }
-
-    p {
-      font-size: 1.2rem;
-      color: #cbd5f5;
-      line-height: 1.6;
-    }
-
-    .cta {
-      margin-top: 30px;
-    }
-
-    .email-form {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    input {
-      padding: 12px 20px;
-      width: 300px;
-      border: 1px solid #334155;
-      -webkit-appearance: none;
-      appearance: none;
-      -webkit-border-radius: 8px;
-      border-radius: 8px;
-      background: #1e293b;
-      color: white;
-      font-size: 1rem;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #22c55e;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
-    }
-
-    button {
-      padding: 12px 24px;
-      border: none;
-      background: #22c55e;
-      color: white;
-      -webkit-appearance: none;
-      appearance: none;
-      -webkit-border-radius: 8px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: all 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button:hover {
-      background: #16a34a;
-      transform: translateY(-1px);
-    }
-
-    button:disabled {
-      background: #475569;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .message {
-      margin-top: 15px;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-
-    .success {
-      background: rgba(34, 197, 94, 0.1);
-      color: #22c55e;
-      border: 1px solid #22c55e;
-    }
-
-    .error {
-      background: rgba(239, 68, 68, 0.1);
-      color: #ef4444;
-      border: 1px solid #ef4444;
-    }
-
-    .features {
-      margin-top: 60px;
-    }
-
-    .services-grid {
-      margin-top: 60px;
-    }
-
-    .card {
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid #334155;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .card h3 {
-      margin: 0 0 15px 0;
-      font-size: 1.3rem;
-      color: #22c55e;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .stats {
-      margin-top: 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-    }
-
-    .stat {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 2rem;
-      font-weight: bold;
-      color: #22c55e;
-    }
-
-    .stat-label {
-      font-size: 0.9rem;
-      color: #94a3b8;
-    }
-
-    footer {
-      margin-top: 80px;
-      font-size: 0.9rem;
-      color: #94a3b8;
-      border-top: 1px solid #334155;
-      padding-top: 20px;
-    }
-
-    /* iOS Safari fixes */
-    @supports (-webkit-touch-callout: none) {
-      .container {
-        padding-bottom: env(safe-area-inset-bottom);
-      }
-      
-      button {
-        -webkit-tap-highlight-color: transparent;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        user-select: none;
-      }
-      
-      input {
-        -webkit-appearance: none;
-        appearance: none;
-        -webkit-border-radius: 8px;
-        border-radius: 8px;
-      }
-      
-      .email-form {
-        -webkit-overflow-scrolling: touch;
-      }
-    }
-    
-    /* Animations for AI Generator */
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-20px) rotate(180deg);
-      }
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .email-form {
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      input {
-        width: 100%;
-        max-width: 300px;
-      }
-      
-      button {
-        width: 100%;
-        max-width: 300px;
-      }
-
-      .logo-container {
-        top: 15px;
-        left: 15px;
-      }
-
-      .logo {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-
-      .container {
-        padding-top: 80px;
-      }
-      
-      /* Service Choice Mobile Styles */
-      div[style*="Ready to Start Your Service Business"] > div[style*="grid"] {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-      }
-      
-      div[style*="Ready to Start Your Service Business"] button {
-        padding: 15px !important;
-        font-size: 1rem !important;
-      }
-      
-      div[style*="Ready to Start Your Service Business"] button div:first-child {
-        font-size: 1.5rem !important;
-        margin-bottom: 8px !important;
-      }
-      
-      /* AI Generator Mobile Styles */
-      #aiGeneratorSection {
-        padding: 40px 20px !important;
-        min-height: auto !important;
-      }
-      
-      #aiGeneratorSection h2 {
-        font-size: 2rem !important;
-      }
-      
-      #aiGeneratorSection p {
-        font-size: 1.1rem !important;
-      }
-      
-      #ideaGenerator {
-        max-width: 100% !important;
-      }
-      
-      #ideaGenerator > div[style*="grid"] {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-      }
-      
-      #ideaGenerator label {
-        font-size: 1rem !important;
-      }
-      
-      #ideaGenerator input {
-        padding: 15px !important;
-        font-size: 1rem !important;
-      }
-      
-      #generateIdeasBtn {
-        padding: 20px !important;
-        font-size: 1.2rem !important;
-      }
-      
-      #ideasList > div {
-        padding: 20px !important;
-      }
-      
-      #ideasList h4 {
-        font-size: 1rem !important;
-      }
-      
-      #ideasList p {
-        font-size: 0.9rem !important;
-      }
-      
-      #ideasResult div[style*="text-align: center"] {
-        flex-direction: column;
-        gap: 15px;
-      }
-      
-      #ideasResult button {
-        width: 100%;
-        margin-right: 0 !important;
-        padding: 15px 25px !important;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<!-- Navigation -->
-<nav id="main-nav" class="nav">
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <div style="width: 40px; height: 40px; background: var(--blue); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-family: var(--font-display); font-size: 1.2rem;">OP</div>
-      <div class="nav-logo-text">
-        <div class="nav-logo-name">OnPurpose</div>
-        <div class="nav-logo-sub">Book People</div>
-      </div>
-    </a>
-
-    <ul class="nav-links">
-      <li><a href="#home" class="nav-link">Home</a></li>
-      <li><a href="#services" class="nav-link">Services</a></li>
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#contact" class="nav-link">Contact</a></li>
-    </ul>
-
-    <div class="nav-right">
-      <div id="nav-auth-row" class="nav-auth">
-        <button class="btn btn-secondary">Login</button>
-        <button class="btn btn-primary">Sign Up</button>
-      </div>
-      <button id="nav-user-btn" class="nav-user-btn" style="display: none;">
-        <div id="nav-av" class="nav-avatar">U</div>
-        <span id="nav-name">User</span>
-      </button>
-      <button id="nav-ham" class="nav-hamburger" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- Mobile Drawer -->
-<div id="nav-drawer" class="nav-drawer">
-  <a href="#home" class="nav-link">Home</a>
-  <a href="#services" class="nav-link">Services</a>
-  <a href="#about" class="nav-link">About</a>
-  <a href="#contact" class="nav-link">Contact</a>
-  <div class="nav-drawer-divider"></div>
-  <div id="drawer-auth" class="nav-drawer-footer">
-    <button class="btn btn-secondary btn-full">Login</button>
-    <button class="btn btn-primary btn-full">Sign Up</button>
-  </div>
-  <div id="drawer-user" class="nav-drawer-footer" style="display: none;">
-    <div style="display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3);">
-      <div class="nav-avatar">U</div>
-      <div>
-        <div style="font-weight: 600; color: var(--navy);">User</div>
-        <div style="font-size: var(--size-12); color: var(--text-3);">Account</div>
-      </div>
-    </div>
-    <button class="btn btn-ghost btn-full">Logout</button>
-  </div>
-</div>
-
-<!-- Page wrapper -->
-<div class="page-wrap">
-    <div class="logo">OP</div>
-  </div>
-
+<!-- Service Cards Section -->
+<section id="services" class="svc-section">
   <div class="container">
-    <!-- Unified Navigation -->
-    <nav class="main-nav">
-      <div class="nav-container">
-        <div class="nav-brand">OnPurpose</div>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <div class="nav-menu" id="navMenu">
-          <a href="#home" class="nav-link">Home</a>
-          <a href="#services" class="nav-link">Services</a>
-          <a href="#about" class="nav-link">About</a>
-          <a href="#contact" class="nav-link">Contact</a>
-          <div class="nav-auth" id="nav-auth">
-            <button class="btn btn-secondary">Login</button>
-            <button class="btn btn-primary">Sign Up</button>
-          </div>
-          <div class="nav-user" id="nav-user" style="display: none;">
-            <span class="nav-name" id="nav-name">User</span>
-            <div class="nav-avatar" id="nav-avatar">U</div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <h2 class="section-title">Available Services</h2>
+    <p class="section-subtitle">Connect with skilled professionals offering real services</p>
     
-    <!-- Home Section -->
-    <section id="home">
-      <div class="hero-content">
-        <h1 class="hero-title">Book People. Not Places.</h1>
-        <h2 class="hero-subtitle">not dating connection for skills & human services</h2>
-        
-        <div class="alert alert-urgent">
-          ⚡ Limited early access — first 100 users only
-        </div>
-        
-        <div class="alert alert-success">
-          ✨ Already used by 50+ early users
-        </div>
-        
-        <p class="hero-description">
-          OnPurpose connects you directly with real people offering real skills —
-          from coaching to creative services.
-        </p>
-
-        <div class="cta-section">
-          <form class="email-form" id="earlyAccessForm">
-            <input 
-              type="email" 
-              id="emailInput"
-              class="email-input"
-              placeholder="Enter your email" 
-              required
-            />
-            <button type="submit" id="submitBtn" class="btn btn-primary btn-large">
-              Join Early Access
-            </button>
-          </form>
-          <div id="message" class="form-message"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SERVICE CHOICE SECTION -->
-    <div class="service-choice">
-      <h3>Ready to Start Your Service Business?</h3>
-      <p>Choose how you'd like to get started with OnPurpose</p>
-      
-      <div class="service-buttons">
-        <button class="service-btn" onclick="scrollToIdeaGenerator()">
-          <span class="service-btn-icon">💡</span>
-          <span>Generate My Service</span>
-          <span class="service-btn-text">Let AI create ideas for you</span>
-        </button>
-        
-        <button class="service-btn service-btn-secondary" onclick="goToProvider()">
-          <span class="service-btn-icon">🚀</span>
-          <span>I Already Have a Service</span>
-          <span class="service-btn-text">Start listing right away</span>
-        </button>
-      </div>
+    <div class="svc-grid" id="serviceGrid">
+      <!-- Services will be loaded here from API -->
     </div>
-
-    <!-- AI GENERATOR - ALWAYS VISIBLE SECTION -->
-    <div class="ai-generator" id="aiGeneratorSection">
-      <!-- Background decorations -->
-      <div class="ai-bg-decoration ai-bg-decoration-1"></div>
-      <div class="ai-bg-decoration ai-bg-decoration-2"></div>
-      <div class="ai-bg-decoration ai-bg-decoration-3"></div>
-      
-      <div class="ai-content">
-        <h2 class="ai-title">💡 AI Service Idea Generator</h2>
-        <p class="ai-description">
-          Discover your perfect service offering with our AI-powered idea generator.<br>
-          <span style="font-size: 1.4rem; font-weight: 700; color: white;">Tell us your skills and interests, and we'll create personalized business ideas for you.</span>
-        </p>
-        
-        <div class="ai-form" id="ideaGenerator">
-          <div class="ai-input-grid">
-            <div class="ai-input-group">
-              <label>YOUR SKILL/EXPERTISE</label>
-              <input 
-                type="text" 
-                id="skillInput" 
-                class="ai-input"
-                placeholder="e.g. Web Development, Marketing, Design..." 
-              />
-            </div>
-            <div class="ai-input-group">
-              <label>TARGET MARKET</label>
-              <input 
-                type="text" 
-                id="nicheInput" 
-                class="ai-input"
-                placeholder="e.g. Small Businesses, Startups, Creators..." 
-              />
-            </div>
-          </div>
-          
-          <button class="ai-generate-btn" id="generateIdeasBtn" onclick="generateIdeas()">
-            🚀 Generate AI Ideas
-          </button>
-        </div>
-      </div>
-    </div>
-          
-          <div id="ideasResult" style="display: none;">
-            <div style="background: rgba(255, 255, 255, 0.2); border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 20px; padding: 40px; margin-bottom: 40px; backdrop-filter: blur(15px); box-shadow: 0 15px 35px rgba(0,0,0,0.2);">
-              <h3 style="color: white; margin-bottom: 25px; font-size: 1.8rem; text-align: center; font-weight: 800;">✨ Your AI-Generated Service Ideas</h3>
-              <div id="ideasList"></div>
-            </div>
-            
-            <div style="text-align: center;">
-              <p style="color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; font-size: 1.2rem; font-weight: 600;">Ready to turn these ideas into reality?</p>
-              <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <button 
-                  onclick="becomeProvider()" 
-                  style="padding: 18px 40px; background: white; color: #22c55e; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);"
-                  onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 35px rgba(0,0,0,0.3)'"
-                  onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.2)'"
-                >
-                  🎯 Become a Provider
-                </button>
-                <button 
-                  onclick="generateMoreIdeas()" 
-                  style="padding: 18px 40px; background: transparent; color: white; border: 3px solid white; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem;"
-                  onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(-3px)'"
-                  onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'"
-                >
-                  🔄 Generate More
-                </button>
-              </div>
-            </div>
-          </div>
-          
-          <div id="loadingState" style="display: none; text-align: center; padding: 40px;">
-            <div style="color: white; font-size: 1.6rem; font-weight: 700; margin-bottom: 15px;">🤖 AI is generating your personalized ideas...</div>
-            <div style="margin-top: 15px; color: rgba(255, 255, 255, 0.8); font-size: 1.1rem;">This usually takes 2-3 seconds</div>
-            <div style="margin-top: 25px; width: 60px; height: 60px; border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin-left: auto; margin-right: auto;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-number" id="hostsCount">50+</div>
-        <div class="stat-label">Expert Hosts</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" id="bookingsCount">100+</div>
-        <div class="stat-label">Bookings Made</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number" id="countriesCount">12+</div>
-        <div class="stat-label">Countries</div>
-      </div>
-    </div>
-
-    </section>
-
-    <!-- Services Section -->
-    <section id="services">
-      <div class="features services-grid">
-      <div class="card">
-        <h3>🎯 Career Coaching</h3>
-        <p>Get personalized career guidance from industry professionals.</p>
-      </div>
-
-      <div class="card">
-        <h3>📣 Marketing Help</h3>
-        <p>Boost your brand with expert marketing strategies and support.</p>
-      </div>
-
-      <div class="card">
-        <h3>🎨 Design Services</h3>
-        <p>Professional design solutions for your creative projects.</p>
-      </div>
-    </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-      <div style="text-align: center; padding: 4rem 2rem; background: rgba(34, 197, 94, 0.1); border-radius: 16px; margin: 2rem 0;">
-        <h2 style="color: white; font-size: 2rem; margin-bottom: 1rem;">About OnPurpose</h2>
-        <p style="color: rgba(255, 255, 255, 0.9); max-width: 600px; margin: 0 auto;">
-          We're building a marketplace where human connection comes first. 
-          Book people, not places — for skills, services, and meaningful interactions.
-        </p>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-      <div style="text-align: center; padding: 2rem;">
-        <h2 style="color: white; font-size: 1.5rem; margin-bottom: 1rem;">Get in Touch</h2>
-        <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem;">
-          Have questions? Want to become a provider? We'd love to hear from you.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <button class="btn btn-primary" onclick="window.location.href='mailto:hello@onpurpose.earth'">
-            Email Us
-          </button>
-          <button class="btn btn-secondary" onclick="window.open('https://twitter.com/onpurpose', '_blank')">
-            Follow on Twitter
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      © 2026 OnPurpose — Marketplace for human connection
-    </footer>
   </div>
+</section>
 
-  <script src="config.js"></script>
-  <script src="api.js"></script>
-  <script>
+<!-- AI Generator Section -->
+<section id="aiGeneratorSection" class="ai-generator">
+  <div class="ai-content">
+    <h2 class="ai-title">💡 AI Service Idea Generator</h2>
+    <p class="ai-description">
+      Discover your perfect service offering with our AI-powered idea generator.<br>
+      <strong>Tell us your skills and interests, and we'll create personalized business ideas for you.</strong>
+    </p>
     
-    // Form submission handler
-    document.getElementById('earlyAccessForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+    <div id="ideaGenerator" class="ai-form">
+      <div class="ai-input-group">
+        <input 
+          type="text" 
+          id="skillInput" 
+          class="input input-lg"
+          placeholder="e.g. Web Development, Marketing, Design..." 
+        />
+        <input 
+          type="text" 
+          id="nicheInput" 
+          class="input input-lg"
+          placeholder="e.g. Small Businesses, Startups, Creators..." 
+        />
+      </div>
       
-      const emailInput = document.getElementById('emailInput');
-      const submitBtn = document.getElementById('submitBtn');
-      const messageDiv = document.getElementById('message');
+      <button 
+        id="generateIdeasBtn" 
+        class="btn btn-primary btn-xl btn-block"
+        onclick="generateIdeas()"
+      >
+        🚀 Generate My Service Ideas
+      </button>
       
-      const email = emailInput.value.trim();
-      
-      if (!email) {
-        showMessage('Please enter a valid email address', 'error');
-        return;
-      }
-      
-      // Disable form during submission
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Joining...';
-      
-      try {
-        await api('/api/early-access', { 
-          method: 'POST', 
-          body: { email } 
-        });
-        
-        showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
-        emailInput.value = '';
-      } catch (error) {
-        // For demo purposes, show success even if API fails
-        console.log('Early access signup (demo mode):', email);
-        showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
-        emailInput.value = '';
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Join Early Access';
-      }
-    });
-
-    function showMessage(text, type) {
-      const messageDiv = document.getElementById('message');
-      messageDiv.textContent = text;
-      messageDiv.className = `message ${type}`;
-      
-      // Clear message after 5 seconds
-      setTimeout(() => {
-        messageDiv.textContent = '';
-        messageDiv.className = 'message';
-      }, 5000);
-    }
-
-    // Load platform stats
-    async function loadStats() {
-      try {
-        const stats = await api('/api/stats');
-        document.getElementById('providersCount').textContent = stats.providers || '0';
-        document.getElementById('bookingsCount').textContent = stats.bookings || '0';
-        document.getElementById('countriesCount').textContent = stats.countries || '0';
-      } catch (e) {
-        console.error('Stats failed:', e);
-      }
-    }
-
-    // Navigation auth state
-    function updateNav() {
-      const user = JSON.parse(localStorage.getItem('op_user') || 'null');
-
-      const auth = document.getElementById('nav-auth');
-      const userNav = document.getElementById('nav-user');
-
-      if (user) {
-        auth.style.display = 'none';
-        userNav.style.display = 'flex';
-
-        document.getElementById('nav-name').textContent = user.name.split(' ')[0];
-        document.getElementById('nav-avatar').textContent = user.name.charAt(0).toUpperCase();
-      } else {
-        auth.style.display = 'flex';
-        userNav.style.display = 'none';
-      }
-    }
-
-    // Logo click handler - return to homepage
-    document.querySelector('.logo').addEventListener('click', () => {
-      window.location.href = window.location.origin;
-    });
-
-    // SERVICE CHOICE FUNCTIONS
-    function scrollToIdeaGenerator() {
-      const ideaGenerator = document.getElementById('ideaGenerator');
-      if (ideaGenerator) {
-        ideaGenerator.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Highlight the section briefly
-        const section = ideaGenerator.closest('div[style*="linear-gradient"]');
-        if (section) {
-          section.style.transition = 'all 0.3s';
-          section.style.transform = 'scale(1.02)';
-          setTimeout(() => {
-            section.style.transform = 'scale(1)';
-          }, 300);
-        }
-      }
-    }
-
-    function goToProvider() {
-      // Store the source for analytics
-      localStorage.setItem('providerSource', 'homepage-direct');
-      window.location.href = '/provider.html';
-    }
-
-    // IDEA GENERATOR FUNCTIONALITY
-    const ideaCache = new Map();
-    let currentIdeas = [];
-
-    async function generateIdeas() {
-      const skillInput = document.getElementById('skillInput');
-      const nicheInput = document.getElementById('nicheInput');
-      const generateBtn = document.getElementById('generateIdeasBtn');
-      const loadingState = document.getElementById('loadingState');
-      const ideasResult = document.getElementById('ideasResult');
-      
-      const skill = skillInput.value.trim();
-      const niche = nicheInput.value.trim();
-      
-      if (!skill || !niche) {
-        alert('Please enter both your skill and target market');
-        return;
-      }
-      
-      // Show loading state
-      generateBtn.disabled = true;
-      generateBtn.textContent = '🤖 AI Thinking...';
-      loadingState.style.display = 'block';
-      ideasResult.style.display = 'none';
-      
-      try {
-        // Create cache key
-        const cacheKey = `${skill.toLowerCase()}-${niche.toLowerCase()}`;
-        
-        // Check cache first
-        if (ideaCache.has(cacheKey)) {
-          currentIdeas = ideaCache.get(cacheKey);
-          displayIdeas(currentIdeas);
-          return;
-        }
-        
-        // Call AI API
-        const data = await api('/api/ideas/generate', {
-          method: 'POST',
-          body: { skill, niche }
-        });
-        
-        if (data.success && data.data && data.data.ideas) {
-          currentIdeas = data.data.ideas;
-          // Cache the results
-          ideaCache.set(cacheKey, currentIdeas);
-          displayIdeas(currentIdeas);
-        } else {
-          throw new Error('Invalid response format');
-        }
-      } catch (error) {
-        console.log('AI API error, using fallback ideas:', error);
-        // Fallback ideas if API fails
-        currentIdeas = generateFallbackIdeas(skill, niche);
-        displayIdeas(currentIdeas);
-      } finally {
-        generateBtn.disabled = false;
-        generateBtn.textContent = '🚀 Generate AI Ideas';
-        loadingState.style.display = 'none';
-      }
-    }
-
-    function generateFallbackIdeas(skill, niche) {
-      const templates = [
-        {
-          title: `${skill} Consulting for ${niche}`,
-          description: `Provide expert ${skill.toLowerCase()} consulting services tailored specifically for ${niche.toLowerCase()} to help them achieve their goals and overcome challenges.`,
-          category: 'Consulting',
-          price: '$75-150/hour'
-        },
-        {
-          title: `${skill} Coaching Program`,
-          description: `Create a comprehensive coaching program that teaches ${niche.toLowerCase()} how to master ${skill.toLowerCase()} through personalized guidance and support.`,
-          category: 'Coaching',
-          price: '$50-100/session'
-        },
-        {
-          title: `Done-for-You ${skill} Service`,
-          description: `Offer a complete ${skill.toLowerCase()} service where you handle everything from strategy to execution for busy ${niche.toLowerCase()}.`,
-          category: 'Service',
-          price: '$200-500/project'
-        }
-      ];
-      
-      return templates.map(template => ({
-        ...template,
-        uniqueId: Math.random().toString(36).substr(2, 9)
-      }));
-    }
-
-    function displayIdeas(ideas) {
-      const ideasList = document.getElementById('ideasList');
-      const ideasResult = document.getElementById('ideasResult');
-      
-      ideasList.innerHTML = ideas.map((idea, index) => `
-        <div style="background: rgba(255, 255, 255, 0.1); border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 12px; padding: 25px; margin-bottom: 20px; backdrop-filter: blur(10px); transition: all 0.3s;" onmouseover="this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
-          <h4 style="color: white; margin-bottom: 15px; font-size: 1.3rem; font-weight: 700;">${index + 1}. ${idea.title}</h4>
-          <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; line-height: 1.6; font-size: 1.05rem;">${idea.description}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
-            <span style="background: linear-gradient(45deg, #22c55e, #3b82f6); color: white; padding: 8px 20px; border-radius: 25px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${idea.category}</span>
-            <span style="color: rgba(255, 255, 255, 0.8); font-weight: 600; font-size: 1rem;">${idea.price || 'Competitive rates'}</span>
-          </div>
+      <div id="ideasResult" class="ideas-result">
+        <div class="ideas-container">
+          <h3 class="ideas-title">✨ Your AI-Generated Service Ideas</h3>
+          <div id="ideasList"></div>
         </div>
-      `).join('');
-      
-      ideasResult.style.display = 'block';
-      
-      // Save to localStorage for persistence
-      localStorage.setItem('lastGeneratedIdeas', JSON.stringify({
-        ideas,
-        timestamp: Date.now(),
-        skill: document.getElementById('skillInput').value,
-        niche: document.getElementById('nicheInput').value
-      }));
-      
-      // Scroll to results
-      setTimeout(() => {
-        ideasResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    }
-
-    function generateMoreIdeas() {
-      // Clear cache and regenerate
-      const skill = document.getElementById('skillInput').value.trim();
-      const niche = document.getElementById('nicheInput').value.trim();
-      
-      if (skill && niche) {
-        // Clear cache for this combination
-        const cacheKey = `${skill.toLowerCase()}-${niche.toLowerCase()}`;
-        ideaCache.delete(cacheKey);
         
-        // Generate new ideas
-        generateIdeas();
-      }
-    }
+        <div class="ideas-actions">
+          <button onclick="createServiceFromIdea()" class="btn btn-success btn-lg">
+            💼 Create This Service
+          </button>
+          <button onclick="generateMoreIdeas()" class="btn btn-secondary btn-lg">
+            🔄 Generate More Ideas
+          </button>
+        </div>
+      </div>
+      
+      <div id="loadingState" class="loading-state">
+        <div class="loading-text">🤖 AI is generating your personalized ideas...</div>
+        <div class="loading-subtext">This usually takes 2-3 seconds</div>
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function becomeProvider() {
-      // Store the current ideas for the provider page
-      if (currentIdeas.length > 0) {
-        localStorage.setItem('providerIdeas', JSON.stringify(currentIdeas));
-        localStorage.setItem('providerSkill', document.getElementById('skillInput').value);
-        localStorage.setItem('providerNiche', document.getElementById('nicheInput').value);
-      }
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>OnPurpose</h3>
+        <p>Book People, Not Places</p>
+      </div>
       
-      // Redirect to provider page
-      window.location.href = '/provider.html';
-    }
+      <div class="footer-links">
+        <h4>Platform</h4>
+        <a href="#services">Browse Services</a>
+        <a href="#provider">Become a Provider</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+      
+      <div class="footer-social">
+        <h4>Connect</h4>
+        <a href="https://www.instagram.com/onpurposeearth/">Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61577482846260">Facebook</a>
+        <a href="https://www.linkedin.com/in/tyler-forbes-1704423bb/">LinkedIn</a>
+        <a href="https://www.youtube.com/@onpurposeearth">YouTube</a>
+        <a href="https://x.com/onpurposeearth">X</a>
+        <a href="https://www.tiktok.com/@onpurpose.app">TikTok</a>
+        <a href="https://discord.gg/8megf4Snz">Discord</a>
+        <a href="mailto:onpurposeearth@gmail.com">Email</a>
+      </div>
+    </div>
+    
+    <div class="footer-bar">
+      <p>&copy; 2026 OnPurpose Inc. All rights reserved.</p>
+      <a href="#privacy">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
 
-    // Load saved ideas on page load
-    function loadSavedIdeas() {
-      const savedData = localStorage.getItem('lastGeneratedIdeas');
-      if (savedData) {
-        try {
-          const data = JSON.parse(savedData);
-          const ageInHours = (Date.now() - data.timestamp) / (1000 * 60 * 60);
-          
-          // Show saved ideas if less than 24 hours old
-          if (ageInHours < 24 && data.ideas && data.ideas.length > 0) {
-            document.getElementById('skillInput').value = data.skill || '';
-            document.getElementById('nicheInput').value = data.niche || '';
-            currentIdeas = data.ideas;
-            displayIdeas(data.ideas);
-          }
-        } catch (error) {
-          console.log('Error loading saved ideas:', error);
-        }
-      }
-    }
+</div> <!-- page-wrap -->
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-      loadStats();
-      updateNav();
-      loadSavedIdeas();
-      handleUrlParameters();
-      initNavigation();
-    });
-
-    // Unified Navigation System
-    function initNavigation() {
-      const navToggle = document.getElementById('navToggle');
-      const navMenu = document.getElementById('navMenu');
-      
-      navToggle.addEventListener('click', () => {
-        navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
-      });
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-          navMenu.style.display = 'none';
-        }
-      });
-      
-      // Handle nav links
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-          if (link.getAttribute('href').startsWith('#')) {
-            e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
-            if (target) {
-              target.scrollIntoView({ behavior: 'smooth' });
-            }
-          }
-          navMenu.style.display = 'none';
-        });
-      });
-    }
-
-    // Handle URL parameters (Facebook links, etc.)
-    function handleUrlParameters() {
-      const urlParams = new URLSearchParams(window.location.search);
-      
-      // Store source for analytics
-      if (urlParams.get('fbclid')) {
-        localStorage.setItem('trafficSource', 'facebook');
-        console.log('Facebook referral detected');
-      }
-      
-      if (urlParams.get('utm_source')) {
-        localStorage.setItem('utmSource', urlParams.get('utm_source'));
-      }
-      
-      if (urlParams.get('utm_campaign')) {
-        localStorage.setItem('utmCampaign', urlParams.get('utm_campaign'));
-      }
-      
-      // Clear URL parameters for clean experience
-      if (window.location.search) {
-        const cleanUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, cleanUrl);
-      }
-    }
-  </script>
-
-<!-- Navigation JavaScript -->
+<!-- JavaScript -->
 <script>
-(function() {
-  'use strict';
-
-  /* ── Nav scroll shadow ─────────────────────────────────────────── */
-  const nav = document.getElementById('main-nav');
-  if (nav) {
-    window.addEventListener('scroll', function() {
-      nav.classList.toggle('scrolled', window.scrollY > 8);
-    }, { passive: true });
-  }
-
-  /* ── Hamburger + drawer ────────────────────────────────────────── */
-  const ham    = document.getElementById('nav-ham');
-  const drawer = document.getElementById('nav-drawer');
-
-  function closeDrawer() {
-    if (!ham || !drawer) return;
-    ham.setAttribute('aria-expanded', 'false');
-    drawer.classList.remove('open');
-    document.body.classList.remove('no-scroll');
-  }
-
-  if (ham && drawer) {
-    ham.addEventListener('click', function() {
-      const open = drawer.classList.toggle('open');
-      ham.setAttribute('aria-expanded', String(open));
-      document.body.classList.toggle('no-scroll', open);
+// Early access form
+document.getElementById('earlyAccessForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('emailInput').value;
+  const submitBtn = document.getElementById('submitBtn');
+  const message = document.getElementById('message');
+  
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Joining...';
+  
+  try {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: 'Early Access User',
+        email: email,
+        password: 'TempPass123!',
+        role: 'customer'
+      })
     });
-
-    document.addEventListener('click', function(e) {
-      if (!ham.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeDrawer();
-    });
-  }
-
-  /* ── updateNav: reflect auth state everywhere ──────────────────── */
-  window.updateNav = function() {
-    var user = null;
-    try { user = JSON.parse(localStorage.getItem('op_user')); } catch {}
-    var token = localStorage.getItem('op_token');
-
-    var authRow   = document.getElementById('nav-auth-row');
-    var userBtn   = document.getElementById('nav-user-btn');
-    var navAv     = document.getElementById('nav-av');
-    var navName   = document.getElementById('nav-name');
-    var drawerAuth = document.getElementById('drawer-auth');
-    var drawerUser = document.getElementById('drawer-user');
-
-    if (user && token) {
-      if (authRow)    authRow.style.display    = 'none';
-      if (userBtn)    userBtn.style.display    = 'flex';
-      if (drawerAuth) drawerAuth.style.display = 'none';
-      if (drawerUser) drawerUser.style.display = 'flex';
-      var initial = (user.name || '?').charAt(0).toUpperCase();
-      var first   = (user.name || 'Account').split(' ')[0];
-      if (navAv)   navAv.textContent   = initial;
-      if (navName) navName.textContent = first;
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      message.textContent = '✅ Welcome to OnPurpose! Check your email for next steps.';
+      message.className = 'form-message success';
+      document.getElementById('emailInput').value = '';
     } else {
-      if (authRow)    authRow.style.display    = 'flex';
-      if (userBtn)    userBtn.style.display    = 'none';
-      if (drawerAuth) drawerAuth.style.display = 'flex';
-      if (drawerUser) drawerUser.style.display = 'none';
+      message.textContent = data.message || 'Something went wrong. Please try again.';
+      message.className = 'form-message error';
     }
-  };
+  } catch (error) {
+    message.textContent = 'Network error. Please try again.';
+    message.className = 'form-message error';
+  }
+  
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Join Early Access';
+});
 
-  /* ── Toast ─────────────────────────────────────────────────────── */
-  window.toast = function(msg, type) {
-    var t = document.getElementById('toast');
-    if (!t) return;
-    t.querySelector('.toast-msg').textContent = msg;
-    t.className = 'toast show' + (type === 'er' ? ' error' : '');
-    clearTimeout(t._tid);
-    t._tid = setTimeout(function() { t.className = 'toast'; }, 3800);
-  };
+// AI Idea Generator
+async function generateIdeas() {
+  const skillInput = document.getElementById('skillInput').value;
+  const nicheInput = document.getElementById('nicheInput').value;
+  const ideasResult = document.getElementById('ideasResult');
+  const loadingState = document.getElementById('loadingState');
+  const ideasList = document.getElementById('ideasList');
+  
+  if (!skillInput || !nicheInput) {
+    alert('Please fill in both fields');
+    return;
+  }
+  
+  // Show loading
+  loadingState.style.display = 'block';
+  ideasResult.style.display = 'none';
+  
+  try {
+    // Simulate AI generation (replace with real API call)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const ideas = [
+      {
+        title: `${skillInput} Consulting for ${nicheInput}`,
+        description: `Offer your ${skillInput} expertise to help ${nicheInput} achieve their goals through personalized consulting sessions.`
+      },
+      {
+        title: `${skillInput} Workshops & Training`,
+        description: `Create and sell workshops teaching ${skillInput} skills to ${nicheInput}. Both online and in-person options.`
+      },
+      {
+        title: `Done-For-You ${skillInput} Services`,
+        description: `Provide complete ${skillInput} solutions for ${nicheInput} who want professional results without the DIY approach.`
+      }
+    ];
+    
+    ideasList.innerHTML = ideas.map((idea, index) => `
+      <div class="idea-card">
+        <h4 class="idea-title">${idea.title}</h4>
+        <p class="idea-description">${idea.description}</p>
+        <button onclick="createServiceFromIdea('${idea.title}')" class="btn btn-success">
+          Create This Service
+        </button>
+      </div>
+    `).join('');
+    
+    // Show results
+    loadingState.style.display = 'none';
+    ideasResult.style.display = 'block';
+    
+  } catch (error) {
+    loadingState.style.display = 'none';
+    alert('Failed to generate ideas. Please try again.');
+  }
+}
 
-  /* ── Run on load ────────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function() {
-    updateNav();
+function createServiceFromIdea(serviceTitle) {
+  // Redirect to provider page with service pre-filled
+  window.location.href = `/provider.html?service=${encodeURIComponent(serviceTitle)}`;
+}
 
-    /* Mark active nav link */
-    var path = window.location.pathname;
-    document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(function(a) {
-      if (a.getAttribute('href') === path ||
-          (path !== '/' && a.getAttribute('href') && path.includes(a.getAttribute('href')))) {
-        a.classList.add('active');
+function generateMoreIdeas() {
+  document.getElementById('ideasResult').style.display = 'none';
+  generateIdeas();
+}
+
+// Navigation
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile menu toggle
+  const hamburger = document.querySelector('.nav-hamburger');
+  const drawer = document.querySelector('.nav-drawer');
+  
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', function() {
+      drawer.classList.toggle('open');
+    });
+    
+    // Close drawer when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!drawer.contains(e.target) && !hamburger.contains(e.target)) {
+        drawer.classList.remove('open');
       }
     });
-
-    /* Detect Capacitor */
-    if (window.Capacitor && window.Capacitor.isNativePlatform()) {
-      document.body.classList.add('capacitor-app');
-    }
+  }
+  
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
   });
-
-})();
+});
 </script>
-
-<!-- Toast HTML -->
-<div id="toast" role="status" aria-live="polite" aria-atomic="true">
-  <span class="toast-icon">✓</span>
-  <span class="toast-msg"></span>
-</div>
 
 </body>
 </html>
