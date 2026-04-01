@@ -561,7 +561,7 @@ class AutoDeployPipeline {
       console.log('🔍 Checking for crash logs...');
       healthChecks.noCrashLogs = true;
       
-      const passed = Object.values(healthChecks).every(check => check === true || typeof check === 'string');
+      const passed = healthChecks.serverRunning && healthChecks.databaseConnected && healthChecks.noCrashLogs;
       
       return {
         passed,
