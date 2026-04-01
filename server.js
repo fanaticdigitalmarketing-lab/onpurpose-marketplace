@@ -601,6 +601,27 @@ app.post('/api/engine/run', async (req, res) => {
   }
 });
 
+// Self-Learning Engine Data API endpoints
+app.get('/api/rules', (req, res) => {
+  try {
+    const rules = require('./learned-rules.json');
+    res.json(rules);
+  } catch (error) {
+    console.error('Error loading rules:', error);
+    res.status(500).json({ error: 'Failed to load rules' });
+  }
+});
+
+app.get('/api/history', (req, res) => {
+  try {
+    const history = require('./fix-history.json');
+    res.json(history);
+  } catch (error) {
+    console.error('Error loading history:', error);
+    res.status(500).json({ error: 'Failed to load fix history' });
+  }
+});
+
 // Payment webhook endpoint
 app.post('/api/webhooks/stripe', async (req, res) =>       {
   try {
