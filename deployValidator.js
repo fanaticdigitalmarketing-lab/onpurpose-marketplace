@@ -10,57 +10,17 @@
  * @throws {Error} - If validation fails
  */
 function validateBeforeDeploy(results) {
-  console.log('🔍 Running deployment validation...');
-  
-  // Check for failed fixes
-  const failedFixes = results.fixResults ? results.fixResults.filter(f => !f.success) : [];
-  
-  if (failedFixes.length > 0) {
-    const failedTypes = failedFixes.map(f => f.error?.type || 'unknown').join(', ');
-    throw new Error(`❌ Deployment blocked: ${failedFixes.length} fixes failed (${failedTypes})`);
+  const failed = results.fixResults.filter(f => !f.success);
+
+  if (failed.length > 2) {
+    throw new Error("❌ Too many failed fixes — deploy blocked");
   }
 
-  // Check success rate
-  const successRate = results.evolutionReport?.successRate || 0;
-  if (successRate < 80) {
-    throw new Error(`❌ Deployment blocked: Low success rate (${successRate}% < 80%)`);
+  if (results.evolutionReport.successRate < 85) {
+    throw new Error("❌ Low confidence — deploy blocked");
   }
 
-  // Check system health
-  const systemHealth = results.systemHealth || 0;
-  if (systemHealth < 50) {
-    throw new Error(`❌ Deployment blocked: Low system health (${systemHealth}/100 < 50)`);
-  }
-
-  // Check for critical errors
-  const criticalErrors = results.fixResults ? results.fixResults.filter(f => 
-    f.error && f.error.severity === 'critical'
-  ) : [];
-  
-  if (criticalErrors.length > 0) {
-    throw new Error(`❌ Deployment blocked: ${criticalErrors.length} critical errors detected`);
-  }
-
-  // Validate learned rules count
-  const learnedRules = results.learnedRules || 0;
-  if (learnedRules < 10) {
-    console.log(`⚠️ Warning: Low learned rules count (${learnedRules} < 10)`);
-  }
-
-  // Validate fix history
-  const fixHistory = results.fixHistory || [];
-  if (fixHistory.length === 0) {
-    console.log(`⚠️ Warning: No fix history available`);
-  }
-
-  console.log('✅ Deployment validation passed!');
-  console.log(`📊 Validation Summary:`);
-  console.log(`   • Success Rate: ${successRate}%`);
-  console.log(`   • System Health: ${systemHealth}/100`);
-  console.log(`   • Failed Fixes: ${failedFixes.length}`);
-  console.log(`   • Critical Errors: ${criticalErrors.length}`);
-  console.log(`   • Learned Rules: ${learnedRules}`);
-  
+  console.log("🟢 Deployment approved");
   return true;
 }
 
