@@ -1601,7 +1601,7 @@ app.put('/api/notifications/read', authenticate, async (req, res) => {
 });
 
 // ===== IDEA GENERATOR ENGINE =====
-// Production-ready idea generation system - v2.0
+// Production-ready idea generation system - v2.1 - DEPLOYED
 
 // Generate service ideas based on niche
 app.post('/api/ideas/generate', authenticate, async (req, res) => {
