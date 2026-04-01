@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// In production, use Render backend URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://onpurpose-backend.onrender.com';
+// In production, use Railway backend URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://onpurpose-backend-clean-production.up.railway.app';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -11,8 +11,8 @@ function App() {
   const [messageType, setMessageType] = useState('');
 
   const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3000' 
-    : 'https://onpurpose.earth';
+    ? 'https://onpurpose-backend-clean-production.up.railway.app' 
+    : 'https://onpurpose-backend-clean-production.up.railway.app';
 
   useEffect(() => {
     loadStats();
