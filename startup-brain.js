@@ -1,12 +1,9 @@
-const { pickBestProject } = require('./projectPrioritizer');
+const { pickBestProject: _pickBestProject } = require('./projectPrioritizer');
 
 /**
  * Startup Brain - Intelligent project focus system
  * Integrates project prioritization with autonomous decision making
  */
-
-// Re-export the core function
-const { pickBestProject: _pickBestProject } = require('./projectPrioritizer');
 
 // Enhanced version with startup-specific logic
 function pickBestProject() {
