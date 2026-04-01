@@ -588,12 +588,11 @@ app.post('/api/engine/run', async (req, res) => {
 
     res.json({
       success: true,
-      message: "Engine executed",
       result
     });
 
   } catch (error) {
-    console.error('Engine error:', error);
+    console.error('Engine failed:', error);
     res.status(500).json({
       success: false,
       error: error.message
