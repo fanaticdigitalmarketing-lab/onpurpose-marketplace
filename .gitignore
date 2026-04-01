@@ -48,3 +48,27 @@ temp/
 
 # Stripe CLI
 stripe.exe
+
+# Large files and binaries
+*.exe
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.zip
+*.tar.gz
+*.rar
+
+# Mobile development files
+android/
+ios/
+*.apk
+*.ipa
+
+# OpenJDK
+openJdk-25/
+
+# Untracked large directories
+simple-marketplace/
+onpurpose-backend-clean/
+onpurpose-web/
