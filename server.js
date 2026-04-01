@@ -580,6 +580,27 @@ app.get('/api/run-engine', async (req, res) => {
   }
 });
 
+// Self-Learning Hotfix Engine POST endpoint
+app.post('/api/engine/run', async (req, res) => {
+  try {
+    const engine = new SelfLearningHotfixEngine();
+    const result = await engine.executeFullCycle();
+
+    res.json({
+      success: true,
+      message: "Engine executed",
+      result
+    });
+
+  } catch (error) {
+    console.error('Engine error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
 // Payment webhook endpoint
 app.post('/api/webhooks/stripe', async (req, res) =>       {
   try {
