@@ -8,9 +8,22 @@
   # Force rebuild - 2024-04-01-15-20
 
 [[redirects]]
+  from = "/api/*"
+  to = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Authorization = "*"
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
 
 [[headers]]
   for = "/*"

@@ -3,6 +3,7 @@ const sequelize = require('../config/database');
 const User = require('./User');
 const Service = require('./Service');
 const Booking = require('./Booking');
+const Subscriber = require('./Subscriber');
 
 // Relationships
 User.hasMany(Booking);
@@ -15,7 +16,8 @@ const db = {
   sequelize,
   User,
   Service,
-  Booking
+  Booking,
+  Subscriber
 };
 
 module.exports = db;
