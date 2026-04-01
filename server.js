@@ -1746,35 +1746,36 @@ app.use((err, req, res, next) => {
 
 app.use(securityMiddleware.handleError);
 
+// Start server immediately, sync database in background
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('');
+  console.log('╔══════════════════════════════╗');
+  console.log('║  OnPurpose server running    ║');
+  console.log('║  Port: ' + PORT + '                  ║');
+  console.log('║  ENV:  ' + (process.env.NODE_ENV||'dev').padEnd(18) + '║');
+  console.log('╚══════════════════════════════╝');
+  console.log('[Health] http://localhost:' + PORT + '/health');
+  
+  // Keep-alive for Railway (prevents cold-start network errors)
+  if (process.env.NODE_ENV === 'production' &&
+      process.env.RAILWAY_PUBLIC_DOMAIN) {
+    const https = require('https');
+    const pingUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/health`;
+    setInterval(() => {
+      https.get(pingUrl, r => r.resume())
+           .on('error', () => {});
+    }, 4 * 60 * 1000); // every 4 minutes
+    console.log('[KeepAlive] Pinging ' + pingUrl + ' every 4 minutes');
+  }
+});
+
+// Sync database in background
 sequelize.sync({ force: false, alter: false })
   .then(() => {
     console.log('[DB] Database synced ✓');
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log('');
-      console.log('╔══════════════════════════════╗');
-      console.log('║  OnPurpose server running    ║');
-      console.log('║  Port: ' + PORT + '                  ║');
-      console.log('║  ENV:  ' + (process.env.NODE_ENV||'dev').padEnd(18) + '║');
-      console.log('╚══════════════════════════════╝');
-      console.log('[Health] http://localhost:' + PORT + '/health');
-      
-      // Keep-alive for Railway (prevents cold-start network errors)
-      if (process.env.NODE_ENV === 'production' &&
-          process.env.RAILWAY_PUBLIC_DOMAIN) {
-        const https = require('https');
-        const pingUrl = `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/health`;
-        setInterval(() => {
-          https.get(pingUrl, r => r.resume())
-               .on('error', () => {});
-        }, 4 * 60 * 1000); // every 4 minutes
-        console.log('[KeepAlive] Pinging', pingUrl, 'every 4 minutes');
-      }
-    });
   })
   .catch(err => {
-    console.error('[STARTUP FAILED]', err.message);
-    console.error(err.stack);
-    process.exit(1);
+    console.error('[DB] Database sync failed:', err);
   });
 
 /* ═══════════════════ PROVIDER ANALYTICS ═══════════════════ */
