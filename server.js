@@ -179,7 +179,19 @@ const hashPassword = async (password) => {
 // API Routes
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (req, res) =>   {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
     res.json({ 
       status: 'ok', 
@@ -193,7 +205,19 @@ app.get('/health', (req, res) => {
 });
 
 // Authentication routes
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', async (req, res) =>   {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -259,7 +283,19 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-app.post('/api/auth/login', async (req, res) =>     {
+app.post('/api/auth/login', async (req, res) =>       {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -323,7 +359,19 @@ app.post('/api/auth/login', async (req, res) =>     {
 });
 
 // Idea generation endpoint
-app.post('/api/ideas/generate', async (req, res) =>     {
+app.post('/api/ideas/generate', async (req, res) =>       {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -388,7 +436,19 @@ app.post('/api/ideas/generate', async (req, res) =>     {
 });
 
 // Services endpoint
-app.get('/api/services', async (req, res) =>     {
+app.get('/api/services', async (req, res) =>       {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -434,7 +494,19 @@ app.get('/api/services', async (req, res) =>     {
 });
 
 // Payments endpoint
-app.post('/api/payments/create-intent', async (req, res) =>     {
+app.post('/api/payments/create-intent', async (req, res) =>       {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -482,8 +554,46 @@ app.post('/api/payments/create-intent', async (req, res) =>     {
   }
 });
 
+// Self-Learning Hotfix Engine endpoint
+app.get('/run-engine', async (req, res) => {
+  try {
+    const SelfLearningHotfixEngine = require('./self-learning-hotfix-engine');
+    const engine = new SelfLearningHotfixEngine();
+    const result = await engine.executeFullCycle();
+    res.json(result);
+  } catch (error) {
+    console.error('Engine execution error:', error);
+    res.status(500).json({ success: false, error: 'Engine execution failed' });
+  }
+});
+
+// Self-Learning Hotfix Engine endpoint (API version)
+app.get('/api/run-engine', async (req, res) => {
+  try {
+    const SelfLearningHotfixEngine = require('./self-learning-hotfix-engine');
+    const engine = new SelfLearningHotfixEngine();
+    const result = await engine.executeFullCycle();
+    res.json(result);
+  } catch (error) {
+    console.error('Engine execution error:', error);
+    res.status(500).json({ success: false, error: 'Engine execution failed' });
+  }
+});
+
 // Payment webhook endpoint
-app.post('/api/webhooks/stripe', async (req, res) =>     {
+app.post('/api/webhooks/stripe', async (req, res) =>       {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
   } catch (error) {
     console.error("API Error:", error);
@@ -520,7 +630,19 @@ app.post('/api/webhooks/stripe', async (req, res) =>     {
 });
 
 // Self-Learning Hotfix Engine endpoint
-app.get('/api/run-engine', async (req, res) => {
+app.get('/api/run-engine', async (req, res) =>   {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
     const SelfLearningHotfixEngine = require('./self-learning-hotfix-engine');
     const engine = new SelfLearningHotfixEngine();
@@ -536,7 +658,19 @@ app.get('/api/run-engine', async (req, res) => {
 app.use(express.static('frontend'));
 
 // Catch-all handler - MUST be after all API routes
-app.get('*', (req, res) => {
+app.get('*', (req, res) =>   {
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+  try {
+  } catch (error) {
+    console.error("API Error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
   try {
     const path = require('path');
     res.sendFile(path.join(__dirname, 'frontend', 'index.html'));

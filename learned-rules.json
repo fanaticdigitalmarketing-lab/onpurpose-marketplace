@@ -908,5 +908,255 @@
     "severity": "high",
     "createdAt": "2026-04-01T10:31:25.239Z",
     "applications": 0
+  },
+  {
+    "id": "rule_1775039889934_67sob04uw",
+    "type": "prevention",
+    "trigger": "console_error",
+    "condition": "error type: console_error",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T10:38:09.934Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889936_hrcmyt0sr",
+    "type": "prevention",
+    "trigger": "console_error",
+    "condition": "error type: console_error",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T10:38:09.936Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889939_5fmqn2ikb",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.939Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889942_f1kpt0ohd",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.942Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889944_d06hmfo44",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.944Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889947_9fgwwqz6a",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.947Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889949_ccgi6hxgi",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.949Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889952_gayu794x6",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.952Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889955_l898lg8fv",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.955Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889957_lurt5uk8y",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.957Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889959_5ji2khvmg",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.959Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889961_ru6o4iams",
+    "type": "prevention",
+    "trigger": "missing_og_image",
+    "condition": "error type: missing_og_image",
+    "action": "No auto-fix available for this error type",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.961Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889965_ffw3uxvjl",
+    "type": "prevention",
+    "trigger": "missing_doctype",
+    "condition": "error type: missing_doctype",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T10:38:09.965Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889967_9v8525l9e",
+    "type": "prevention",
+    "trigger": "missing_charset",
+    "condition": "error type: missing_charset",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T10:38:09.967Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889969_hb315p5om",
+    "type": "prevention",
+    "trigger": "missing_og_image",
+    "condition": "error type: missing_og_image",
+    "action": "No auto-fix available for this error type",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.969Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889973_nz5nrt88v",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.973Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889976_8fr5bkjmn",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.976Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889978_tera7o9gv",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.978Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889981_mytzfm9w3",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.981Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889983_l7ztnhw7x",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.983Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889986_ssjupjetl",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.986Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889989_bzsvmehk6",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.989Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889991_urvyufhxn",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.991Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889994_ki3esbc65",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.994Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_1775039889996_oughutq8x",
+    "type": "prevention",
+    "trigger": "missing_og_image",
+    "condition": "error type: missing_og_image",
+    "action": "No auto-fix available for this error type",
+    "severity": "high",
+    "createdAt": "2026-04-01T10:38:09.996Z",
+    "applications": 0
   }
 ]

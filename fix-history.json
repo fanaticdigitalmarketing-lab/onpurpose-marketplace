@@ -1,308 +1,5 @@
 [
   {
-    "timestamp": "2026-04-01T09:31:02.207Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/auth/login', async (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862206_4zj3i6p9t"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.208Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/ideas/generate', async (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862207_4odbukma4"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.209Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('/api/services', async (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862208_ge4ehollw"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.210Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/payments/create-intent', async (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862209_c5xgc3rw4"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.211Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/webhooks/stripe', async (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862210_5dipvkfv3"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.212Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('*', (req, res) => {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862211_44mb4l7t2"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.350Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('/health', (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862349_5i6abc34o"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.351Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/auth/register', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862350_ex34gqgjs"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.352Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/auth/login', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862352_eb5489ygt"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.353Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/ideas/generate', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862353_2608836b7"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.354Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('/api/services', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862354_eg8yvexaq"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.355Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/payments/create-intent', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862355_lee8p4d8f"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.356Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/webhooks/stripe', async (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862356_gpz6u0ox8"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:02.358Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('*', (req, res) =>   {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035862357_6u3uwykyn"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.082Z",
-    "error": {
-      "type": "console_error",
-      "file": "index.html",
-      "pattern": "/throw new Error/g",
-      "count": 3,
-      "severity": "medium"
-    },
-    "success": true,
-    "action": "No auto-fix available for this error type",
-    "ruleId": "rule_1775035882080_ekq7z5oe4"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.084Z",
-    "error": {
-      "type": "console_error",
-      "file": "frontend/index.html",
-      "pattern": "/throw new Error/g",
-      "count": 3,
-      "severity": "medium"
-    },
-    "success": true,
-    "action": "No auto-fix available for this error type",
-    "ruleId": "rule_1775035882083_un4pd6m27"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.085Z",
-    "error": {
-      "type": "console_error",
-      "file": "build/index.html",
-      "pattern": "/throw new Error/g",
-      "count": 3,
-      "severity": "medium"
-    },
-    "success": true,
-    "action": "No auto-fix available for this error type",
-    "ruleId": "rule_1775035882084_mlxvs93mt"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.087Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('/health', (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882086_igmpwlw7g"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.088Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/auth/register', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882088_wv10to2y6"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.089Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/auth/login', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882089_yf9cs98pw"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.090Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/ideas/generate', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882090_gquo3792k"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.091Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('/api/services', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882091_ywen0snx1"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.092Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/payments/create-intent', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882092_yyz7z7blm"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.094Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.post('/api/webhooks/stripe', async (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882093_9jqb3dfv3"
-  },
-  {
-    "timestamp": "2026-04-01T09:31:22.095Z",
-    "error": {
-      "type": "api_error_handling",
-      "route": "app.get('*', (req, res) =>    {",
-      "file": "server.js",
-      "severity": "high"
-    },
-    "success": true,
-    "action": "Added error handling to API route",
-    "ruleId": "rule_1775035882094_z578155lw"
-  },
-  {
     "timestamp": "2026-04-01T09:31:22.256Z",
     "error": {
       "type": "api_error_handling",
@@ -1195,5 +892,299 @@
     "success": true,
     "action": "No auto-fix available for this error type",
     "ruleId": "rule_1775039485239_gcwwwf83b"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.935Z",
+    "error": {
+      "type": "console_error",
+      "file": "frontend/index.html",
+      "pattern": "/throw new Error/g",
+      "count": 3,
+      "severity": "medium"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889934_67sob04uw"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.937Z",
+    "error": {
+      "type": "console_error",
+      "file": "build/index.html",
+      "pattern": "/throw new Error/g",
+      "count": 3,
+      "severity": "medium"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889936_hrcmyt0sr"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.940Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/health', (req, res) => {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889939_5fmqn2ikb"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.943Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/auth/register', async (req, res) => {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889942_f1kpt0ohd"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.945Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/auth/login', async (req, res) =>     {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889944_d06hmfo44"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.948Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/ideas/generate', async (req, res) =>     {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889947_9fgwwqz6a"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.951Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/api/services', async (req, res) =>     {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889949_ccgi6hxgi"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.953Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/payments/create-intent', async (req, res) =>     {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889952_gayu794x6"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.955Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/webhooks/stripe', async (req, res) =>     {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889955_l898lg8fv"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.958Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/api/run-engine', async (req, res) => {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889957_lurt5uk8y"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.960Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('*', (req, res) => {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889959_5ji2khvmg"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.962Z",
+    "error": {
+      "type": "missing_og_image",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889961_ru6o4iams"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.966Z",
+    "error": {
+      "type": "missing_doctype",
+      "file": "index.html",
+      "severity": "medium"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889965_ffw3uxvjl"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.968Z",
+    "error": {
+      "type": "missing_charset",
+      "file": "index.html",
+      "severity": "medium"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889967_9v8525l9e"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.970Z",
+    "error": {
+      "type": "missing_og_image",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889969_hb315p5om"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.974Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/health', (req, res) =>  {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889973_nz5nrt88v"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.976Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/auth/register', async (req, res) =>  {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889976_8fr5bkjmn"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.979Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/auth/login', async (req, res) =>      {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889978_tera7o9gv"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.982Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/ideas/generate', async (req, res) =>      {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889981_mytzfm9w3"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.984Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/api/services', async (req, res) =>      {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889983_l7ztnhw7x"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.987Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/payments/create-intent', async (req, res) =>      {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889986_ssjupjetl"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.990Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.post('/api/webhooks/stripe', async (req, res) =>      {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889989_bzsvmehk6"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.992Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('/api/run-engine', async (req, res) =>  {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889991_urvyufhxn"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.995Z",
+    "error": {
+      "type": "api_error_handling",
+      "route": "app.get('*', (req, res) =>  {",
+      "file": "server.js",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "Added error handling to API route",
+    "ruleId": "rule_1775039889994_ki3esbc65"
+  },
+  {
+    "timestamp": "2026-04-01T10:38:09.997Z",
+    "error": {
+      "type": "missing_og_image",
+      "severity": "high"
+    },
+    "success": true,
+    "action": "No auto-fix available for this error type",
+    "ruleId": "rule_1775039889996_oughutq8x"
   }
 ]
