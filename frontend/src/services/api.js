@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// In production, use relative /api path so Netlify proxies to Railway backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+// In production, use Render backend URL
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://onpurpose-backend.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
