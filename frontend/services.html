@@ -4,6 +4,42 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Browse Services — OnPurpose</title>
+  
+<!-- ── PWA & Mobile Meta ── -->
+<meta name="application-name" content="OnPurpose">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OnPurpose">
+<meta name="theme-color" content="#2563d4">
+<meta name="msapplication-TileColor" content="#1a2744">
+<meta name="msapplication-TileImage" content="/assets/icons/icon-144.png">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ── PWA Manifest ── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ── Apple Touch Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/icon-128.png">
+
+<!-- ── Apple Splash Screens (required for iOS standalone mode) ── -->
+<link rel="apple-touch-startup-image"
+      media="(device-width: 430px) and (device-height: 932px)"
+      href="/assets/splash/splash-430x932.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 393px) and (device-height: 852px)"
+      href="/assets/splash/splash-393x852.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 390px) and (device-height: 844px)"
+      href="/assets/splash/splash-390x844.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px)"
+      href="/assets/splash/splash-375x812.png">
+<!-- ── End PWA & Mobile Meta ── -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
@@ -42,8 +78,10 @@
     .category-pill{background:var(--off2);color:var(--txt);padding:0.5rem 1rem;border-radius:20px;border:2px solid transparent;cursor:pointer;font-weight:500;transition:all 0.2s}
     .category-pill:hover,.category-pill.active{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
     .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;margin-bottom:3rem}
-    .service-card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column}
+    .service-card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column;position:relative}
     .service-card:hover{transform:translateY(-8px);box-shadow:var(--shadow2)}
+    .service-card.example-service{border:2px solid var(--blue)}
+    .service-card.example-service::before{content:'EXAMPLE';position:absolute;top:10px;right:10px;background:var(--blue);color:var(--white);padding:0.2rem 0.6rem;border-radius:6px;font-size:0.7rem;font-weight:700;z-index:10}
     .service-card img{width:100%;height:220px;object-fit:cover}
     .service-card-content{padding:1.5rem;flex:1;display:flex;flex-direction:column}
     .service-card .category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.85rem;font-weight:600;margin-bottom:0.8rem}
@@ -52,6 +90,7 @@
     .service-card .price{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
     .service-card .provider{color:var(--mut);font-size:0.9rem;display:flex;align-items:center;gap:0.5rem}
     .service-card .rating{color:var(--warn);font-size:0.9rem;margin-top:0.5rem}
+    .service-card .example-badge{background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.8rem;font-weight:600;margin-top:0.5rem;display:inline-block}
     .pagination{display:flex;justify-content:center;gap:0.5rem;margin-top:3rem}
     .pagination button{padding:0.6rem 1rem;border:2px solid var(--bdr);background:var(--white);color:var(--txt);border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.2s}
     .pagination button:hover:not(:disabled){background:var(--blue);color:var(--white);border-color:var(--blue)}
@@ -70,6 +109,9 @@
     .social-links a{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
     .social-links a:hover{background:var(--blue);transform:translateY(-2px)}
     .footer-bottom{text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
+    .toast.show{transform:translateY(0);opacity:1}
+    .toast.er{background:var(--red)}
     @media(max-width:768px){
       nav{flex-direction:column;gap:1rem}
       .nav-links{flex-wrap:wrap;justify-content:center}
@@ -78,23 +120,30 @@
       .services-grid{grid-template-columns:1fr}
     }
   </style>
+  <link rel="stylesheet" href="/assets/css/mobile.css">
 </head>
 <body>
 
   <nav>
     <a href="/" class="logo-link">
-      <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="100" rx="22" fill="#2563d4"/>
-        <path d="M22 14 L78 14 L78 24 Q78 50 50 50 Q78 50 78 76 L78 86 L22 86 L22 76 Q22 50 50 50 Q22 50 22 24 Z" fill="white"/>
-        <circle cx="37" cy="77" r="5" fill="#2563d4"/>
-      </svg>
+      <img src="/assets/logo.png" alt="OnPurpose" class="logo-img">
       <span class="brand">OnPurpose</span>
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-auth">
       <a href="/">Home</a>
       <a href="/services.html">Browse Services</a>
       <a href="/provider.html">Become a Provider</a>
-      <a href="/dashboard.html" class="btn-primary">Dashboard</a>
+      <button class="btn-ghost" onclick="location.href='/'">Sign In</button>
+    </div>
+    <div class="nav-links" id="nav-user" style="display:none">
+      <a href="/">Home</a>
+      <a href="/services.html">Browse Services</a>
+      <a href="/provider.html">Become a Provider</a>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <div id="nav-av" style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px"></div>
+        <span id="nav-nm" style="font-weight:500"></span>
+        <a href="/dashboard.html" class="btn-primary">Dashboard</a>
+      </div>
     </div>
   </nav>
 
@@ -209,6 +258,107 @@
   </footer>
 
   <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000' : '';
+
+    const TOKEN_KEY   = 'op_token';
+    const REFRESH_KEY = 'op_refresh';
+    const USER_KEY    = 'op_user';
+
+    const getToken  = () => localStorage.getItem(TOKEN_KEY);
+    const getUser   = () => { try { return JSON.parse(
+      localStorage.getItem(USER_KEY)); } catch { return null; } };
+    const clearSession = () => {
+      [TOKEN_KEY, REFRESH_KEY, USER_KEY].forEach(k =>
+        localStorage.removeItem(k));
+    };
+
+    const esc = s => String(s||'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    async function api(path, opts = {}) {
+      const makeReq = async (token) => {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 30000);
+        const res  = await fetch(API + path, {
+          method:  opts.method || 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: 'Bearer ' + token } : {}),
+          },
+          body:   opts.body ? JSON.stringify(opts.body) : undefined,
+          signal: ctrl.signal,
+        });
+        clearTimeout(tid);
+        return res;
+      };
+
+      let token = getToken();
+      let res   = await makeReq(token);
+
+      if (res.status === 401) {
+        const data = await res.clone().json().catch(() => ({}));
+        const refresh = localStorage.getItem(REFRESH_KEY);
+        if (refresh) {
+          try {
+            const rr = await fetch(API + '/api/auth/refresh', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ refreshToken: refresh }),
+            });
+            const rd = await rr.json();
+            if (rd.accessToken) {
+              localStorage.setItem(TOKEN_KEY, rd.accessToken);
+              if (rd.refreshToken)
+                localStorage.setItem(REFRESH_KEY, rd.refreshToken);
+              res = await makeReq(rd.accessToken);
+            } else {
+              clearSession();
+              window.location.href = '/';
+              return {};
+            }
+          } catch {
+            clearSession();
+            window.location.href = '/';
+            return {};
+          }
+        } else {
+          clearSession();
+          window.location.href = '/';
+          return {};
+        }
+      }
+      try { return await res.json(); } catch { return {}; }
+    }
+
+    function toast(msg, type = 'ok') {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className   = 'toast show' + (type === 'er' ? ' er' : '');
+      clearTimeout(el._tid);
+      el._tid = setTimeout(() => el.className = 'toast', 3500);
+    }
+
+    function updateNav() {
+      const u = getUser();
+      const authEl = document.getElementById('nav-auth');
+      const userEl = document.getElementById('nav-user');
+      if (!authEl || !userEl) return;
+      if (u) {
+        authEl.style.display = 'none';
+        userEl.style.display = 'block';
+        const av = document.getElementById('nav-av');
+        const nm = document.getElementById('nav-nm');
+        if (av) av.textContent = (u.name||'?').charAt(0).toUpperCase();
+        if (nm) nm.textContent = (u.name||'Account').split(' ')[0];
+      } else {
+        authEl.style.display = 'flex';
+        userEl.style.display = 'none';
+      }
+    }
+
+    // Legacy API_BASE_URL for backward compatibility
     const API_BASE_URL = window.location.hostname === 'localhost' 
       ? 'http://localhost:3000' 
       : 'https://onpurpose-backend-clean-production.up.railway.app';
@@ -264,15 +414,16 @@
       }
 
       servicesGrid.innerHTML = services.map(service => `
-        <div class="service-card" onclick="viewService('${service.id}')">
+        <div class="service-card ${service.isExample ? 'example-service' : ''}" onclick="viewService('${service.id}', ${service.isExample || false})">
           <img src="${service.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400'}" alt="${service.title}">
           <div class="service-card-content">
             <span class="category">${getCategoryEmoji(service.category)} ${service.category}</span>
             <h3>${service.title}</h3>
             <p class="description">${service.description || ''}</p>
             <p class="price">$${service.price}/${service.unit || 'hour'}</p>
-            <p class="provider">by ${service.provider?.name || 'Provider'}</p>
-            ${service.averageRating ? `<p class="rating">⭐ ${service.averageRating.toFixed(1)} (${service.reviewCount || 0} reviews)</p>` : ''}
+            <p class="provider">by ${service.provider?.name || service.provider_name || 'Provider'}</p>
+            ${service.rating || service.averageRating ? `<p class="rating">⭐ ${(service.rating || service.averageRating).toFixed(1)} (${service.reviews || service.reviewCount || 0} reviews)</p>` : ''}
+            ${service.isExample ? '<span class="example-badge">🚀 Become this provider</span>' : ''}
           </div>
         </div>
       `).join('');
@@ -280,12 +431,18 @@
 
     function displayDemoServices() {
       const demoServices = [
-        {id: '1', title: 'Career Coaching Session', category: 'coaching', price: 75, unit: 'hour', provider_name: 'Sarah Johnson', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400', rating: 4.9, reviews: 24},
-        {id: '2', title: 'Marketing Strategy Consultation', category: 'marketing', price: 120, unit: 'hour', provider_name: 'Mike Chen', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400', rating: 4.8, reviews: 18},
-        {id: '3', title: 'Brand Identity Design', category: 'design', price: 200, unit: 'project', provider_name: 'Emma Davis', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', rating: 5.0, reviews: 31},
-        {id: '4', title: 'Web Development Consultation', category: 'development', price: 150, unit: 'hour', provider_name: 'Alex Rivera', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400', rating: 4.7, reviews: 15},
-        {id: '5', title: 'Business Strategy Session', category: 'consulting', price: 180, unit: 'hour', provider_name: 'Jordan Lee', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400', rating: 4.9, reviews: 22},
-        {id: '6', title: 'Yoga & Meditation Class', category: 'wellness', price: 45, unit: 'session', provider_name: 'Maya Patel', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400', rating: 5.0, reviews: 42}
+        {id: '1', title: 'Career Coaching Session', category: 'coaching', price: 75, unit: 'hour', provider_name: 'Sarah Johnson', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400', rating: 4.9, reviews: 24, isExample: true},
+        {id: '2', title: 'Marketing Strategy Consultation', category: 'marketing', price: 120, unit: 'hour', provider_name: 'Mike Chen', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400', rating: 4.8, reviews: 18, isExample: true},
+        {id: '3', title: 'Brand Identity Design', category: 'design', price: 200, unit: 'project', provider_name: 'Emma Davis', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400', rating: 5.0, reviews: 31, isExample: true},
+        {id: '4', title: 'Web Development Consultation', category: 'development', price: 150, unit: 'hour', provider_name: 'Alex Rivera', image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400', rating: 4.7, reviews: 15, isExample: true},
+        {id: '5', title: 'Business Strategy Session', category: 'consulting', price: 180, unit: 'hour', provider_name: 'Jordan Lee', image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400', rating: 4.9, reviews: 22, isExample: true},
+        {id: '6', title: 'Yoga & Meditation Class', category: 'wellness', price: 45, unit: 'session', provider_name: 'Maya Patel', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400', rating: 5.0, reviews: 42, isExample: true},
+        {id: '7', title: 'Financial Planning & Investment', category: 'consulting', price: 200, unit: 'hour', provider_name: 'David Kim', image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400', rating: 4.8, reviews: 29, isExample: true},
+        {id: '8', title: 'Personal Fitness Training', category: 'wellness', price: 80, unit: 'session', provider_name: 'Chris Martinez', image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400', rating: 4.9, reviews: 36, isExample: true},
+        {id: '9', title: 'Content Writing & Copywriting', category: 'marketing', price: 100, unit: 'hour', provider_name: 'Sophie Turner', image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400', rating: 4.7, reviews: 19, isExample: true},
+        {id: '10', title: 'Mobile App Development', category: 'development', price: 175, unit: 'hour', provider_name: 'Ryan Johnson', image: 'https://images.unsplash.com/photo-1512941937409-a4c125f792c4?w=400', rating: 4.8, reviews: 24, isExample: true},
+        {id: '11', title: 'Life Coaching & Mentoring', category: 'coaching', price: 90, unit: 'hour', provider_name: 'Lisa Anderson', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', rating: 5.0, reviews: 45, isExample: true},
+        {id: '12', title: 'Social Media Marketing', category: 'marketing', price: 85, unit: 'hour', provider_name: 'Tom Wilson', image: 'https://images.unsplash.com/photo-1611224923853-80b023f2d71b?w=400', rating: 4.6, reviews: 27, isExample: true}
       ];
       displayServices(demoServices);
       displayPagination(demoServices.length);
@@ -333,8 +490,14 @@
       return emojis[category?.toLowerCase()] || '📌';
     }
 
-    function viewService(id) {
-      window.location.href = `/service-detail.html?id=${id}`;
+    function viewService(id, isExample = false) {
+      if (isExample) {
+        // Redirect to provider signup for example services
+        window.location.href = `/provider.html?service=${encodeURIComponent(id)}&example=true`;
+      } else {
+        // Go to real service detail page
+        window.location.href = `/service-detail.html?id=${id}`;
+      }
     }
 
     function resetFilters() {
@@ -393,9 +556,58 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      updateNav();
       loadServices();
     });
   </script>
+  <script src="/js/api.js"></script>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast"></div>
+
+<script>
+// PWA service worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+        // Check for updates every hour
+        setInterval(() => reg.update(), 60 * 60 * 1000);
+      })
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+
+// Detect Capacitor native context
+if (window.Capacitor) {
+  document.body.classList.add('capacitor-app');
+  // Disable PWA install prompt inside native app
+  window.addEventListener('beforeinstallprompt', e => e.preventDefault());
+}
+
+// PWA install prompt (for browser users)
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install button if one exists on the page
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'flex';
+    installBtn.addEventListener('click', () => {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          if (installBtn) installBtn.style.display = 'none';
+        }
+        deferredInstallPrompt = null;
+      });
+    });
+  }
+});
+</script>
 
 </body>
 </html>
