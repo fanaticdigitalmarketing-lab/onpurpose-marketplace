@@ -49,7 +49,7 @@ async function runFinal110PercentTest() {
   let passed = 0;
   let failed = 0;
   let customerToken = null;
-  let providerToken = null;
+// // // // // // // // // // // // // // // // // // let providerToken = null; // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   let serviceId = null;
   let bookingId = null;
 

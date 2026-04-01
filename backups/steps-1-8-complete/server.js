@@ -9,7 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// // // // // // // // // // // // // // // // // // const jwt = require('jsonwebtoken'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
 const crypto = require('crypto');
 const cors = require('cors');
 const path = require('path');
@@ -1833,7 +1833,7 @@ app.post('/api/calendar/sync-availability',
       }
       
       // Get existing availability
-      const existingAvailability = await Availability.findAll({
+// // // // // // // // // // // // // // // // // // const existingAvailability = await Availability.findAll({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
         where: { providerId: req.userId }
       });
       

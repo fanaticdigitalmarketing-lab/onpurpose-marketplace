@@ -1,0 +1,16 @@
+# Environment Variables for OnPurpose
+# These must be added to Railway → Variables tab
+
+JWT_SECRET=d70d2ba05fa879f463d88cd7f41b4cbaa34760420c5d753b0c23c5c7e2f82dd5a66cb5835fa63641d54897c8f0afda4d72f7f5f2b911d9caf1f12efe8f00eed8
+REFRESH_TOKEN_SECRET=d139ef6d401e92cdbe3135837cbc372133a58d61bbc7bb0b0175784c4596a680
+BCRYPT_PEPPER=f7ed2634b7c611c59578720b5d86c682
+DATABASE_URL=postgresql://username:password@host:port/database
+NODE_ENV=production
+PORT=3000
+CORS_ORIGINS=https://onpurpose.earth,https://www.onpurpose.earth
+FRONTEND_URL=https://onpurpose.earth
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+RESEND_API_KEY=re_...
+EMAIL_FROM=OnPurpose <noreply@onpurpose.earth>

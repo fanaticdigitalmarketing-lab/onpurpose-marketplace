@@ -100,7 +100,7 @@ async function seed() {
       reviewCount: 0
     });
 
-    const service3 = await Service.create({
+// // // // // // // // // // // // // // // // // // const service3 = await Service.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       title: 'Resume & LinkedIn Optimization',
       description: 'Professional resume writing and LinkedIn profile optimization to help you stand out to recruiters.',
       price: 120.00,
@@ -113,7 +113,7 @@ async function seed() {
       reviewCount: 0
     });
 
-    const service4 = await Service.create({
+// // // // // // // // // // // // // // // // // // const service4 = await Service.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       title: 'Local NYC Tour Guide',
       description: 'Discover hidden gems in NYC with a local expert. Personalized tours of neighborhoods, food spots, and cultural landmarks.',
       price: 75.00,
@@ -126,7 +126,7 @@ async function seed() {
       reviewCount: 0
     });
 
-    const service5 = await Service.create({
+// // // // // // // // // // // // // // // // // // const service5 = await Service.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       title: 'Wellness & Mindfulness Coaching',
       description: 'Guided mindfulness and wellness sessions to reduce stress, improve focus, and build healthy daily routines.',
       price: 90.00,
@@ -160,7 +160,7 @@ async function seed() {
     const nextWeek = new Date();
     nextWeek.setDate(nextWeek.getDate() + 7);
 
-    const booking1 = await Booking.create({
+// // // // // // // // // // // // // // // // // // const booking1 = await Booking.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       userId: customer.id,
       serviceId: service1.id,
       date: tomorrow.toISOString().split('T')[0],
@@ -173,7 +173,7 @@ async function seed() {
       notes: 'Looking forward to discussing career transition'
     });
 
-    const booking2 = await Booking.create({
+// // // // // // // // // // // // // // // // // // const booking2 = await Booking.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       userId: customer.id,
       serviceId: service2.id,
       date: nextWeek.toISOString().split('T')[0],

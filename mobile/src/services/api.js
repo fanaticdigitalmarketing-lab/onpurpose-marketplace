@@ -37,14 +37,14 @@ api.interceptors.response.use(
 );
 
 // API service functions
-export const authService = {
+// // // // // // // // // // // // // // // // // // export const authService = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   login: (email, password) => api.post('/auth/login', { email, password }),
   register: (email, password, name, userType) => 
     api.post('/auth/register', { email, password, name, userType }),
   verify: () => api.get('/auth/verify'),
 };
 
-export const userService = {
+// // // // // // // // // // // // // // // // // // export const userService = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getProfile: () => api.get('/users/profile'),
   updateProfile: (data) => api.put('/users/profile', data),
   uploadPhoto: (formData) => api.post('/users/profile/photo', formData, {
@@ -52,7 +52,7 @@ export const userService = {
   }),
 };
 
-export const hostService = {
+// // // // // // // // // // // // // // // // // // export const hostService = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getHosts: (params) => api.get('/hosts', { params }),
   getHost: (id) => api.get(`/hosts/${id}`),
   createProfile: (data) => api.post('/hosts', data),
@@ -60,7 +60,7 @@ export const hostService = {
   getMyProfile: () => api.get('/hosts/me/profile'),
 };
 
-export const bookingService = {
+// // // // // // // // // // // // // // // // // // export const bookingService = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   create: (data) => api.post('/bookings', data),
   getMy: () => api.get('/bookings/my'),
   getUpcoming: () => api.get('/bookings/upcoming'),
@@ -68,7 +68,7 @@ export const bookingService = {
   getPending: () => api.get('/bookings/host/pending'),
 };
 
-export const paymentService = {
+// // // // // // // // // // // // // // // // // // export const paymentService = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   createPaymentIntent: (bookingId) => 
     api.post('/payments/create-payment-intent', { bookingId }),
   confirmPayment: (paymentIntentId, bookingId) => 

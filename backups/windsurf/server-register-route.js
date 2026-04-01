@@ -9,7 +9,7 @@ require('dotenv').config();
 const express = require('express');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+// // // // // // // // // // // // // // // // // // const jwt = require('jsonwebtoken'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
 const crypto = require('crypto');
 const cors = require('cors');
 const path = require('path');

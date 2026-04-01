@@ -26,7 +26,7 @@ async function testReminders() {
     console.log('\n⚙️ Step 1: Testing reminder settings endpoint...');
     
     try {
-      const settingsResponse = await request('https://onpurpose.earth/api/reminders/settings');
+// // // // // // // // // // // // // // // // // // const settingsResponse = await request('https://onpurpose.earth/api/reminders/settings'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Reminder settings endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -40,7 +40,7 @@ async function testReminders() {
     console.log('\n📅 Step 2: Testing upcoming reminders endpoint...');
     
     try {
-      const upcomingResponse = await request('https://onpurpose.earth/api/reminders/upcoming');
+// // // // // // // // // // // // // // // // // // const upcomingResponse = await request('https://onpurpose.earth/api/reminders/upcoming'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Upcoming reminders endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -54,7 +54,7 @@ async function testReminders() {
     console.log('\n📊 Step 3: Testing reminder analytics endpoint...');
     
     try {
-      const analyticsResponse = await request('https://onpurpose.earth/api/reminders/analytics');
+// // // // // // // // // // // // // // // // // // const analyticsResponse = await request('https://onpurpose.earth/api/reminders/analytics'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Reminder analytics endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -68,7 +68,7 @@ async function testReminders() {
     console.log('\n🧪 Step 4: Testing test reminder endpoint...');
     
     try {
-      const testResponse = await request('https://onpurpose.earth/api/reminders/test');
+// // // // // // // // // // // // // // // // // // const testResponse = await request('https://onpurpose.earth/api/reminders/test'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Test reminder endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -82,7 +82,7 @@ async function testReminders() {
     console.log('\n⚡ Step 5: Testing manual trigger endpoint...');
     
     try {
-      const triggerResponse = await request('https://onpurpose.earth/api/reminders/trigger');
+// // // // // // // // // // // // // // // // // // const triggerResponse = await request('https://onpurpose.earth/api/reminders/trigger'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Manual trigger endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {

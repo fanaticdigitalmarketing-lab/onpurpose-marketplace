@@ -39,7 +39,7 @@ api.interceptors.response.use(
 );
 
 // Auth API
-export const authAPI = {
+// // // // // // // // // // // // // // // // // // export const authAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   login: (email, password) => 
     api.post('/auth/login', { email, password }),
   
@@ -54,7 +54,7 @@ export const authAPI = {
 };
 
 // Hosts API
-export const hostsAPI = {
+// // // // // // // // // // // // // // // // // // export const hostsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getHosts: (filters = {}) => {
     const params = new URLSearchParams(filters).toString();
     return api.get(`/hosts?${params}`);
@@ -70,7 +70,7 @@ export const hostsAPI = {
 };
 
 // Bookings API
-export const bookingsAPI = {
+// // // // // // // // // // // // // // // // // // export const bookingsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   createBooking: (bookingData) => 
     api.post('/bookings', bookingData),
   
@@ -87,7 +87,7 @@ export const bookingsAPI = {
 };
 
 // Payments API
-export const paymentsAPI = {
+// // // // // // // // // // // // // // // // // // export const paymentsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   createPaymentIntent: (bookingId, amount) => 
     api.post('/payments/create-intent', { bookingId, amount }),
   
@@ -102,7 +102,7 @@ export const paymentsAPI = {
 };
 
 // Reviews API
-export const reviewsAPI = {
+// // // // // // // // // // // // // // // // // // export const reviewsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   submitReview: (reviewData) => 
     api.post('/reviews', reviewData),
   
@@ -114,7 +114,7 @@ export const reviewsAPI = {
 };
 
 // Host Application API (for hosts)
-export const hostApplicationAPI = {
+// // // // // // // // // // // // // // // // // // export const hostApplicationAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   submitApplication: (applicationData) => 
     api.post('/host-application', applicationData),
   

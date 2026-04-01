@@ -1,0 +1,88 @@
+// Create a working OG image using a different approach
+const fs = require('fs');
+
+// Create a simple but professional SVG image
+const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Glow effect -->
+  <rect x="0" y="0" width="1200" height="630" fill="#3b82f6" opacity="0.08"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="60" fill="#3b82f6" opacity="0.15"/>
+  <circle cx="1100" cy="530" r="80" fill="#2563eb" opacity="0.12"/>
+  <circle cx="150" cy="500" r="40" fill="#3b82f6" opacity="0.18"/>
+  <circle cx="1050" cy="150" r="50" fill="#2563eb" opacity="0.15"/>
+  
+  <!-- Main Title -->
+  <text x="600" y="180" font-family="Arial, sans-serif" font-size="80" font-weight="bold" text-anchor="middle" fill="white">
+    OnPurpose
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="50" font-weight="bold" text-anchor="middle" fill="url(#blue)" filter="url(#glow)">
+    Idea Service Income
+  </text>
+  
+  <!-- Tagline -->
+  <text x="600" y="380" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#9ca3af">
+    Turn your skills into real income instantly
+  </text>
+  
+  <!-- Bottom accent -->
+  <rect x="400" y="450" width="400" height="4" fill="url(#blue)" rx="2"/>
+  
+  <!-- Additional text -->
+  <text x="600" y="500" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#6b7280">
+    Generate ideas • Create services • Start earning
+  </text>
+</svg>`;
+
+// Save as SVG file
+fs.writeFileSync('onpurpose-og.svg', svgContent);
+console.log('✅ Professional OG SVG created!');
+
+// Create a base64 data URI
+const base64 = Buffer.from(svgContent).toString('base64');
+const dataUri = `data:image/svg+xml;base64,${base64}`;
+
+console.log('🔗 Data URI created:', dataUri.length, 'characters');
+fs.writeFileSync('onpurpose-og-data-uri.txt', dataUri);
+
+// Also create a simple HTML file to test
+const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Test OG Image</title>
+    <meta property="og:image" content="${dataUri}">
+</head>
+<body>
+    <h1>OG Image Test</h1>
+    <img src="${dataUri}" alt="OnPurpose OG Image" style="max-width: 600px;">
+    <p>Check if this image displays properly.</p>
+</body>
+</html>`;
+
+fs.writeFileSync('test-og.html', htmlContent);
+console.log('📁 Test HTML file created: test-og.html');
+console.log('🌐 Open this file in browser to test the image');

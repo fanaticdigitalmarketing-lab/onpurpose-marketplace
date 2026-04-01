@@ -138,7 +138,7 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
+// // // // // // // // // // // // // // // // // // const styles = StyleSheet.create({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   container: {
     flex: 1,
     backgroundColor: colors.background,

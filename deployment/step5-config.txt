@@ -1,0 +1,91 @@
+Step 5: Configuration Files Validation
+==================================================
+Command: type railway.toml & echo "---" & type netlify.toml & echo "---" & type frontend\_redirects
+
+Output:
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+"---" 
+[build]
+  publish = "frontend"
+  command = "echo 'static site'"
+
+[[redirects]]
+  from = "/api/*"
+  to   = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
+  status = 200
+  force  = true
+  [redirects.headers]
+    Authorization     = ":request_Authorization"
+    X-Forwarded-For   = ":client-ip"
+    Content-Type      = ":request_Content-Type"
+
+[[redirects]]
+  from = "/health"
+  to   = "https://onpurpose-backend-clean-production.up.railway.app/health"
+  status = 200
+  force  = true
+
+[[redirects]]
+  from = "/dashboard.html"
+  to   = "/dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/services.html"
+  to   = "/services.html"
+  status = 200
+
+[[redirects]]
+  from = "/provider.html"
+  to   = "/provider.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact.html"
+  to   = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
+
+# ── Security headers applied to every response ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options              = "DENY"
+    X-XSS-Protection             = "1; mode=block"
+    X-Content-Type-Options       = "nosniff"
+    Referrer-Policy              = "strict-origin-when-cross-origin"
+    Permissions-Policy           = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security    = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy      = "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; connect-src 'self' https://api.stripe.com https://onpurpose.earth; frame-src https://js.stripe.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com"
+
+# ── Cache static assets aggressively ──
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+"---" 
+/api/*    https://onpurpose-backend-clean-production.up.railway.app/api/:splat    200!
+/health   https://onpurpose-backend-clean-production.up.railway.app/health        200!
+/*        /index.html                                         200
+
+
+Timestamp: 2026-03-31T22:07:06.529Z

@@ -412,7 +412,7 @@ app.get('/', (req, res) => {
 <body>
   <div class="container">
     <h1>Book People. Not Places.</h1>
-    <div class="tagline">The Airbnb for Skills & Human Services</div>
+    <div class="tagline">not dating connection for skills & human services</div>
     
     <div class="urgency">⚡ Limited early access — first 100 users only</div>
     <div class="social-proof">✨ Already used by 50+ early users</div>

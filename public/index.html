@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnPurpose - Hospitality Marketplace</title>
+    <title>OnPurpose</title>
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="OnPurpose">
+<meta property="og:description" content="OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://onpurpose.earth">
+<meta property="og:image" content="https://via.placeholder.com/1200x630/2563d4/ffffff?text=OnPurpose">
+<meta property="og:site_name" content="OnPurpose">
+<meta property="og:locale" content="en_US">
+<meta property="fb:app_id" content="0">
+
+<!-- Additional Meta Tags -->
+<meta name="description" content="OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.">
     <style>
         * {
             margin: 0;
@@ -149,7 +162,7 @@
     <div class="container">
         <div class="logo">
             <h1>OnPurpose</h1>
-            <p>Your Hospitality Marketplace</p>
+            <p>OnPurpose is a people-first marketplace designed for real human connection and meaningful experiences.</p>
         </div>
         
         <!-- Login Form -->
@@ -211,7 +224,7 @@
             <div class="user-info">
                 <h3>Welcome, <span id="userName"></span>!</h3>
                 <p>Email: <span id="userEmail"></span></p>
-                <p>Host Status: <span id="hostStatus"></span></p>
+                <p>Provider Status: <span id="providerStatus"></span></p>
             </div>
             <button class="logout-btn" id="logout">Logout</button>
         </div>
@@ -341,7 +354,7 @@
             const user = JSON.parse(localStorage.getItem('user'));
             document.getElementById('userName').textContent = `${user.firstName} ${user.lastName}`;
             document.getElementById('userEmail').textContent = user.email;
-            document.getElementById('hostStatus').textContent = user.isHost ? 'Host' : 'Guest';
+            document.getElementById('providerStatus').textContent = user.isHost ? 'Provider' : 'Customer';
             
             loginForm.style.display = 'none';
             registerForm.style.display = 'none';

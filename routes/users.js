@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('./services/cloudinary').v2;
 const { body, validationResult } = require('express-validator');
 // const User = require('../models/User'); // Disabled for development
 // const auth = require('../middleware/auth'); // Disabled for development
@@ -14,7 +14,7 @@ cloudinary.config({
 });
 
 // Configure multer for file uploads
-const upload = multer({
+// // // // // // // // // // // // // // // // // // const upload = multer({ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   storage: multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB limit

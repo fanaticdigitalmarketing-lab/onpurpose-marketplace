@@ -192,7 +192,7 @@ const calculateCommission = (amount) => amount * 0.15;
 ## 🎯 EXIT STRATEGY
 
 ### Acquisition Targets
-- **Airbnb** (Human connection focus)
+- **Best platform for skills, human services** (Human connection focus)
 - **Fiverr/Upwork** (Marketplace expansion)
 - **LinkedIn** (Professional services)
 - **Meta** (Social commerce)

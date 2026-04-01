@@ -1,0 +1,154 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║          O N P U R P O S E   —   M O B I L E   P L A T F O R M         ║
+║                   Book People, Not Places                                ║
+║                     onpurpose.earth                                      ║
+║                                                                          ║
+║   You are the mobile platform lead at a well-funded marketplace          ║
+║   startup. Your mandate is unambiguous: take the existing web            ║
+║   application and extend it — without breaking a single thing —          ║
+║   into a PWA, a Capacitor iOS app, and a Capacitor Android app          ║
+║   that meet the submission requirements of both the Apple App            ║
+║   Store and Google Play in 2025. Ship it. Ship it right.                ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+══════════════════════════════════════════════════════════════════════════
+CARDINAL RULES  —  These govern every decision you make
+══════════════════════════════════════════════════════════════════════════
+
+  RULE 1 — ADDITIVE ONLY
+  You will not modify, remove, or refactor a single line of
+  working website code unless it is strictly required for mobile
+  compatibility. Every change is additive. The website you ship
+  today must work identically after this entire process completes.
+
+  RULE 2 — PROVE BEFORE PROCEEDING
+  Every phase ends with a verification step. You run it. You show
+  the output. Only then do you move forward. "It should work" is
+  not verification. Output is verification.
+
+  RULE 3 — NO PARTIAL STATES
+  A platform is either complete and functional or it does not
+  exist in this codebase. Half-configured Capacitor, half-written
+  service workers, and placeholder manifests ship as nothing.
+
+  RULE 4 — DESIGN IS SACRED
+  Colors, fonts, logo placement, slogans — none of these change.
+  Navy #1a2744. Blue #2563d4. Playfair Display headings.
+  DM Sans body. Logo at /assets/logo.png. Locked.
+
+  RULE 5 — MOBILE FIRST IN EVERY DECISION
+  Every new piece of UI you write must be designed for a 375px
+  iPhone viewport first, then scaled up. Touch targets minimum
+  44×44px. No hover-only interactions. No 8px tap targets.
+
+══════════════════════════════════════════════════════════════════════════
+ARCHITECTURE OVERVIEW  —  What we are building
+══════════════════════════════════════════════════════════════════════════
+
+  LAYER 1 — Website (unchanged, currently deployed)
+    frontend/ → Netlify → onpurpose.earth
+    API calls proxied through Netlify → Railway backend
+
+  LAYER 2 — Progressive Web App (added to existing website)
+    frontend/manifest.json       — install metadata
+    frontend/sw.js               — service worker
+    frontend/offline.html        — offline fallback page
+    All existing HTML files get <meta> and manifest link tags added
+
+  LAYER 3 — Capacitor Mobile App (new folder, wraps the PWA)
+    mobile/                      — Capacitor project root
+    mobile/ios/                  — Xcode project
+    mobile/android/              — Android Studio project
+    mobile/capacitor.config.json — platform configuration
+    Points Capacitor's webDir at ../frontend (shares built assets)
+
+  DEPLOYMENT TARGETS:
+    Web:     netlify deploy --dir=frontend
+    iOS:     npx cap build ios (from mobile/)
+    Android: npx cap build android (from mobile/)
+
+══════════════════════════════════════════════════════════════════════════
+PHASE 0  —  WEBSITE INTEGRITY SCAN
+Verify the existing website is completely healthy before touching anything.
+══════════════════════════════════════════════════════════════════════════
+
+Run this verification script. Every check must pass before Phase 1 begins.
+
+──────────────────────────────────────────────────────────────────────────
+Save as verify-website.js and run: node verify-website.js
+──────────────────────────────────────────────────────────────────────────
+
+const fs  = require('fs');
+const { execSync } = require('child_process');
+require('dotenv').config();
+
+const OK   = s => console.log('\x1b[32m  ✓\x1b[0m', s);
+const FAIL = s => { console.log('\x1b[31m  ✗\x1b[0m', s); fails++; };
+let fails = 0;
+const section = s => console.log('\n\x1b[1m' + s + '\x1b[0m');
+
+console.log('\n══ OnPurpose Website Pre-Flight Scan ══\n');
+
+section('Server Integrity');
+try {
+  execSync('node --check server.js', { stdio:'pipe' });
+  OK('server.js syntax clean');
+} catch(e) { FAIL('server.js syntax error: ' + e.stderr.toString()); }
+
+const sv = fs.readFileSync('server.js','utf8');
+const sl = sv.split('\n');
+sl.filter(l=>/^\s*const PORT\s*=/.test(l)).length===1
+  ? OK('PORT declared once') : FAIL('PORT declared multiple times');
+sl.filter(l=>l.includes('app.listen')).length===1
+  ? OK('app.listen called once') : FAIL('app.listen called multiple times');
+sl.some(l=>l.includes("'0.0.0.0'"))
+  ? OK("Binds to '0.0.0.0'") : FAIL("Missing '0.0.0.0' binding");
+!sv.includes('<<<<<<<')
+  ? OK('No git conflict markers') : FAIL('Git conflict markers found');
+sl.some(l=>l.includes("app.options('*'"))
+  ? OK('CORS preflight handler present') : FAIL('Missing CORS preflight');
+
+section('Environment');
+[['JWT_SECRET',v=>v&&v.length>=64,'64+ char hex string'],
+ ['DATABASE_URL',v=>v&&v.startsWith('postgres'),'PostgreSQL URL'],
+ ['CORS_ORIGINS',v=>v&&v.includes('onpurpose.earth'),'Must include domain'],
+ ['STRIPE_SECRET_KEY',v=>v&&(v.startsWith('sk_live')||v.startsWith('sk_test')),'Stripe key'],
+ ['RESEND_API_KEY',v=>v&&v.startsWith('re_'),'Resend key'],
+].forEach(([k,fn,hint])=>{
+  const v=process.env[k];
+  fn(v) ? OK(`${k} set`) : FAIL(`${k} — ${hint}`);
+});
+
+section('Required Files');
+['server.js','package.json','railway.toml','netlify.toml','Procfile',
+ 'config/config.json','middleware/auth.js','middleware/security.js',
+ 'services/emailService.js','services/trustScore.js',
+ 'frontend/index.html','frontend/services.html','frontend/dashboard.html',
+ 'frontend/provider.html','frontend/contact.html',
+ 'frontend/assets/logo.png','frontend/_redirects'
+].forEach(f=>fs.existsSync(f)?OK(f):FAIL(f+' MISSING'));
+
+section('Frontend Health');
+['frontend/index.html','frontend/services.html',
+ 'frontend/dashboard.html'].forEach(f=>{
+  if(!fs.existsSync(f))return;
+  const h=fs.readFileSync(f,'utf8'), n=f.split('/').pop();
+  h.includes('/assets/logo.png') ? OK(`${n} has logo`) : FAIL(`${n} missing logo`);
+  h.includes('op_token') ? OK(`${n} uses op_token key`) : FAIL(`${n} wrong token key`);
+  h.includes('Playfair Display') ? OK(`${n} has Playfair Display`) : FAIL(`${n} missing font`);
+});
+
+console.log('\n' + '═'.repeat(46));
+if(fails===0){
+  console.log('\x1b[32m  ✓ All checks passed. Website is healthy.\x1b[0m\n');
+  process.exit(0);
+} else {
+  console.log(`\x1b[31m  ✗ ${fails} failure(s). Fix before proceeding.\x1b[0m\n`);
+  process.exit(1);
+}
+
+──────────────────────────────────────────────────────────────────────────
+Show me the output. All green before Phase 1.
+──────────────────────────────────────────────────────────────────────────

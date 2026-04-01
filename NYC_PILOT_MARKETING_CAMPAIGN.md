@@ -99,7 +99,7 @@
 **NYC Tourism & Hospitality:**
 - **NYC & Company:** Official tourism board partnership
 - **Hotels:** Concierge referral program for guest experiences
-- **Airbnb Hosts:** Cross-promotion for local experience add-ons
+- **Best platform for skills, human services providers:** Cross-promotion for local experience add-ons
 
 **Educational Institutions:**
 - **NYU, Columbia, Parsons:** Student host recruitment program

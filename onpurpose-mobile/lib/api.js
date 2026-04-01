@@ -43,20 +43,20 @@ api.interceptors.response.use(
   }
 );
 
-export const authAPI = {
+// // // // // // // // // // // // // // // // // // export const authAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   login:    (data) => api.post('/auth/login', data),
   register: (data) => api.post('/auth/register', data),
   logout:   ()     => api.post('/auth/logout'),
 };
 
-export const servicesAPI = {
+// // // // // // // // // // // // // // // // // // export const servicesAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getAll:   (params) => api.get('/services', { params }),
   getById:  (id)     => api.get(`/services/${id}`),
   getMine:  ()       => api.get('/services/my-services'),
   create:   (data)   => api.post('/services', data),
 };
 
-export const bookingsAPI = {
+// // // // // // // // // // // // // // // // // // export const bookingsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getMine:        () => api.get('/bookings/my-bookings'),
   getProvider:    () => api.get('/bookings/provider-bookings'),
   create:         (data) => api.post('/bookings', data),
@@ -64,12 +64,12 @@ export const bookingsAPI = {
     api.patch(`/bookings/${id}/status`, { status }),
 };
 
-export const paymentsAPI = {
+// // // // // // // // // // // // // // // // // // export const paymentsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   checkout: (bookingId) => 
     api.post('/payments/create-checkout', { bookingId }),
 };
 
-export const usersAPI = {
+// // // // // // // // // // // // // // // // // // export const usersAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   getProfile:    () => api.get('/users/profile'),
   updateProfile: (data) => api.patch('/users/profile', data),
 };

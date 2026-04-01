@@ -1,0 +1,47 @@
+{
+  "date": "2026-03-31T23:18:42.254Z",
+  "status": "PROTECTED",
+  "protected_files": [
+    "frontend/manifest.json",
+    "frontend/sw.js",
+    "frontend/offline.html",
+    "frontend/assets/css/mobile.css",
+    "capacitor.config.json",
+    "frontend/assets/js/capacitor-init.js",
+    "create-placeholders.js",
+    "generate-icons.js",
+    "ios/App/App/AppDelegate.swift",
+    "ios/App/App/Info.plist",
+    "android/app/src/main/AndroidManifest.xml",
+    "android/app/build.gradle",
+    "frontend/privacy.html",
+    "package.json"
+  ],
+  "protected_dirs": [
+    "ios/",
+    "android/",
+    "frontend/assets/icons/",
+    "frontend/assets/splash/"
+  ],
+  "cardinal_rules": [
+    "RULE 1 — ADDITIVE ONLY: Never modify, remove, or refactor working mobile code",
+    "RULE 2 — PROVE BEFORE PROCEEDING: Verify every change with tests",
+    "RULE 3 — NO PARTIAL STATES: Complete implementations only",
+    "RULE 4 — DESIGN IS SACRED: Colors, fonts, logo placement unchanged",
+    "RULE 5 — MOBILE FIRST: All new UI designed for mobile first"
+  ],
+  "allowed_changes": [
+    "Hot fixes for critical bugs",
+    "Security patches",
+    "Minor CSS adjustments",
+    "Icon asset updates",
+    "Store submission metadata"
+  ],
+  "forbidden_changes": [
+    "Removing PWA functionality",
+    "Breaking Capacitor configuration",
+    "Modifying core mobile CSS architecture",
+    "Changing app ID or bundle IDs",
+    "Removing native platform projects"
+  ]
+}

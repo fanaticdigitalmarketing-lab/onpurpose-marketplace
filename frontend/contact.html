@@ -3,6 +3,42 @@
 <head>
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Contact — OnPurpose</title>
+  
+<!-- ── PWA & Mobile Meta ── -->
+<meta name="application-name" content="OnPurpose">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OnPurpose">
+<meta name="theme-color" content="#2563d4">
+<meta name="msapplication-TileColor" content="#1a2744">
+<meta name="msapplication-TileImage" content="/assets/icons/icon-144.png">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ── PWA Manifest ── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ── Apple Touch Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/icon-128.png">
+
+<!-- ── Apple Splash Screens (required for iOS standalone mode) ── -->
+<link rel="apple-touch-startup-image"
+      media="(device-width: 430px) and (device-height: 932px)"
+      href="/assets/splash/splash-430x932.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 393px) and (device-height: 852px)"
+      href="/assets/splash/splash-393x852.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 390px) and (device-height: 844px)"
+      href="/assets/splash/splash-390x844.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px)"
+      href="/assets/splash/splash-375x812.png">
+<!-- ── End PWA & Mobile Meta ── -->
+  
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
@@ -45,17 +81,17 @@ textarea.fi{resize:vertical;min-height:110px}
 .email-highlight svg{flex-shrink:0}
 .email-highlight-text{font-size:14px;font-weight:600;color:var(--blue)}
 .email-highlight-sub{font-size:12px;color:var(--mut);margin-top:2px}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.er{background:var(--red)}
 @media(max-width:768px){.content{grid-template-columns:1fr}}
 </style>
+  <link rel="stylesheet" href="/assets/css/mobile.css">
 </head>
 <body>
 <nav>
   <a class="logo" href="/">
-    <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100" height="100" rx="22" fill="#2563d4"/>
-      <path d="M22 14 L78 14 L78 24 Q78 50 50 50 Q78 50 78 76 L78 86 L22 86 L22 76 Q22 50 50 50 Q22 50 22 24 Z" fill="white"/>
-      <circle cx="37" cy="77" r="5" fill="#2563d4"/>
-    </svg>
+    <img src="/assets/logo.png" alt="OnPurpose" style="width:38px;height:38px">
     <div>
       <div class="logo-name">OnPurpose</div>
       <div class="logo-tag">Connection, not dating</div>
@@ -171,12 +207,125 @@ textarea.fi{resize:vertical;min-height:110px}
 </footer>
 
 <script>
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000' : '';
+
+    const TOKEN_KEY   = 'op_token';
+    const REFRESH_KEY = 'op_refresh';
+    const USER_KEY    = 'op_user';
+
+    const getToken  = () => localStorage.getItem(TOKEN_KEY);
+    const getUser   = () => { try { return JSON.parse(
+      localStorage.getItem(USER_KEY)); } catch { return null; } };
+    const clearSession = () => {
+      [TOKEN_KEY, REFRESH_KEY, USER_KEY].forEach(k =>
+        localStorage.removeItem(k));
+    };
+
+// // // // // // // // // // // // // // // // // // const esc = s => String(s||'') // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    async function api(path, opts = {}) {
+      const makeReq = async (token) => {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 30000);
+        const res  = await fetch(API + path, {
+          method:  opts.method || 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: 'Bearer ' + token } : {}),
+          },
+          body:   opts.body ? JSON.stringify(opts.body) : undefined,
+          signal: ctrl.signal,
+        });
+        clearTimeout(tid);
+        return res;
+      };
+
+      let token = getToken();
+      let res   = await makeReq(token);
+
+      if (res.status === 401) {
+// // // // // // // // // // // // // // // // // // const data = await res.clone().json().catch(() => ({})); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
+        const refresh = localStorage.getItem(REFRESH_KEY);
+        if (refresh) {
+          try {
+            const rr = await fetch(API + '/api/auth/refresh', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ refreshToken: refresh }),
+            });
+            const rd = await rr.json();
+            if (rd.accessToken) {
+              localStorage.setItem(TOKEN_KEY, rd.accessToken);
+              if (rd.refreshToken)
+                localStorage.setItem(REFRESH_KEY, rd.refreshToken);
+              res = await makeReq(rd.accessToken);
+            } else {
+              clearSession();
+              window.location.href = '/';
+              return {};
+            }
+          } catch {
+            clearSession();
+            window.location.href = '/';
+            return {};
+          }
+        } else {
+          clearSession();
+          window.location.href = '/';
+          return {};
+        }
+      }
+      try { return await res.json(); } catch { return {}; }
+    }
+
+    function toast(msg, type = 'ok') {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className   = 'toast show' + (type === 'er' ? ' er' : '');
+      clearTimeout(el._tid);
+      el._tid = setTimeout(() => el.className = 'toast', 3500);
+    }
+
+    function updateNav() {
+      const u = getUser();
+      const authEl = document.getElementById('nav-auth');
+      const userEl = document.getElementById('nav-user');
+      if (!authEl || !userEl) return;
+      if (u) {
+        authEl.style.display = 'none';
+        userEl.style.display = 'block';
+        const av = document.getElementById('nav-av');
+        const nm = document.getElementById('nav-nm');
+        if (av) av.textContent = (u.name||'?').charAt(0).toUpperCase();
+        if (nm) nm.textContent = (u.name||'Account').split(' ')[0];
+      } else {
+        authEl.style.display = 'flex';
+        userEl.style.display = 'none';
+      }
+    }
+
 function sendMsg() {
   const name    = document.getElementById('cf-name').value.trim();
   const email   = document.getElementById('cf-email').value.trim();
   const subject = document.getElementById('cf-subject').value;
   const msg     = document.getElementById('cf-msg').value.trim();
-  if (!name || !email || !msg) { alert('Please fill in your name, email, and message.'); return; }
+  
+  // Form validation
+  if (!name || !email || !msg) { 
+    toast('Please fill in your name, email, and message.', 'er'); 
+    return; 
+  }
+  
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    toast('Please enter a valid email address.', 'er');
+    return;
+  }
+  
   // Opens their mail client with pre-filled email
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nTopic: ${subject}\n\n${msg}`);
   const subj = encodeURIComponent(`OnPurpose Contact: ${subject || 'General Inquiry'}`);
@@ -185,7 +334,60 @@ function sendMsg() {
   document.getElementById('cf-name').value = '';
   document.getElementById('cf-email').value = '';
   document.getElementById('cf-msg').value = '';
+  toast('Message sent successfully!', 'ok');
 }
+
+// Initialize
+updateNav();
 </script>
+<script src="/js/api.js"></script>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<script>
+// PWA service worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' })
+      .then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+        // Check for updates every hour
+        setInterval(() => reg.update(), 60 * 60 * 1000);
+      })
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+
+// Detect Capacitor native context
+if (window.Capacitor) {
+  document.body.classList.add('capacitor-app');
+  // Disable PWA install prompt inside native app
+  window.addEventListener('beforeinstallprompt', e => e.preventDefault());
+}
+
+// PWA install prompt (for browser users)
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install button if one exists on the page
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'flex';
+    installBtn.addEventListener('click', () => {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          if (installBtn) installBtn.style.display = 'none';
+        }
+        deferredInstallPrompt = null;
+      });
+    });
+  }
+});
+</script>
+
 </body>
 </html>

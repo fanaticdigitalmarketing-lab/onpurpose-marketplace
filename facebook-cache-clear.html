@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facebook Cache Clear Instructions</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
+        .step { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .urgent { background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        a { color: #2563d4; }
+        code { background: #f0f0f0; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>🔄 Facebook Cache Clear Instructions</h1>
+    
+    <div class="urgent">
+        <strong>⚠️ IMPORTANT:</strong> Facebook may have cached old content. Follow these steps to force Facebook to update:
+    </div>
+
+    <div class="step">
+        <h3>Step 1: Use Facebook Debug Tool</h3>
+        <p>Go to <a href="https://developers.facebook.com/tools/debug/" target="_blank">Facebook Sharing Debugger</a></p>
+        <p>Enter: <code>https://onpurpose.earth</code></p>
+        <p>Click "Debug" → Then click "Scrape Again"</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 2: Clear URL Parameters</h3>
+        <p>Share the clean URL without fbclid:</p>
+        <p><code>https://onpurpose.earth</code></p>
+        <p>NOT: <code>https://onpurpose.earth/?fbclid=...</code></p>
+    </div>
+
+    <div class="step">
+        <h3>Step 3: Wait for Cache Update</h3>
+        <p>Facebook cache updates can take 5-30 minutes after scraping.</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 4: Verify Meta Tags</h3>
+        <p>The page now contains:</p>
+        <ul>
+            <li>✅ Title: "OnPurpose — Book People, Not Places"</li>
+            <li>✅ Description: "OnPurpose is a people-first marketplace..."</li>
+            <li>✅ No trademark references</li>
+            <li>✅ Proper Open Graph tags</li>
+            <li>✅ Working og:image (1200x630 Unsplash image)</li>
+            <li>✅ Complete og:image properties (type, width, height, alt)</li>
+            <li>✅ Cache control headers</li>
+        </ul>
+        <p><strong>Fixed:</strong> The "Inferred Property" warning should be resolved now that we have explicit og:image properties.</p>
+    </div>
+
+    <div class="step">
+        <h3>Step 5: Test Sharing</h3>
+        <p>After cache clears, test sharing the clean URL again.</p>
+        <p>The Facebook preview should show the correct OnPurpose branding.</p>
+    </div>
+
+    <hr>
+    <p><strong>Note:</strong> The fbclid parameter is just a Facebook tracking parameter and doesn't affect the content. The issue was Facebook's cache of the old page content.</p>
+
+    <div style="margin-top: 30px; padding: 20px; background: #e8f5e8; border-radius: 5px;">
+        <h3>✅ Current Status</h3>
+        <p>All trademark references have been removed from the codebase.</p>
+        <p>Meta tags are properly configured with approved branding.</p>
+        <p>Facebook just needs to recrawl the updated page.</p>
+    </div>
+</body>
+</html>

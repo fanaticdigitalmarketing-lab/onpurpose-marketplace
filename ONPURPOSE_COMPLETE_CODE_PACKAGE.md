@@ -162,7 +162,7 @@ const helmet = require('helmet');
 <body>
   <div class="container">
     <h1>Book People. Not Places.</h1>
-    <h2>The Airbnb for Skills & Human Services</h2>
+    <h2>not dating connection for skills & human services</h2>
     
     <!-- Urgency and social proof messaging -->
     <div class="urgency-message">⚡ Limited early access — first 100 users only</div>

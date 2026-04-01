@@ -26,7 +26,7 @@ async function testAnalytics() {
     console.log('\n📊 Step 1: Creating provider account...');
     const providerEmail = `analytics_test_${Date.now()}@testdomain.com`;
     
-    const registerResponse = await request('https://onpurpose.earth/api/auth/register', {
+// // // // // // // // // // // // // // // // // // const registerResponse = await request('https://onpurpose.earth/api/auth/register', { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

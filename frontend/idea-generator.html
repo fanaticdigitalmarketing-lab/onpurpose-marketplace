@@ -71,39 +71,197 @@
     .page-header h1{font-size:2.5rem;margin-bottom:1rem}
     .page-header p{color:var(--mut);font-size:1.1rem;max-width:600px;margin:0 auto}
     .idea-form{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2.5rem;margin-bottom:3rem;max-width:600px;margin-left:auto;margin-right:auto}
-    .form-group{margin-bottom:1.5rem}
-    .form-group label{display:block;font-weight:600;color:var(--navy);margin-bottom:0.5rem}
-    .form-group input{width:100%;padding:1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem;transition:border-color 0.2s}
-    .form-group input:focus{outline:none;border-color:var(--blue)}
-    .generate-btn{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1.2rem 2rem;border-radius:12px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(37,99,212,0.3);position:relative;overflow:hidden}
-    .generate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(37,99,212,0.4)}
-    .generate-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
-    .generate-btn .loading{display:none}
-    .generate-btn.loading .text{display:none}
-    .generate-btn.loading .loading{display:inline-block}
-    .ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;margin-bottom:3rem}
-    .idea-card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem;transition:all 0.3s;position:relative;border:2px solid transparent}
-    .idea-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--blue)}
-    .idea-card .category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.85rem;font-weight:600;margin-bottom:1rem}
-    .idea-card h3{font-size:1.3rem;margin-bottom:1rem;color:var(--navy)}
-    .idea-card p{color:var(--mut);margin-bottom:1.5rem;line-height:1.6}
-    .idea-meta{display:flex;gap:1rem;margin-bottom:1.5rem;font-size:0.9rem;color:var(--mut)}
-    .idea-meta span{display:flex;align-items:center;gap:0.3rem}
-    .idea-actions{display:flex;gap:1rem}
-    .idea-actions button{flex:1;padding:0.8rem 1rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s}
-    .use-idea{background:var(--blue);color:var(--white)}
-    .use-idea:hover{background:var(--blue2)}
-    .more-like-this{background:var(--off);color:var(--navy);border:2px solid var(--bdr)}
-    .more-like-this:hover{background:var(--off2)}
-    .empty-state{text-align:center;padding:4rem 2rem;background:var(--white);border-radius:16px;box-shadow:var(--shadow)}
-    .empty-state h3{font-size:1.5rem;margin-bottom:1rem;color:var(--navy)}
-    .empty-state p{color:var(--mut);margin-bottom:2rem}
-    .loading-spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-top:3px solid white;border-radius:50%;animation:spin 1s linear infinite}
+    .form-group{margin-bottom:1.5rem;}
+    .form-group label{display:block;font-weight:600;color:var(--navy);margin-bottom:0.5rem;}
+    .form-group input{width:100%;padding:1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem;transition:border-color 0.2s;}
+    .form-group input:focus{outline:none;border-color:var(--blue);}
+    .generate-btn{width:100%;background:linear-gradient(135deg,var(--blue),var(--blue2));color:var(--white);padding:1.2rem 2rem;border-radius:12px;border:none;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(37,99,212,0.3);position:relative;overflow:hidden;}
+    .generate-btn:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(37,99,212,0.4);}
+    .generate-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+    .generate-btn .loading{display:none;}
+    .generate-btn.loading .text{display:none;}
+    .generate-btn.loading .loading{display:inline-block;}
+    .ideas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;margin-bottom:3rem;}
+    .idea-card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);padding:2rem;transition:all 0.3s;position:relative;border:2px solid transparent;}
+    .idea-card:hover{transform:translateY(-4px);box-shadow:var(--shadow2);border-color:var(--blue);}
+    .idea-card .category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.85rem;font-weight:600;margin-bottom:1rem;}
+    .idea-card h3{font-size:1.3rem;margin-bottom:1rem;color:var(--navy);}
+    .idea-card p{color:var(--mut);margin-bottom:1.5rem;line-height:1.6;}
+    .idea-meta{display:flex;gap:1rem;margin-bottom:1.5rem;font-size:0.9rem;color:var(--mut);}
+    .idea-meta span{display:flex;align-items:center;gap:0.3rem;}
+    .idea-actions{display:flex;gap:1rem;}
+    .idea-actions button{flex:1;padding:0.8rem 1rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;}
+    .use-idea{background:var(--blue);color:var(--white);}
+    .use-idea:hover{background:var(--blue2);}
+    .more-like-this{background:var(--off);color:var(--navy);border:2px solid var(--bdr);}
+    .more-like-this:hover{background:var(--off2);}
+    .empty-state{text-align:center;padding:4rem 2rem;background:var(--white);border-radius:16px;box-shadow:var(--shadow);}
+    .empty-state h3{font-size:1.5rem;margin-bottom:1rem;color:var(--navy);}
+    .empty-state p{color:var(--mut);margin-bottom:2rem;}
+    .loading-spinner{display:none;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-top:3px solid white;border-radius:50%;animation:spin 1s linear infinite;}
     @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
-    .toast.show{transform:translateY(0);opacity:1}
-    .toast.er{background:var(--red)}
-    .toast.suc{background:var(--ok)}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000;}
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast.er{background:var(--red);}
+    .toast.suc{background:var(--ok);}
+    
+    /* Viral Sharing Styles */
+    .idea-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .viral-score {
+      display: flex;
+      align-items: center;
+    }
+    
+    .score-badge {
+      background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+    
+    .viral-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--bdr);
+    }
+    
+    .copy-btn, .share-btn, .image-btn {
+      flex: 1;
+      padding: 0.6rem 0.8rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+    
+    .copy-btn {
+      background: var(--off);
+      color: var(--navy);
+      border: 1px solid var(--bdr);
+    }
+    
+    .copy-btn:hover {
+      background: var(--off2);
+    }
+    
+    .share-btn {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: white;
+    }
+    
+    .share-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37,99,212,0.3);
+    }
+    
+    .image-btn {
+      background: var(--ok);
+      color: white;
+    }
+    
+    .image-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(22,163,74,0.3);
+    }
+    
+    /* Trending Niches */
+    .trending-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+    
+    .trending-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .trending-niches {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .trending-niche {
+      background: var(--blue-l);
+      color: var(--blue);
+      padding: 0.8rem 1.2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+    
+    .trending-niche:hover {
+      background: var(--blue);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .niche-growth {
+      background: rgba(22,163,74,0.2);
+      color: var(--ok);
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+    }
+    
+    /* Addiction Loop Elements */
+    .generate-another-btn {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .generate-another-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(37,99,212,0.4);
+    }
+    
+    /* Enhanced Loading States */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
     @media(max-width:768px){
       nav{flex-direction:column;gap:1rem}
       .nav-links{flex-wrap:wrap;justify-content:center}
@@ -112,6 +270,8 @@
       .ideas-grid{grid-template-columns:1fr;margin:0 1rem}
       .idea-card{padding:1.5rem}
       .idea-actions{flex-direction:column}
+      .viral-actions{flex-direction:column}
+      .trending-niches{flex-direction:column}
     }
   </style>
 </head>
@@ -140,47 +300,52 @@
   </nav>
 
   <div class="container">
-    <div class="page-header">
-      <h1>Generate Your Service Idea</h1>
-      <p>Enter your niche or skill to discover profitable service opportunities tailored to your expertise</p>
-    </div>
+      <div class="page-header">
+        <h1>💡 Advanced Idea Generator</h1>
+        <p>Transform your skills into premium, monetizable services with AI-powered intelligence</p>
+      </div>
 
-    <div class="idea-form">
-      <form id="ideaGeneratorForm">
-        <div class="form-group">
-          <label for="nicheInput">Enter a niche or skill</label>
-          <input 
-            type="text" 
-            id="nicheInput" 
-            placeholder="e.g., coaching, web design, fitness, writing..."
-            required
-            minlength="2"
-          >
+      <!-- Trending Niches Section -->
+      <div class="trending-section">
+        <div class="trending-title">🔥 Trending Niches</div>
+        <div class="trending-niches" id="trendingNiches">
+          <!-- Will be populated dynamically -->
         </div>
-        <button type="submit" class="generate-btn" id="generateBtn">
-          <span class="text">Generate Ideas</span>
-          <span class="loading">
-            <span class="loading-spinner"></span>
-            Generating...
-          </span>
-        </button>
-      </form>
-    </div>
+      </div>
 
-    <div id="ideasContainer" style="display:none;">
-      <div class="ideas-grid" id="ideasGrid"></div>
-      <div style="text-align:center;margin-top:2rem">
-        <button onclick="generateMore()" class="btn-ghost">Generate More Ideas</button>
+      <div class="idea-form">
+        <form id="ideaGeneratorForm">
+          <div class="form-group">
+            <label for="nicheInput">Enter your niche or skill</label>
+            <input 
+              type="text" 
+              id="nicheInput" 
+              placeholder="e.g., coaching, web design, fitness, writing..."
+              required
+              minlength="2"
+            >
+          </div>
+          <button type="submit" class="generate-btn" id="generateBtn">
+            <span class="text">🚀 Generate Advanced Ideas</span>
+            <span class="loading">
+              <span class="loading-spinner"></span>
+              Generating brilliance...
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <div class="ideas-grid" id="ideasGrid">
+        <!-- Ideas will be displayed here -->
+      </div>
+
+      <div id="emptyState" class="empty-state" style="display:none">
+        <h3>No ideas yet</h3>
+        <p>Enter your niche above to generate brilliant service ideas!</p>
       </div>
     </div>
 
-    <div id="emptyState" class="empty-state" style="display:none;">
-      <h3>No ideas yet</h3>
-      <p>Enter your niche or skill above to generate personalized service ideas</p>
-    </div>
-  </div>
-
-  <!-- Toast notification -->
+    <!-- Toast notification -->
   <div id="toast" class="toast"></div>
 
   <script>
@@ -243,51 +408,79 @@
       return true;
     }
 
-    // Idea generator functions
-    async function generateIdeas(niche) {
+    // Advanced idea generator functions
+    async function generateAdvancedIdeas(niche) {
       const generateBtn = document.getElementById('generateBtn');
-      const ideasContainer = document.getElementById('ideasContainer');
+      const ideasGrid = document.getElementById('ideasGrid');
       const emptyState = document.getElementById('emptyState');
       
       try {
+        // Show loading state
         generateBtn.classList.add('loading');
         generateBtn.disabled = true;
-
-        const response = await fetch(`${API_BASE}/api/ideas/generate`, {
+        emptyState.style.display = 'none';
+        ideasGrid.innerHTML = '<div class="loading-spinner"></div><p style="text-align:center; margin-top:1rem; color:var(--mut);">Generating brilliant ideas...</p>';
+        
+        // Call advanced idea generation API
+        const response = await fetch(`${API_BASE}/api/ideas/generate-advanced`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`
+            'Authorization': 'Bearer ' + getToken()
           },
-          body: JSON.stringify({ niche })
+          body: JSON.stringify({ 
+            niche: niche,
+            userLevel: 'beginner',
+            goal: 'monetize'
+          })
         });
 
         const data = await response.json();
-
+        
         if (data.success) {
-          currentNiche = niche;
           currentIdeas = data.data.ideas;
-          displayIdeas(data.data.ideas);
-          ideasContainer.style.display = 'block';
-          emptyState.style.display = 'none';
+          currentNiche = niche;
+          displayAdvancedIdeas(data.data.ideas, data.data.shareable);
+          
+          // Track generation for analytics
+          trackIdeaGeneration(niche, data.data.ideas.length);
+          
+          // Show success message
+          showToast(`Generated ${data.data.ideas.length} amazing ideas for "${niche}"!`, 'success');
         } else {
-          toast(data.message || 'Failed to generate ideas', 'er');
+          showToast(data.message || 'Failed to generate ideas', 'error');
         }
       } catch (error) {
         console.error('Generate ideas error:', error);
-        toast('Network error. Please try again.', 'er');
+        showToast('Network error. Please try again.', 'error');
       } finally {
         generateBtn.classList.remove('loading');
         generateBtn.disabled = false;
       }
     }
 
-    function displayIdeas(ideas) {
+    function displayAdvancedIdeas(ideas, shareable) {
       const ideasGrid = document.getElementById('ideasGrid');
+      const emptyState = document.getElementById('emptyState');
       
-      ideasGrid.innerHTML = ideas.map(idea => `
-        <div class="idea-card">
-          <span class="category">${idea.category}</span>
+      if (ideas.length === 0) {
+        emptyState.style.display = 'block';
+        ideasGrid.innerHTML = '';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      
+      ideasGrid.innerHTML = ideas.map((idea, index) => `
+        <div class="idea-card" data-idea-id="${idea.id}">
+          <div class="idea-header">
+            <span class="category">${getCategoryEmoji(idea.category)} ${idea.category}</span>
+            <div class="viral-score">
+              <span class="score-badge" title="Viral Score: ${idea.viralScore}/100">
+                🔥 ${idea.viralScore}
+              </span>
+            </div>
+          </div>
           <h3>${idea.title}</h3>
           <p>${idea.description}</p>
           <div class="idea-meta">
@@ -299,91 +492,273 @@
             <button onclick="useIdea(${idea.id})" class="use-idea">Use This Service</button>
             <button onclick="generateSimilar(${idea.id})" class="more-like-this">Generate More Like This</button>
           </div>
+          <div class="viral-actions">
+            <button onclick="copyIdea(${idea.id})" class="copy-btn" title="Copy idea">
+              📋 Copy
+            </button>
+            <button onclick="shareIdea(${idea.id})" class="share-btn" title="Share idea">
+              🚀 Share
+            </button>
+            <button onclick="generateShareImage(${idea.id})" class="image-btn" title="Generate share image">
+              🖼️ Image
+            </button>
+          </div>
         </div>
       `).join('');
+      
+      // Add smooth animations
+      animateIdeaCards();
+    }
+
+    function animateIdeaCards() {
+      const cards = document.querySelectorAll('.idea-card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          card.style.transition = 'all 0.5s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+    }
+
+    function getCategoryEmoji(category) {
+      const emojis = {
+        'coaching': '🎯',
+        'consulting': '💼',
+        'design': '🎨',
+        'development': '💻',
+        'marketing': '📢',
+        'wellness': '🧘',
+        'fitness': '💪'
+      };
+      return emojis[category] || '💡';
+    }
+
+    // Viral sharing functions
+    async function copyIdea(ideaId) {
+      const idea = currentIdeas.find(i => i.id === ideaId);
+      if (!idea) return;
+      
+      const shareText = `💡 Idea: ${idea.description}\nGenerated on https://onpurpose.earth`;
+      
+      try {
+        await navigator.clipboard.writeText(shareText);
+        showToast('Idea copied to clipboard!', 'success');
+        trackIdeaShare(ideaId, 'copy');
+      } catch (error) {
+        showToast('Failed to copy idea', 'error');
+      }
+    }
+
+    async function shareIdea(ideaId) {
+      const idea = currentIdeas.find(i => i.id === ideaId);
+      if (!idea) return;
+      
+      const shareText = `💡 Idea: ${idea.description}\nGenerated on https://onpurpose.earth`;
+      const shareUrl = `https://onpurpose.earth/idea-generator.html?idea=${ideaId}`;
+      
+      try {
+        if (navigator.share) {
+          // Mobile native share
+          await navigator.share({
+            title: '💡 OnPurpose Idea',
+            text: shareText,
+            url: shareUrl
+          });
+          trackIdeaShare(ideaId, 'native-share');
+        } else {
+          // Fallback - copy to clipboard
+          await copyIdea(ideaId);
+        }
+      } catch (error) {
+        console.error('Share error:', error);
+        showToast('Share failed', 'error');
+      }
+    }
+
+    async function generateShareImage(ideaId) {
+      const idea = currentIdeas.find(i => i.id === ideaId);
+      if (!idea) return;
+      
+      try {
+        const response = await fetch(`/api/ideas/share-image/${ideaId}`);
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        
+        // Download the image
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `onpurpose-idea-${ideaId}.png`;
+        a.click();
+        
+        URL.revokeObjectURL(url);
+        showToast('Share image generated!', 'success');
+        trackIdeaShare(ideaId, 'image');
+      } catch (error) {
+        console.error('Image generation error:', error);
+        showToast('Failed to generate image', 'error');
+      }
     }
 
     function useIdea(ideaId) {
       const idea = currentIdeas.find(i => i.id === ideaId);
       if (!idea) return;
-
-      // Store idea data for service creation
-      localStorage.setItem('selectedIdea', JSON.stringify({
-        title: idea.title,
-        description: idea.description,
-        category: idea.category,
-        estimatedPrice: idea.estimatedPrice,
-        timeCommitment: idea.timeCommitment,
-        difficulty: idea.difficulty
-      }));
-
+      
+      // Store idea for service creation
+      localStorage.setItem('selectedIdea', JSON.stringify(idea));
+      
       // Navigate to service creation page
-      window.location.href = `/create-service.html?fromIdea=true`;
+      window.location.href = `/create-service.html?fromIdea=true&ideaId=${ideaId}`;
     }
 
     async function generateSimilar(ideaId) {
       const idea = currentIdeas.find(i => i.id === ideaId);
       if (!idea) return;
-
+      
       try {
-        const response = await fetch(`${API_BASE}/api/ideas/generate-similar`, {
+        const response = await fetch('/api/ideas/generate-similar', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getToken()}`
+            'Authorization': 'Bearer ' + getToken()
           },
           body: JSON.stringify({ ideaId, niche: currentNiche })
         });
 
         const data = await response.json();
-
+        
         if (data.success) {
-          currentIdeas = [...currentIdeas, ...data.data.ideas];
-          displayIdeas(currentIdeas);
-          toast('Generated similar ideas!', 'suc');
+          currentIdeas = data.data.ideas;
+          displayAdvancedIdeas(data.data.ideas, []);
+          showToast('Generated similar ideas!', 'success');
         } else {
-          toast(data.message || 'Failed to generate similar ideas', 'er');
+          showToast(data.message || 'Failed to generate similar ideas', 'error');
         }
       } catch (error) {
         console.error('Generate similar ideas error:', error);
-        toast('Network error. Please try again.', 'er');
+        showToast('Network error', 'error');
       }
     }
 
     function generateMore() {
       if (currentNiche) {
-        generateIdeas(currentNiche);
+        generateAdvancedIdeas(currentNiche);
       }
     }
 
-    // Form submission
+    // Analytics tracking
+    function trackIdeaGeneration(niche, count) {
+      try {
+        // This would normally send to analytics
+        console.log(`[Analytics] Generated ${count} ideas for niche: ${niche}`);
+      } catch (error) {
+        console.error('Analytics error:', error);
+      }
+    }
+
+    function trackIdeaShare(ideaId, shareType) {
+      try {
+        fetch('/api/ideas/share', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getToken()
+          },
+          body: JSON.stringify({ ideaId, shareType, platform: 'web' })
+        });
+      } catch (error) {
+        console.error('Share tracking error:', error);
+      }
+    }
+
+    // Enhanced UI elements for addiction loop
+    function addAddictionLoopElements() {
+      const container = document.querySelector('.container');
+      
+      // Add "Generate Another Idea" button
+      const generateAnotherBtn = document.createElement('button');
+      generateAnotherBtn.className = 'generate-another-btn';
+      generateAnotherBtn.innerHTML = '🔄 Generate More Ideas';
+      generateAnotherBtn.onclick = generateMore;
+      generateAnotherBtn.style.cssText = `
+        display: none;
+        margin: 2rem auto;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, var(--blue), var(--blue2));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 20px rgba(37,99,212,0.3);
+      `;
+      
+      container.appendChild(generateAnotherBtn);
+      
+      // Show button after ideas are generated
+      setTimeout(() => {
+        generateAnotherBtn.style.display = 'block';
+      }, 2000);
+    }
+
+    // Form submission with enhanced UX
     document.getElementById('ideaGeneratorForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      if (!checkAuth()) return;
-      
-      const nicheInput = document.getElementById('nicheInput');
-      const niche = nicheInput.value.trim();
+      const niche = document.getElementById('nicheInput').value.trim();
       
       if (niche.length < 2) {
-        toast('Please enter at least 2 characters', 'er');
+        showToast('Please enter at least 2 characters', 'error');
         return;
       }
-
-      await generateIdeas(niche);
+      
+      await generateAdvancedIdeas(niche);
     });
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
       updateNav();
+      addAddictionLoopElements();
       
-      if (!checkAuth()) {
-        return;
+      // Check for referral code
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      if (refCode) {
+        localStorage.setItem('referralCode', refCode);
+        showToast('Welcome! You were referred by a friend.', 'success');
       }
-
-      // Focus on input
-      document.getElementById('nicheInput').focus();
+      
+      // Load trending ideas for inspiration
+      loadTrendingIdeas();
     });
+
+    async function loadTrendingIdeas() {
+      try {
+        const response = await fetch('/api/ideas/trending');
+        const data = await response.json();
+        
+        if (data.success) {
+          displayTrendingNiches(data.data.topNiches);
+        }
+      } catch (error) {
+        console.error('Failed to load trending ideas:', error);
+      }
+    }
+
+    function displayTrendingNiches(niches) {
+      const trendingContainer = document.getElementById('trendingNiches');
+      if (!trendingContainer) return;
+      
+      trendingContainer.innerHTML = niches.slice(0, 3).map(niche => `
+        <div class="trending-niche" onclick="generateAdvancedIdeas('${niche.niche}')">
+          <span class="niche-name">${niche.niche}</span>
+          <span class="niche-growth">${niche.growth}</span>
+        </div>
+      `).join('');
+    }
   </script>
 </body>
 </html>

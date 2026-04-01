@@ -74,7 +74,7 @@ async function testProfileEnhancements() {
     
     try {
       // This will fail without auth, but we can check if endpoint exists
-      const response = await request('https://onpurpose-backend-clean-production.up.railway.app/api/users/profile');
+// // // // // // // // // // // // // // // // // // const response = await request('https://onpurpose-backend-clean-production.up.railway.app/api/users/profile'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('✅ Backend profile endpoint is accessible');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {

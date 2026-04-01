@@ -4,139 +4,175 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"/>
   <title>OnPurpose — Dashboard</title>
+  
+<!-- ── PWA & Mobile Meta ── -->
+<meta name="application-name" content="OnPurpose">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OnPurpose">
+<meta name="theme-color" content="#2563d4">
+<meta name="msapplication-TileColor" content="#1a2744">
+<meta name="msapplication-TileImage" content="/assets/icons/icon-144.png">
+<meta name="format-detection" content="telephone=no">
+
+<!-- ── PWA Manifest ── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ── Apple Touch Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/icon-128.png">
+
+<!-- ── Apple Splash Screens (required for iOS standalone mode) ── -->
+<link rel="apple-touch-startup-image"
+      media="(device-width: 430px) and (device-height: 932px)"
+      href="/assets/splash/splash-430x932.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 393px) and (device-height: 852px)"
+      href="/assets/splash/splash-393x852.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 390px) and (device-height: 844px)"
+      href="/assets/splash/splash-390x844.png">
+<link rel="apple-touch-startup-image"
+      media="(device-width: 375px) and (device-height: 812px)"
+      href="/assets/splash/splash-375x812.png">
+<!-- ── End PWA & Mobile Meta ── -->
+  
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--navy:#1a2744;--navy2:#243156;--blue:#2563d4;--blue2:#3b7ef8;--blue-light:#3b7ef8;--blue-pale:#dbeafe;--blue-bg:#eff6ff;--blue-l:rgba(37,99,212,0.10);--gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#6c757d;--gray-700:#495057;--white:#fff;--off:#f7f8fc;--off2:#eef1f8;--txt:#1a2744;--mut:#6b7a99;--bdr:rgba(26,39,68,0.10);--bdr2:rgba(26,39,68,0.18);--green:#22c55e;--ok:#16a34a;--amber:#f59e0b;--warn:#d97706;--red:#ef4444;--font-display:'Playfair Display',serif;--font-body:'DM Sans',sans-serif;--shadow:0 4px 24px rgba(37,99,212,0.10);--shadow-md:0 4px 12px rgba(0,0,0,.1);--shadow2:0 8px 40px rgba(37,99,212,0.16);--radius:12px;--radius-lg:16px}
-    body{font-family:var(--font-body);background:var(--gray-50);color:var(--navy);line-height:1.6;display:flex;flex-direction:column;min-height:100vh}
-    a{color:var(--blue);text-decoration:none}
+    *{margin:0;padding:0;box-sizing: border-box;}
+    :root{--navy:#1a2744;--navy2:#243156;--blue:#2563d4;--blue2:#3b7ef8;--blue-light:#3b7ef8;--blue-pale:#dbeafe;--blue-bg:#eff6ff;--blue-l:rgba(37,99,212,0.10);--gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-400:#ced4da;--gray-500:#adb5bd;--gray-600:#6c757d;--gray-700:#495057;--white:#fff;--off:#f7f8fc;--off2:#eef1f8;--txt:#1a2744;--mut:#6b7a99;--bdr:rgba(26,39,68,0.10);--bdr2:rgba(26,39,68,0.18);--green:#22c55e;--ok:#16a34a;--amber:#f59e0b;--warn:#d97706;--red:#ef4444;--font-display:'Playfair Display',serif;--font-body:'DM Sans',sans-serif;--shadow:0 4px 24px rgba(37,99,212,0.10);--shadow-md:0 4px 12px rgba(0,0,0,.1);--shadow2:0 8px 40px rgba(37,99,212,0.16);--radius:12px;--radius-lg: 16px;}
+    body{font-family:var(--font-body);background:var(--gray-50);color:var(--navy);line-height:1.6;display:flex;flex-direction:column;min-height: 100vh;}
+    a{color:var(--blue);text-decoration: none;}
 
     /* NAV */
-    .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
-    .nav-brand{display:flex;align-items:center;gap:10px}
-    .nav-brand svg{width:34px;height:34px}
-    .nav-brand-text{display:flex;flex-direction:column;line-height:1.1}
-    .nav-brand-name{font-family:var(--font-display);font-weight:800;font-size:1.1rem;color:var(--navy)}
-    .nav-brand-tagline{font-size:9px;color:var(--blue);font-weight:600;letter-spacing:.5px}
-    .nav-right{display:flex;gap:10px;align-items:center}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--white);border-bottom:1px solid var(--gray-200);padding:0 24px;height:60px;display:flex;align-items:center;justify-content: space-between;}
+    .nav-brand{display:flex;align-items:center;gap: 10px;}
+    .nav-brand svg{width:34px;height: 34px;}
+    .nav-brand-text{display:flex;flex-direction:column;line-height: 1.1;}
+    .nav-brand-name{font-family:var(--font-display);font-weight:800;font-size:1.1rem;color: var(--navy);}
+    .nav-brand-tagline{font-size:9px;color:var(--blue);font-weight:600;letter-spacing: .5px;}
+    .nav-right{display:flex;gap:10px;align-items: center;}
 
     /* BUTTONS */
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 20px;border:none;-webkit-appearance:none;appearance:none;border-radius:var(--radius);cursor:pointer;font-family:var(--font-body);font-size:.85rem;font-weight:600;transition:all .2s;gap:6px;-webkit-tap-highlight-color:transparent}
-    .btn-primary{background:var(--blue);color:var(--white)}
-    .btn-primary:hover{background:#1d4ed8}
-    .btn-outline{background:transparent;color:var(--blue);border:1.5px solid var(--blue)}
-    .btn-outline:hover{background:var(--blue-bg)}
-    .btn-sm{padding:7px 14px;font-size:.8rem}
-    .btn-pill{border-radius:50px}
-    .btn-danger{background:var(--red);color:var(--white)}
-    .btn-danger:hover{background:#dc2626}
-    .btn-success{background:var(--green);color:var(--white)}
-    .btn-amber{background:var(--amber);color:var(--navy)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:9px 20px;border:none;-webkit-appearance:none;appearance:none;border-radius:var(--radius);cursor:pointer;font-family:var(--font-body);font-size:.85rem;font-weight:600;transition:all .2s;gap:6px;-webkit-tap-highlight-color: transparent;}
+    .btn-primary{background:var(--blue);color: var(--white);}
+    .btn-primary:hover{background: #1d4ed8;}
+    .btn-outline{background:transparent;color:var(--blue);border:2px solid var(--blue);-webkit-appearance: none;border-radius: 12px;}
+    .btn-outline:hover{background:var(--blue);color: var(--white);}
+    .btn-sm{padding:7px 14px;font-size: .8rem;}
+    .btn-pill{border-radius: 50px;}
+    .btn-danger{background:var(--red);color: var(--white);}
+    .btn-danger:hover{background: #dc2626;}
+    .btn-success{background:var(--green);color: var(--white);}
+    .btn-amber{background:var(--amber);color: var(--navy);}
 
     /* LAYOUT */
-    .layout{display:flex;margin-top:60px;min-height:calc(100vh - 60px)}
-    .sidebar{width:230px;background:var(--white);border-right:1px solid var(--gray-200);padding:24px 16px;display:flex;flex-direction:column;position:fixed;top:60px;bottom:0;overflow-y:auto}
-    .main{flex:1;margin-left:230px;padding:28px 32px}
+    .layout{display:flex;margin-top:60px;min-height: calc(100vh - 60px);}
+    .sidebar{width:230px;background:var(--white);border-right:1px solid var(--gray-200);padding:24px 16px;display:flex;flex-direction:column;position:fixed;top:60px;bottom:0;overflow-y: auto;}
+    .main{flex:1;margin-left:230px;padding: 28px 32px;}
 
     /* SIDEBAR */
-    .sidebar-user{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--gray-200)}
-    .sidebar-avatar{width:56px;height:56px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:var(--white);margin:0 auto 10px}
-    .sidebar-name{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--navy)}
-    .sidebar-role{font-size:.75rem;font-weight:600;color:var(--blue);background:var(--blue-pale);padding:2px 10px;border-radius:50px;display:inline-block;margin-top:4px}
-    .sidebar-nav{display:flex;flex-direction:column;gap:2px;flex:1}
-    .sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all .2s}
-    .sidebar-link:hover{background:var(--gray-100);color:var(--navy)}
-    .sidebar-link.active{background:var(--blue-bg);color:var(--blue);font-weight:600}
-    .sidebar-link .icon{font-size:1.05rem}
-    .sidebar-bottom{margin-top:auto;padding-top:16px;border-top:1px solid var(--gray-200);text-align:center}
-    .sidebar-bottom svg{width:24px;height:24px;opacity:.5}
-    .sidebar-bottom-text{font-size:.7rem;color:var(--gray-500);margin-top:4px}
+    .sidebar-user{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom: 1px solid var(--gray-200);}
+    .sidebar-avatar{width:56px;height:56px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:var(--white);margin: 0 auto 10px;}
+    .sidebar-name{font-family:var(--font-display);font-weight:700;font-size:1rem;color: var(--navy);}
+    .sidebar-role{font-size:.75rem;font-weight:600;color:var(--blue);background:var(--blue-pale);padding:2px 10px;border-radius:50px;display:inline-block;margin-top: 4px;}
+    .sidebar-nav{display:flex;flex-direction:column;gap:2px;flex: 1;}
+    .sidebar-link{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--gray-600);cursor:pointer;transition: all .2s;}
+    .sidebar-link:hover{background:var(--gray-100);color: var(--navy);}
+    .sidebar-link.active{background:var(--blue-bg);color:var(--blue);font-weight: 600;}
+    .sidebar-link .icon{font-size: 1.05rem;}
+    .sidebar-bottom{margin-top:auto;padding-top:16px;border-top:1px solid var(--gray-200);text-align: center;}
+    .sidebar-bottom svg{width:24px;height:24px;opacity: .5;}
+    .sidebar-bottom-text{font-size:.7rem;color:var(--gray-500);margin-top: 4px;}
 
     /* PAGES */
-    .page{display:none}
-    .page.active{display:block}
-    .page-title{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--navy);margin-bottom:4px}
-    .page-sub{color:var(--gray-600);font-size:.9rem;margin-bottom:24px}
+    .page{display: none;}
+    .page.active{display: block;}
+    .page-title{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--navy);margin-bottom: 4px;}
+    .page-sub{color:var(--gray-600);font-size:.9rem;margin-bottom: 24px;}
 
     /* STATS */
-    .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
-    .stat-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px}
-    .stat-card-value{font-family:var(--font-display);font-size:1.8rem;font-weight:800;color:var(--blue)}
-    .stat-card-label{font-size:.8rem;color:var(--gray-600);margin-top:2px}
+    .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom: 28px;}
+    .stat-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding: 20px;}
+    .stat-card-value{font-family:var(--font-display);font-size:1.8rem;font-weight:800;color: var(--blue);}
+    .stat-card-label{font-size:.8rem;color:var(--gray-600);margin-top: 2px;}
 
     /* BOOKING ITEMS */
-    .booking-item{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .booking-info h3{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom:2px}
-    .booking-info p{font-size:.82rem;color:var(--gray-600)}
-    .booking-badges{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
-    .booking-actions{display:flex;gap:8px;flex-wrap:wrap}
-    .pill{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform:uppercase}
-    .pill-pending{background:#fef3c7;color:#92400e}
-    .pill-confirmed{background:var(--blue-pale);color:var(--blue)}
-    .pill-completed{background:#dcfce7;color:#166534}
-    .pill-cancelled{background:#fee2e2;color:#991b1b}
-    .pill-in_progress{background:#ede9fe;color:#5b21b6}
-    .pill-paid{background:#dcfce7;color:#166534}
-    .pill-unpaid{background:#fee2e2;color:#991b1b}
+    .booking-item{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap: 12px;}
+    .booking-info h3{font-size:.95rem;font-weight:600;color:var(--navy);margin-bottom: 2px;}
+    .booking-info p{font-size:.82rem;color: var(--gray-600);}
+    .booking-badges{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap: wrap;}
+    .booking-actions{display:flex;gap:8px;flex-wrap: wrap;}
+    .pill{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:700;text-transform: uppercase;}
+    .pill-pending{background:#fef3c7;color: #92400e;}
+    .pill-confirmed{background:var(--blue-pale);color: var(--blue);}
+    .pill-completed{background:#dcfce7;color: #166534;}
+    .pill-cancelled{background:#fee2e2;color: #991b1b;}
+    .pill-in_progress{background:#ede9fe;color: #5b21b6;}
+    .pill-paid{background:#dcfce7;color: #166534;}
+    .pill-unpaid{background:#fee2e2;color: #991b1b;}
 
     /* SERVICE CARDS */
-    .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
-    .svc-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:20px}
-    .svc-card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--navy);margin-bottom:4px}
-    .svc-card-cat{font-size:.78rem;color:var(--gray-600);margin-bottom:8px}
-    .svc-card-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
-    .svc-card-price{font-family:var(--font-display);font-size:1.2rem;font-weight:800;color:var(--blue)}
-    .svc-card-bookings{font-size:.78rem;color:var(--gray-500)}
+    .svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap: 18px;}
+    .svc-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding: 20px;}
+    .svc-card h3{font-family:var(--font-display);font-size:1.05rem;color:var(--navy);margin-bottom: 4px;}
+    .svc-card-cat{font-size:.78rem;color:var(--gray-600);margin-bottom: 8px;}
+    .svc-card-meta{display:flex;justify-content:space-between;align-items:center;margin-top: 10px;}
+    .svc-card-price{font-family:var(--font-display);font-size:1.2rem;font-weight:800;color: var(--blue);}
+    .svc-card-bookings{font-size:.78rem;color: var(--gray-500);}
 
     /* FORMS */
-    .form-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:28px;max-width:560px}
-    .form-group{margin-bottom:14px}
-    .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--gray-700);margin-bottom:5px}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:var(--radius);border:1.5px solid var(--gray-200);-webkit-appearance:none;appearance:none;color:var(--navy);font-size:.9rem;font-family:var(--font-body);transition:border-color .2s}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--blue)}
-    .form-group textarea{resize:vertical;min-height:80px}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .danger-zone{border:1.5px solid var(--red);border-radius:var(--radius-lg);padding:20px;margin-top:28px}
-    .danger-zone h3{color:var(--red);font-size:.95rem;margin-bottom:8px}
-    .danger-zone p{color:var(--gray-600);font-size:.82rem;margin-bottom:12px}
+    .form-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-lg);padding:28px;max-width: 560px;}
+    .form-group{margin-bottom: 14px;}
+    .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--gray-700);margin-bottom: 5px;}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 14px;border-radius:var(--radius);border:1.5px solid var(--gray-200);-webkit-appearance:none;appearance:none;color:var(--navy);font-size:.9rem;font-family:var(--font-body);transition: border-color .2s;}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color: var(--blue);}
+    .form-group textarea{resize:vertical;min-height: 80px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap: 12px;}
+    .danger-zone{border:1.5px solid var(--red);border-radius:var(--radius-lg);padding:20px;margin-top: 28px;}
+    .danger-zone h3{color:var(--red);font-size:.95rem;margin-bottom: 8px;}
+    .danger-zone p{color:var(--gray-600);font-size:.82rem;margin-bottom: 12px;}
 
     /* EMAIL BANNER */
-    .email-banner{background:#fef3c7;border:1px solid #fbbf24;border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:.85rem;color:#92400e}
-    .email-banner strong{font-weight:700}
+    .email-banner{background:#fef3c7;border:1px solid #fbbf24;border-radius:var(--radius);padding:12px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:.85rem;color: #92400e;}
+    .email-banner strong{font-weight: 700;}
 
     /* OVERLAY / MODAL */
-    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;justify-content:center;align-items:center;backdrop-filter:blur(3px)}
-    .overlay.active{display:flex}
-    .modal{background:var(--white);border-radius:var(--radius-lg);padding:28px;max-width:440px;width:92%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.12)}
-    .modal-close{position:absolute;top:14px;right:16px;font-size:1.2rem;cursor:pointer;color:var(--gray-500);background:none;border:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-    .modal-close:hover{background:var(--gray-100);color:var(--navy)}
+    .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;justify-content:center;align-items:center;backdrop-filter: blur(3px);}
+    .overlay.active{display: flex;}
+    .modal{background:var(--white);border-radius:var(--radius-lg);padding:28px;max-width:440px;width:92%;max-height:90vh;overflow-y:auto;position:relative;box-shadow: 0 8px 24px rgba(0,0,0,.12);}
+    .modal-close{position:absolute;top:14px;right:16px;font-size:1.2rem;cursor:pointer;color:var(--gray-500);background:none;border:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius: 50%;}
+    .modal-close:hover{background:var(--gray-100);color: var(--navy);}
 
     /* TOAST */
-    .toast-container{position:fixed;bottom:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap:8px}
-    .toast{padding:14px 20px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,.12);animation:toastIn .3s ease;max-width:360px}
-    .toast-success{background:var(--green)}
-    .toast-error{background:var(--red)}
-    .toast-info{background:var(--blue)}
-    @keyframes toastIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .toast-container{position:fixed;bottom:20px;right:20px;z-index:300;display:flex;flex-direction:column;gap: 8px;}
+    .toast{padding:14px 20px;border-radius:var(--radius);font-size:.88rem;font-weight:500;color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,.12);animation:toastIn .3s ease;max-width: 360px;}
+    .toast-success{background: var(--green);}
+    .toast-error{background: var(--red);}
+    .toast-info{background: var(--blue);}
+    @keyframes toastIn{from{opacity:0;transform: translateY(12px);}to{opacity:1;transform: translateY(0);}}
 
-    .empty{text-align:center;padding:40px;color:var(--gray-500);font-size:.9rem}
-    .hidden{display:none}
+    .empty{text-align:center;padding:40px;color:var(--gray-500);font-size: .9rem;}
+    .hidden{display: none;}
 
     /* iOS Safari fixes */
     @supports (-webkit-touch-callout: none) {
-      .layout{padding-bottom:env(safe-area-inset-bottom)}
-      .btn{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none}
-      .form-group input,.form-group select,.form-group textarea{-webkit-appearance:none;-webkit-border-radius:var(--radius)}
-      .sidebar{-webkit-overflow-scrolling:touch}
-      .main{-webkit-overflow-scrolling:touch}
+      .layout{padding-bottom: env(safe-area-inset-bottom);}
+      .btn{-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select: none;}
+      .form-group input,.form-group select,.form-group textarea{-webkit-appearance:none;-webkit-border-radius: var(--radius);}
+      .sidebar{-webkit-overflow-scrolling: touch;}
+      .main{-webkit-overflow-scrolling: touch;}
     }
     
     @media(max-width:768px){
-      .sidebar{display:none}
-      .main{margin-left:0}
-      .stat-row{grid-template-columns:1fr 1fr}
-      .booking-item{flex-direction:column;align-items:flex-start}
-      .form-row{grid-template-columns:1fr}
+      .sidebar{display: none;}
+      .main{margin-left: 0;}
+      .stat-row{grid-template-columns: 1fr 1fr;}
+      .booking-item{flex-direction:column;align-items: flex-start;}
+      .form-row{grid-template-columns: 1fr;}
     }
 
     /* Analytics Dashboard Styles */
@@ -3227,7 +3263,11 @@
         padding: 1.5rem;
       }
     }
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index: 1000;}
+    .toast.show{transform:translateY(0);opacity: 1;}
+    .toast.er{background: var(--red);}
   </style>
+  <link rel="stylesheet" href="/assets/css/mobile.css">
 </head>
 <body>
   <nav class="nav">
@@ -3317,6 +3357,22 @@
         <div class="form-card">
           <div class="form-group"><label>Title</label><input type="text" id="svcTitle" placeholder="e.g. Career Coaching Session"></div>
           <div class="form-group"><label>Description</label><textarea id="svcDesc" placeholder="Describe what you offer..."></textarea></div>
+          <div class="form-group">
+            <label>Service Image</label>
+            <div class="image-upload-container">
+              <input type="file" id="svcImage" accept="image/jpeg,image/png,image/webp" style="display: none;">
+              <div id="imagePreview" class="image-preview" style="display: none;">
+                <img id="previewImg" src="" alt="Service image preview">
+                <button type="button" class="remove-image-btn" onclick="removeServiceImage()">✕</button>
+              </div>
+              <button type="button" class="btn btn-outline" onclick="document.getElementById('svcImage').click()">
+                📷 Upload Image
+              </button>
+              <small style="display: block; margin-top: 8px; color: var(--mut);">
+                JPEG, PNG, or WebP (max 5MB)
+              </small>
+            </div>
+          </div>
           <div class="form-row">
             <div class="form-group"><label>Price ($)</label><input type="number" id="svcPrice" min="1" step="0.01" placeholder="50"></div>
             <div class="form-group"><label>Duration (min)</label><input type="number" id="svcDuration" value="60" min="15"></div>
@@ -4395,82 +4451,129 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script>
-    const API=location.hostname === 'localhost' 
-      ? 'http://localhost:3000' 
-      : 'https://onpurpose-backend-clean-production.up.railway.app';
-    let accessToken=localStorage.getItem('op_token')||'';
-    let currentUser=JSON.parse(localStorage.getItem('op_user')||'null');
-    if(!accessToken||!currentUser){window.location.href='/';}
+    const API = window.location.hostname === 'localhost'
+      ? 'http://localhost:3000' : '';
 
-    /* ===== API HELPER ===== */
-    async function api(path,method,body){
-      const opts={method:method||'GET',headers:{'Content-Type':'application/json','Authorization':'Bearer '+accessToken}};
-      if(body)opts.body=JSON.stringify(body);
-      const r=await fetch(API+path,opts);
-      
-      // Handle token expired
-      if(r.status===401){
-        const errorData = await r.json();
-        if(errorData.code === 'TOKEN_EXPIRED'){
-          // Try to refresh token
-          const refreshed = await refreshAccessToken();
-          if(refreshed){
-            // Retry with new token
-            opts.headers.Authorization='Bearer '+accessToken;
-            const retryR=await fetch(API+path,opts);
-            return retryR.json();
-          } else {
-            // Redirect to login if refresh fails
-            localStorage.removeItem('op_token');
-            localStorage.removeItem('op_user');
-            window.location.href='/';
-            return;
+    const TOKEN_KEY   = 'op_token';
+    const REFRESH_KEY = 'op_refresh';
+    const USER_KEY    = 'op_user';
+
+    const getToken  = () => localStorage.getItem(TOKEN_KEY);
+    const getUser   = () => { try { return JSON.parse(
+      localStorage.getItem(USER_KEY)); } catch { return null; } };
+    const clearSession = () => {
+      [TOKEN_KEY, REFRESH_KEY, USER_KEY].forEach(k =>
+        localStorage.removeItem(k));
+    };
+
+    const esc = s => String(s||'')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+    async function api(path, opts = {}) {
+      const makeReq = async (token) => {
+        const ctrl = new AbortController();
+        const tid  = setTimeout(() => ctrl.abort(), 30000);
+        const res  = await fetch(API + path, {
+          method:  opts.method || 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: 'Bearer ' + token ;} : {}),
+          },
+          body: opts.body ? JSON.stringify(opts.body) : undefined,
+          signal: ctrl.signal,
+        ;});
+        clearTimeout(tid);
+        return res;
+      };
+
+      let token = getToken();
+      let res   = await makeReq(token);
+
+      if (res.status === 401) {
+        const data = await res.clone().json().catch(() => ({}));
+        const refresh = localStorage.getItem(REFRESH_KEY);
+        if (refresh) {
+          try {
+            const rr = await fetch(API + '/api/auth/refresh', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ refreshToken: refresh ;}),
+            });
+            const rd = await rr.json();
+            if (rd.accessToken) {
+              localStorage.setItem(TOKEN_KEY, rd.accessToken);
+              if (rd.refreshToken)
+                localStorage.setItem(REFRESH_KEY, rd.refreshToken);
+              res = await makeReq(rd.accessToken);
+            } else {
+              clearSession();
+              window.location.href = '/';
+              return {};
+            }
+          } catch {
+            clearSession();
+            window.location.href = '/';
+            return {};
           }
+        } else {
+          clearSession();
+          window.location.href = '/';
+          return {};
         }
       }
-      
-      return r.json();
+      try { return await res.json(); } catch { return {}; }
     }
-    
-    // Refresh access token
-    async function refreshAccessToken(){
-      try{
-        const refreshToken=localStorage.getItem('op_refresh');
-        if(!refreshToken) return false;
-        
-        const r=await fetch(API+'/api/auth/refresh',{
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({refreshToken})
-        });
-        
-        if(r.ok){
-          const data=await r.json();
-          if(data.success){
-            localStorage.setItem('op_token',data.accessToken);
-            accessToken=data.accessToken;
-            return true;
-          }
-        }
-      }catch(e){
-        console.error('Token refresh failed:', e);
+
+    function toast(msg, type = 'ok') {
+      const el = document.getElementById('toast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className   = 'toast show' + (type === 'er' ? ' er' : '');
+      clearTimeout(el._tid);
+      el._tid = setTimeout(() => el.className = 'toast', 3500);
+    }
+
+    function updateNav() {
+      const u = getUser();
+      const authEl = document.getElementById('nav-auth');
+      const userEl = document.getElementById('nav-user');
+      if (!authEl || !userEl) return;
+      if (u) {
+        authEl.style.display = 'none';
+        userEl.style.display = 'block';
+        const av = document.getElementById('nav-av');
+        const nm = document.getElementById('nav-nm');
+        if (av) av.textContent = (u.name||'?').charAt(0).toUpperCase();
+        if (nm) nm.textContent = (u.name||'Account').split(' ')[0];
+      } else {
+        authEl.style.display = 'flex';
+        userEl.style.display = 'none';
       }
-      
-      // Clear tokens and redirect to login
-      localStorage.removeItem('op_token');
-      localStorage.removeItem('op_refresh');
-      localStorage.removeItem('op_user');
-      return false;
+    }
+
+    // Auth check
+    if (!getToken() || !getUser()) {
+      // Use absolute URL in native app context, relative on web
+      const base = window.Capacitor?.isNativePlatform()
+        ? window.location.origin
+        : '';
+      window.location.href = base + '/';
     }
 
     /* ===== NAV / SIDEBAR ===== */
     function initSidebar(){
-      const u=currentUser;
-      const initials=u.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-      document.getElementById('sidebarAvatar').textContent=initials;
-      document.getElementById('sidebarName').textContent=u.name;
-      document.getElementById('sidebarRole').textContent=u.role.charAt(0).toUpperCase()+u.role.slice(1);
-      document.getElementById('greeting').textContent='Welcome back, '+u.name.split(' ')[0];
+      const u = getUser();
+      if (!u) return;
+      const initials = u.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+      const avatarEl = document.getElementById('sidebarAvatar');
+      const nameEl = document.getElementById('sidebarName');
+      const roleEl = document.getElementById('sidebarRole');
+      const greetingEl = document.getElementById('greeting');
+      
+      if (avatarEl) avatarEl.textContent = initials;
+      if (nameEl) nameEl.textContent = u.name;
+      if (roleEl) roleEl.textContent = u.role.charAt(0).toUpperCase() + u.role.slice(1);
+      if (greetingEl) greetingEl.textContent = 'Welcome back, ' + u.name.split(' ')[0];
       if(u.role==='provider'||u.role==='admin'){
         document.getElementById('linkMyServices').classList.remove('hidden');
         document.getElementById('linkAddService').classList.remove('hidden');
@@ -4488,14 +4591,18 @@
     }
     function logout(){
       localStorage.removeItem('op_token');localStorage.removeItem('op_refresh');localStorage.removeItem('op_user');
-      window.location.href='/';
+      // Use absolute URL in native app context, relative on web
+      const base = window.Capacitor?.isNativePlatform()
+        ? window.location.origin
+        : '';
+      window.location.href = base + '/';
     }
     function showPage(name){
       document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
       document.getElementById('page-'+name).classList.add('active');
       document.querySelectorAll('.sidebar-link').forEach(l=>l.classList.remove('active'));
       const links=document.querySelectorAll('.sidebar-link');
-      const map={overview:0,bookings:1,myservices:2,addservice:3,pay:4,profile:5};
+      const map={overview: 0,bookings:1,myservices:2,addservice:3,pay:4,profile:5;};
       const idx=map[name];
       if(idx!==undefined&&links[idx])links[idx].classList.add('active');
       if(name==='overview')loadOverview();
@@ -4563,7 +4670,7 @@
     async function cancelBooking(id){
       if(!confirm('Cancel this booking?'))return;
       try{
-        const r=await api('/api/bookings/'+id+'/status','PATCH',{status:'cancelled'});
+        const r=await api('/api/bookings/'+id+'/status','PATCH',{status: 'cancelled';});
         if(r.success){toast('Booking cancelled','info');loadOverview();loadAllBookings();}
         else toast(r.message||'Failed','error');
       }catch(e){toast('Network error','error');}
@@ -4771,15 +4878,72 @@
       const category=document.getElementById('svcCategory').value;
       const isOnline=document.getElementById('svcOnline').value==='true';
       const location=document.getElementById('svcLocation').value;
+      
+      // Get image data if uploaded
+      const imageData = document.getElementById('previewImg').src || null;
+      
       if(!title||!description||!price)return toast('Fill in title, description, and price','error');
       try{
-        const r=await api('/api/services','POST',{title,description,price,duration,category,isOnline,location});
+        const r=await api('/api/services','POST',{title,description,price,duration,category,isOnline,location,image: imageData;});
         if(r.success){toast('Service created!','success');setTimeout(()=>location.reload(),1500);}
         else if(r.errors && r.errors.length){
           toast(r.errors.map(e=>e.msg).join(', '),'error');
         }
         else toast(r.message||'Failed','error');
       }catch(e){toast('Network error','error');}
+    }
+
+    // Image upload functions
+    document.addEventListener('DOMContentLoaded', function() {
+      const imageInput = document.getElementById('svcImage');
+      if (imageInput) {
+        imageInput.addEventListener('change', handleImageSelect);
+      }
+    });
+
+    function handleImageSelect(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        toast('Invalid file type. Please use JPEG, PNG, or WebP.', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast('File too large. Maximum size is 5MB.', 'error');
+        event.target.value = '';
+        return;
+      }
+
+      // Read and display preview
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const uploadBtn = event.target.nextElementSibling;
+        
+        previewImg.src = e.target.result;
+        preview.style.display = 'inline-block';
+        uploadBtn.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeServiceImage() {
+      const preview = document.getElementById('imagePreview');
+      const previewImg = document.getElementById('previewImg');
+      const imageInput = document.getElementById('svcImage');
+      const uploadBtn = imageInput.nextElementSibling;
+      
+      preview.style.display = 'none';
+      previewImg.src = '';
+      imageInput.value = '';
+      uploadBtn.style.display = 'inline-flex';
     }
 
     /* ===== PROFILE ===== */
@@ -5003,7 +5167,7 @@
           ${dailyRevenue.map(day => `
             <div class="chart-bar" style="height: ${(day.revenue / maxRevenue * 100)}%">
               <div class="chart-value">$${day.revenue.toFixed(0)}</div>
-              <div class="chart-label">${new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+              <div class="chart-label">${new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' ;})}</div>
             </div>
           `).join('')}
         </div>
@@ -5195,7 +5359,7 @@
 
       const eventsHTML = events.map(event => {
         const startTime = event.start?.dateTime || event.start?.date;
-        const endTime = event.end?.dateTime || event.end?.date;
+// // // // // // // // // // // // // // // // // // const endTime = event.end?.dateTime || event.end?.date; // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
         
         if (!startTime) return '';
         
@@ -5204,12 +5368,12 @@
           hour: 'numeric', 
           minute: '2-digit',
           hour12: true 
-        });
+        ;});
         
         const dateStr = startDate.toLocaleDateString('en-US', { 
           month: 'short', 
           day: 'numeric' 
-        });
+        ;});
 
         return `
           <div class="event-item">
@@ -5293,10 +5457,10 @@
     async function saveReminderSettings() {
       try {
         const settings = [
-          { reminderType: 'EMAIL_24H', enabled: document.getElementById('email-24h').checked },
-          { reminderType: 'EMAIL_2H', enabled: document.getElementById('email-2h').checked },
-          { reminderType: 'SMS_2H', enabled: document.getElementById('sms-2h').checked },
-          { reminderType: 'SMS_1H', enabled: document.getElementById('sms-1h').checked }
+          { reminderType: 'EMAIL_24H', enabled: document.getElementById('email-24h').checked ;},
+          { reminderType: 'EMAIL_2H', enabled: document.getElementById('email-2h').checked ;},
+          { reminderType: 'SMS_2H', enabled: document.getElementById('sms-2h').checked ;},
+          { reminderType: 'SMS_1H', enabled: document.getElementById('sms-1h').checked ;}
         ];
 
         const response = await api('/api/reminders/settings', 'PUT', { settings });
@@ -5330,7 +5494,7 @@
           reminderType,
           testEmail: testEmail || undefined,
           testPhone: testPhone || undefined
-        });
+        ;});
 
         if (response.success) {
           toast(response.message, 'success');
@@ -5372,7 +5536,7 @@
           day: 'numeric',
           hour: '2-digit',
           minute: '2-digit'
-        });
+        ;});
 
         return `
           <div class="reminder-item">
@@ -6057,7 +6221,7 @@
         
         if (response) {
           // Create download link
-          const blob = new Blob([response], { type: 'text/csv' });
+          const blob = new Blob([response], { type: 'text/csv' ;});
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -6426,7 +6590,7 @@
       try {
         const response = await api(`/api/automation/workflows/${workflowId}`, 'PUT', {
           isActive: !isActive
-        });
+        ;});
         
         if (response.success) {
           toast(response.message, 'success');
@@ -6579,7 +6743,7 @@
           name,
           permissions,
           expiresIn: expiresIn ? parseInt(expiresIn) * 24 * 60 * 60 : null
-        };
+        ;};
         
         const response = await api('/api/integrations/api-keys', 'POST', apiKeyData);
         
@@ -6672,9 +6836,9 @@
           dateRange: {
             startDate: startDate.toISOString().split('T')[0],
             endDate: endDate.toISOString().split('T')[0]
-          },
+          ;},
           format: 'json'
-        };
+        ;};
         
         const response = await api('/api/reports/generate', 'POST', reportData);
         
@@ -6833,7 +6997,7 @@
           dateRange: {
             startDate: startDate.toISOString().split('T')[0],
             endDate: endDate.toISOString().split('T')[0]
-          },
+          ;},
           format
         };
         
@@ -6843,7 +7007,7 @@
           // Create download link
           const blob = new Blob([response.data.content || JSON.stringify(response.data)], {
             type: format === 'csv' ? 'text/csv' : 'application/pdf'
-          });
+          ;});
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -7001,12 +7165,12 @@
           dateRange: {
             startDate: formData.get('startDate'),
             endDate: formData.get('endDate')
-          },
+          ;},
           format: formData.get('format'),
           filters: {
             serviceFilter: formData.get('serviceFilter'),
             statusFilter: formData.get('statusFilter')
-          }
+          ;}
         };
         
         const response = await api('/api/reports/generate', 'POST', reportData);
@@ -7269,7 +7433,7 @@
           schedule: formData.get('schedule'),
           recipients: formData.get('recipients').split(',').map(email => email.trim()),
           format: formData.get('format')
-        };
+        ;};
         
         const response = await api('/api/reports/schedule', 'POST', reportData);
         
@@ -7364,6 +7528,7 @@
     }
 
     /* ===== INIT ===== */
+    updateNav();
     initSidebar();
     loadOverview();
     if(window.location.search.includes('payment=success'))toast('Payment successful!','success');
@@ -7501,7 +7666,7 @@
             domain: document.getElementById('orgDomain').value,
             primaryColor: document.getElementById('orgPrimaryColor').value,
             secondaryColor: document.getElementById('orgSecondaryColor').value
-          }
+          ;}
         };
 
         const response = await api('/api/enterprise/organization', 'PUT', data);
@@ -7605,7 +7770,7 @@
           email: document.getElementById('memberEmail').value,
           role: document.getElementById('memberRole').value,
           permissions: permissions.length > 0 ? permissions : ['view']
-        };
+        ;};
 
         const response = await api('/api/enterprise/members', 'POST', data);
         if (response.success) {
@@ -7802,7 +7967,7 @@
         professional: ['Advanced Analytics', 'Multi-Provider (5)', 'Priority Support', 'Custom Branding'],
         enterprise: ['Enterprise Analytics', 'Unlimited Providers', 'Dedicated Support', 'White-Label', 'API Access'],
         custom: ['Custom Features', 'Unlimited Everything', 'Dedicated Account Manager', 'Custom Integrations']
-      };
+      ;};
       
       content.innerHTML = `
         <div class="tier-info">
@@ -7891,7 +8056,7 @@
         const data = {
           tier: document.getElementById('selectedTier').value,
           paymentMethodId: document.getElementById('paymentMethod').value
-        };
+        ;};
 
         const response = await api('/api/enterprise/upgrade', 'POST', data);
         if (response.success) {
@@ -7946,6 +8111,63 @@
   </div>
   <div style="font-size:11px;color:rgba(255,255,255,0.25)">© 2025 OnPurpose Inc.</div>
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast"></div>
+
+<script>
+// PWA service worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js', { scope: '/' ;})
+      .then(reg => {
+        console.log('[SW] Registered:', reg.scope);
+        // Check for updates every hour
+        setInterval(() => reg.update(), 60 * 60 * 1000);
+      })
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+
+// Detect Capacitor native context
+if (window.Capacitor) {
+  document.body.classList.add('capacitor-app');
+  // Disable PWA install prompt inside native app
+  window.addEventListener('beforeinstallprompt', e => e.preventDefault());
+}
+
+// PWA install prompt (for browser users)
+let deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  // Show install button if one exists on the page
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) {
+    installBtn.style.display = 'flex';
+    installBtn.addEventListener('click', () => {
+      deferredInstallPrompt.prompt();
+      deferredInstallPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          if (installBtn) installBtn.style.display = 'none';
+        }
+        deferredInstallPrompt = null;
+      });
+    });
+  }
+});
+</script>
+
+<script>
+// Load Capacitor features only in native app context
+if (window.Capacitor && window.Capacitor.isNativePlatform()) {
+  const s = document.createElement('script');
+  s.src = '/assets/js/capacitor-init.js';
+  s.type = 'module';
+  document.head.appendChild(s);
+}
+</script>
 
 </body>
 </html>

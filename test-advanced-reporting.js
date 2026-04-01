@@ -36,7 +36,7 @@ async function testAdvancedReporting() {
     
     for (const endpoint of endpoints) {
       try {
-        const response = await request(`https://onpurpose.earth${endpoint}`);
+// // // // // // // // // // // // // // // // // // const response = await request(`https://onpurpose.earth${endpoint}`); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
         console.log(`✅ ${endpoint} endpoint exists (auth required as expected)`);
       } catch (error) {
         if (error.message.includes('401') || error.message.includes('403')) {

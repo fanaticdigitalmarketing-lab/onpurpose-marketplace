@@ -1,4 +1,4 @@
-export const COLORS = {
+// // // // // // // // // // // // // // // // // // export const COLORS = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   navy:      '#1a2744',
   navyLight: '#243156',
   blue:      '#2563d4',
@@ -16,16 +16,16 @@ export const COLORS = {
   black:     '#000000',
 };
 
-export const FONTS = {
+// // // // // // // // // // // // // // // // // // export const FONTS = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   heading: 'serif',
   headingBold: 'serif',
   body: 'sans-serif',
   bodyMedium: 'sans-serif-medium',
 };
 
-export const API_URL = 'https://ydmxe6sf.up.railway.app';
+// // // // // // // // // // // // // // // // // // export const API_URL = 'https://ydmxe6sf.up.railway.app'; // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
 
-export const CATEGORIES = [
+// // // // // // // // // // // // // // // // // // export const CATEGORIES = [ // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   { label: 'All',             emoji: '✨' },
   { label: 'Career Coaching', emoji: '💼' },
   { label: 'Local Expert',    emoji: '🗺️' },

@@ -1,0 +1,108 @@
+Step 1: Environment Variables Configuration
+==================================================
+Command: node run-diagnostics.js
+
+Output:
+
+[1m═══ OnPurpose Full System Diagnostic ═══[0m
+
+[1mA. Syntax & Structure[0m
+[32m  ✓ PASS[0m server.js syntax is clean
+[32m  ✓ PASS[0m const PORT declared exactly once
+[32m  ✓ PASS[0m app.listen called exactly once
+[32m  ✓ PASS[0m app.listen binds to '0.0.0.0' (Railway requirement)
+[32m  ✓ PASS[0m No git conflict markers found
+[32m  ✓ PASS[0m Stripe webhook route registered before express.json()
+[32m  ✓ PASS[0m CORS preflight handler app.options('*') present
+[32m  ✓ PASS[0m module.exports = app present
+
+[1mB. Environment Variables[0m
+[32m  ✓ PASS[0m JWT_SECRET = 619bb36e...
+[32m  ✓ PASS[0m REFRESH_TOKEN_SECRET = 3a5ae39d...
+[32m  ✓ PASS[0m DATABASE_URL = postgres...
+[32m  ✓ PASS[0m NODE_ENV = producti...
+[32m  ✓ PASS[0m CORS_ORIGINS = https://...
+[32m  ✓ PASS[0m FRONTEND_URL = https://...
+[32m  ✓ PASS[0m STRIPE_SECRET_KEY = sk_test_...
+[32m  ✓ PASS[0m STRIPE_WEBHOOK_SECRET = whsec_RE...
+[32m  ✓ PASS[0m RESEND_API_KEY = re_REPLA...
+[32m  ✓ PASS[0m EMAIL_FROM = OnPurpos...
+[32m  ✓ PASS[0m BCRYPT_PEPPER = c9345f9a...
+
+[1mC. npm Dependencies[0m
+[32m  ✓ PASS[0m express
+[32m  ✓ PASS[0m sequelize
+[32m  ✓ PASS[0m pg
+[32m  ✓ PASS[0m pg-hstore
+[32m  ✓ PASS[0m bcrypt
+[32m  ✓ PASS[0m jsonwebtoken
+[32m  ✓ PASS[0m cors
+[32m  ✓ PASS[0m helmet
+[32m  ✓ PASS[0m express-rate-limit
+[32m  ✓ PASS[0m express-validator
+[32m  ✓ PASS[0m dotenv
+[32m  ✓ PASS[0m resend
+[32m  ✓ PASS[0m stripe
+[32m  ✓ PASS[0m uuid
+[32m  ✓ PASS[0m crypto
+
+[1mD. File System[0m
+[32m  ✓ PASS[0m server.js — Main server file
+[32m  ✓ PASS[0m package.json — Package config
+[32m  ✓ PASS[0m railway.toml — Railway deployment config
+[32m  ✓ PASS[0m netlify.toml — Netlify config
+[32m  ✓ PASS[0m Procfile — Process file
+[32m  ✓ PASS[0m config/config.json — Sequelize config
+[32m  ✓ PASS[0m middleware/auth.js — Auth middleware
+[32m  ✓ PASS[0m middleware/security.js — Security middleware
+[32m  ✓ PASS[0m services/emailService.js — Email service
+[32m  ✓ PASS[0m services/trustScore.js — Trust score service
+[32m  ✓ PASS[0m routes/checkin.js — Check-in routes
+[32m  ✓ PASS[0m frontend/index.html — Homepage
+[32m  ✓ PASS[0m frontend/services.html — Services browse page
+[32m  ✓ PASS[0m frontend/dashboard.html — User dashboard
+[32m  ✓ PASS[0m frontend/provider.html — Provider onboarding
+[32m  ✓ PASS[0m frontend/contact.html — Contact page
+[32m  ✓ PASS[0m frontend/assets/logo.png — OnPurpose logo image
+[32m  ✓ PASS[0m frontend/_redirects — Netlify redirects
+
+[1mE. Configuration Files[0m
+[32m  ✓ PASS[0m config/config.json production uses DATABASE_URL env var
+[32m  ✓ PASS[0m config/config.json has SSL rejectUnauthorized:false for Railway
+[32m  ✓ PASS[0m package.json start runs migration then server
+[32m  ✓ PASS[0m package.json engines.node = >=18.0.0
+[32m  ✓ PASS[0m railway.toml has healthcheckPath
+[32m  ✓ PASS[0m railway.toml contains no embedded secrets
+[32m  ✓ PASS[0m netlify.toml proxies /api/* to Railway
+[32m  ✓ PASS[0m netlify.toml passes Authorization header through proxy
+[32m  ✓ PASS[0m netlify.toml publish = "frontend"
+
+[1mF. Frontend Asset Checks[0m
+[32m  ✓ PASS[0m index.html uses real logo image
+[32m  ✓ PASS[0m index.html uses correct token key op_token
+[32m  ✓ PASS[0m index.html uses Playfair Display font
+[32m  ✓ PASS[0m index.html uses design system colors
+[32m  ✓ PASS[0m services.html uses real logo image
+[32m  ✓ PASS[0m services.html uses correct token key op_token
+[32m  ✓ PASS[0m services.html uses Playfair Display font
+[32m  ✓ PASS[0m services.html uses design system colors
+[32m  ✓ PASS[0m dashboard.html uses real logo image
+[32m  ✓ PASS[0m dashboard.html uses correct token key op_token
+[32m  ✓ PASS[0m dashboard.html uses Playfair Display font
+[32m  ✓ PASS[0m dashboard.html uses design system colors
+[32m  ✓ PASS[0m provider.html uses real logo image
+[32m  ✓ PASS[0m provider.html uses correct token key op_token
+[32m  ✓ PASS[0m provider.html uses Playfair Display font
+[32m  ✓ PASS[0m provider.html uses design system colors
+[32m  ✓ PASS[0m contact.html uses real logo image
+[32m  ✓ PASS[0m contact.html uses correct token key op_token
+[32m  ✓ PASS[0m contact.html uses Playfair Display font
+[32m  ✓ PASS[0m contact.html uses design system colors
+
+══════════════════════════════════════════════════
+[32m
+  ✓ ALL DIAGNOSTICS PASSED — System ready
+[0m
+
+
+Timestamp: 2026-03-31T22:07:06.402Z

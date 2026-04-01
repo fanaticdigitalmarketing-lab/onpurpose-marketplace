@@ -52,72 +52,72 @@
       --shadow2:0 8px 40px rgba(37,99,212,0.16);
       --ok:#16a34a;--warn:#d97706;--red:#dc2626;
     }
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--txt);line-height:1.6}
-    h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color:var(--navy)}
-    nav{position:sticky;top:0;background:var(--white);border-bottom:1px solid var(--bdr);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:var(--shadow)}
-    .logo-link{display:flex;align-items:center;gap:0.75rem;text-decoration:none}
-    .logo-img{height:40px;width:auto}
-    .brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--navy)}
-    .nav-links{display:flex;gap:1.5rem;align-items:center}
-    .nav-links a{text-decoration:none;color:var(--txt);font-weight:500;transition:color 0.2s}
-    .nav-links a:hover{color:var(--blue)}
-    .btn-primary{background:var(--blue);color:var(--white);padding:0.6rem 1.5rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
-    .btn-primary:hover{background:var(--blue2);box-shadow:var(--shadow2)}
-    .btn-ghost{background:transparent;color:var(--blue);padding:0.6rem 1.5rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block}
-    .btn-ghost:hover{background:var(--blue-l)}
-    .container{max-width:1200px;margin:0 auto;padding:2rem}
-    .page-header{text-align:center;margin-bottom:3rem}
-    .page-header h1{font-size:2.5rem;margin-bottom:1rem}
-    .page-header p{color:var(--mut);font-size:1.1rem}
-    .filters{background:var(--white);padding:1.5rem;border-radius:12px;box-shadow:var(--shadow);margin-bottom:2rem}
-    .filter-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
-    .filter-row input,.filter-row select{flex:1;min-width:200px;padding:0.8rem 1rem;border:2px solid var(--bdr);border-radius:8px;font-size:1rem}
-    .filter-row input:focus,.filter-row select:focus{outline:none;border-color:var(--blue)}
-    .category-pills{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top:1rem}
-    .category-pill{background:var(--off2);color:var(--txt);padding:0.5rem 1rem;border-radius:20px;border:2px solid transparent;cursor:pointer;font-weight:500;transition:all 0.2s}
-    .category-pill:hover,.category-pill.active{background:var(--blue-l);border-color:var(--blue);color:var(--blue)}
-    .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;margin-bottom:3rem}
-    .service-card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column;position:relative}
-    .service-card:hover{transform:translateY(-8px);box-shadow:var(--shadow2)}
-    .service-card.example-service{border:2px solid var(--blue)}
-    .service-card.example-service::before{content:'EXAMPLE';position:absolute;top:10px;right:10px;background:var(--blue);color:var(--white);padding:0.2rem 0.6rem;border-radius:6px;font-size:0.7rem;font-weight:700;z-index:10}
-    .service-card img{width:100%;height:220px;object-fit:cover}
-    .service-card-content{padding:1.5rem;flex:1;display:flex;flex-direction:column}
-    .service-card .category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.85rem;font-weight:600;margin-bottom:0.8rem}
-    .service-card h3{font-size:1.3rem;margin-bottom:0.5rem;color:var(--navy)}
-    .service-card .description{color:var(--mut);font-size:0.95rem;margin-bottom:1rem;flex:1}
-    .service-card .price{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem}
-    .service-card .provider{color:var(--mut);font-size:0.9rem;display:flex;align-items:center;gap:0.5rem}
-    .service-card .rating{color:var(--warn);font-size:0.9rem;margin-top:0.5rem}
-    .service-card .example-badge{background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.8rem;font-weight:600;margin-top:0.5rem;display:inline-block}
-    .pagination{display:flex;justify-content:center;gap:0.5rem;margin-top:3rem}
-    .pagination button{padding:0.6rem 1rem;border:2px solid var(--bdr);background:var(--white);color:var(--txt);border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.2s}
-    .pagination button:hover:not(:disabled){background:var(--blue);color:var(--white);border-color:var(--blue)}
-    .pagination button.active{background:var(--blue);color:var(--white);border-color:var(--blue)}
-    .pagination button:disabled{opacity:0.5;cursor:not-allowed}
-    .loading{text-align:center;padding:3rem;color:var(--mut)}
-    .empty-state{text-align:center;padding:4rem 2rem;background:var(--white);border-radius:12px;box-shadow:var(--shadow)}
-    .empty-state h3{font-size:1.5rem;margin-bottom:1rem;color:var(--navy)}
-    .empty-state p{color:var(--mut);margin-bottom:2rem}
-    footer{background:var(--navy);color:var(--white);padding:3rem 2rem;margin-top:6rem}
-    .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
-    .footer-section h4{color:var(--white);margin-bottom:1rem;font-size:1.1rem}
-    .footer-section a{color:rgba(255,255,255,0.8);text-decoration:none;display:block;margin-bottom:0.5rem;transition:color 0.2s}
-    .footer-section a:hover{color:var(--white)}
-    .social-links{display:flex;gap:1rem;margin-top:1rem}
-    .social-links a{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-    .social-links a:hover{background:var(--blue);transform:translateY(-2px)}
-    .footer-bottom{text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.6)}
-    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index:1000}
-    .toast.show{transform:translateY(0);opacity:1}
-    .toast.er{background:var(--red)}
+    *{margin:0;padding:0;box-sizing: border-box;}
+    body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--txt);line-height: 1.6;}
+    h1,h2,h3{font-family:'Playfair Display',serif;font-weight:700;color: var(--navy);}
+    nav{position:sticky;top:0;background:var(--white);border-bottom:1px solid var(--bdr);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow: var(--shadow);}
+    .logo-link{display:flex;align-items:center;gap:0.75rem;text-decoration: none;}
+    .logo-img{height:40px;width: auto;}
+    .brand{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color: var(--navy);}
+    .nav-links{display:flex;gap:1.5rem;align-items: center;}
+    .nav-links a{text-decoration:none;color:var(--txt);font-weight:500;transition: color 0.2s;}
+    .nav-links a:hover{color: var(--blue);}
+    .btn-primary{background:var(--blue);color:var(--white);padding:0.6rem 1.5rem;border-radius:8px;border:none;font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display: inline-block;}
+    .btn-primary:hover{background:var(--blue2);box-shadow: var(--shadow2);}
+    .btn-ghost{background:transparent;color:var(--blue);padding:0.6rem 1.5rem;border-radius:8px;border:2px solid var(--blue);font-weight:600;cursor:pointer;transition:all 0.2s;text-decoration:none;display: inline-block;}
+    .btn-ghost:hover{background: var(--blue-l);}
+    .container{max-width:1200px;margin:0 auto;padding: 2rem;}
+    .page-header{text-align:center;margin-bottom: 3rem;}
+    .page-header h1{font-size:2.5rem;margin-bottom: 1rem;}
+    .page-header p{color:var(--mut);font-size: 1.1rem;}
+    .filters{background:var(--white);padding:1.5rem;border-radius:12px;box-shadow:var(--shadow);margin-bottom: 2rem;}
+    .filter-row{display:flex;gap:1rem;flex-wrap:wrap;align-items: center;}
+    .filter-row input,.filter-row select{flex:1;min-width:200px;padding:0.8rem 1rem;border:2px solid var(--bdr);border-radius:8px;font-size: 1rem;}
+    .filter-row input:focus,.filter-row select:focus{outline:none;border-color: var(--blue);}
+    .category-pills{display:flex;gap:0.75rem;flex-wrap:wrap;margin-top: 1rem;}
+    .category-pill{background:var(--off2);color:var(--txt);padding:0.5rem 1rem;border-radius:20px;border:2px solid transparent;cursor:pointer;font-weight:500;transition: all 0.2s;}
+    .category-pill:hover,.category-pill.active{background:var(--blue-l);border-color:var(--blue);color: var(--blue);}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;margin-bottom: 3rem;}
+    .service-card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:var(--shadow);transition:all 0.3s;cursor:pointer;display:flex;flex-direction:column;position: relative;}
+    .service-card:hover{transform:translateY(-8px);box-shadow: var(--shadow2);}
+    .service-card.example-service{border: 2px solid var(--blue);}
+    .service-card.example-service::before{content:'EXAMPLE';position:absolute;top:10px;right:10px;background:var(--blue);color:var(--white);padding:0.2rem 0.6rem;border-radius:6px;font-size:0.7rem;font-weight:700;z-index: 10;}
+    .service-card img{width:100%;height:220px;object-fit: cover;}
+    .service-card-content{padding:1.5rem;flex:1;display:flex;flex-direction: column;}
+    .service-card .category{display:inline-block;background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.85rem;font-weight:600;margin-bottom: 0.8rem;}
+    .service-card h3{font-size:1.3rem;margin-bottom:0.5rem;color: var(--navy);}
+    .service-card .description{color:var(--mut);font-size:0.95rem;margin-bottom:1rem;flex: 1;}
+    .service-card .price{font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom: 0.5rem;}
+    .service-card .provider{color:var(--mut);font-size:0.9rem;display:flex;align-items:center;gap: 0.5rem;}
+    .service-card .rating{color:var(--warn);font-size:0.9rem;margin-top: 0.5rem;}
+    .service-card .example-badge{background:var(--blue-l);color:var(--blue);padding:0.3rem 0.8rem;border-radius:6px;font-size:0.8rem;font-weight:600;margin-top:0.5rem;display: inline-block;}
+    .pagination{display:flex;justify-content:center;gap:0.5rem;margin-top: 3rem;}
+    .pagination button{padding:0.6rem 1rem;border:2px solid var(--bdr);background:var(--white);color:var(--txt);border-radius:8px;cursor:pointer;font-weight:600;transition: all 0.2s;}
+    .pagination button:hover:not(:disabled){background:var(--blue);color:var(--white);border-color: var(--blue);}
+    .pagination button.active{background:var(--blue);color:var(--white);border-color: var(--blue);}
+    .pagination button:disabled{opacity:0.5;cursor: not-allowed;}
+    .loading{text-align:center;padding:3rem;color: var(--mut);}
+    .empty-state{text-align:center;padding:4rem 2rem;background:var(--white);border-radius:12px;box-shadow: var(--shadow);}
+    .empty-state h3{font-size:1.5rem;margin-bottom:1rem;color: var(--navy);}
+    .empty-state p{color:var(--mut);margin-bottom: 2rem;}
+    footer{background:var(--navy);color:var(--white);padding:3rem 2rem;margin-top: 6rem;}
+    .footer-content{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap: 2rem;}
+    .footer-section h4{color:var(--white);margin-bottom:1rem;font-size: 1.1rem;}
+    .footer-section a{color:rgba(255,255,255,0.8);text-decoration:none;display:block;margin-bottom:0.5rem;transition: color 0.2s;}
+    .footer-section a:hover{color: var(--white);}
+    .social-links{display:flex;gap:1rem;margin-top: 1rem;}
+    .social-links a{width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition: all 0.2s;}
+    .social-links a:hover{background:var(--blue);transform: translateY(-2px);}
+    .footer-bottom{text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.1);color: rgba(255,255,255,0.6);}
+    .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:var(--white);padding:1rem 1.5rem;border-radius:8px;box-shadow:var(--shadow2);transform:translateY(100px);opacity:0;transition:all 0.3s ease;z-index: 1000;}
+    .toast.show{transform:translateY(0);opacity: 1;}
+    .toast.er{background: var(--red);}
     @media(max-width:768px){
-      nav{flex-direction:column;gap:1rem}
-      .nav-links{flex-wrap:wrap;justify-content:center}
-      .filter-row{flex-direction:column}
-      .filter-row input,.filter-row select{min-width:100%}
-      .services-grid{grid-template-columns:1fr}
+      nav{flex-direction:column;gap: 1rem;}
+      .nav-links{flex-wrap:wrap;justify-content: center;}
+      .filter-row{flex-direction: column;}
+      .filter-row input,.filter-row select{min-width: 100%;}
+      .services-grid{grid-template-columns: 1fr;}
     }
   </style>
   <link rel="stylesheet" href="/assets/css/mobile.css">
@@ -273,7 +273,7 @@
         localStorage.removeItem(k));
     };
 
-    const esc = s => String(s||'')
+// // // // // // // // // // // // // // // // // // const esc = s => String(s||'') // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
     async function api(path, opts = {}) {
@@ -284,11 +284,11 @@
           method:  opts.method || 'GET',
           headers: {
             'Content-Type': 'application/json',
-            ...(token ? { Authorization: 'Bearer ' + token } : {}),
+            ...(token ? { Authorization: 'Bearer ' + token ;} : {}),
           },
-          body:   opts.body ? JSON.stringify(opts.body) : undefined,
+          body: opts.body ? JSON.stringify(opts.body) : undefined,
           signal: ctrl.signal,
-        });
+        ;});
         clearTimeout(tid);
         return res;
       };
@@ -304,7 +304,7 @@
             const rr = await fetch(API + '/api/auth/refresh', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ refreshToken: refresh }),
+              body: JSON.stringify({ refreshToken: refresh ;}),
             });
             const rd = await rr.json();
             if (rd.accessToken) {
@@ -385,7 +385,7 @@
           category: currentCategory,
           search: currentSearch,
           sort: currentSort
-        });
+        ;});
 
         const response = await fetch(`${API_BASE_URL}/api/services?${params}`);
         
@@ -438,7 +438,7 @@
 
       servicesGrid.innerHTML = services.map(service => `
         <div class="service-card" onclick="viewService('${service.id}')">
-          <img src="${service.image || 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400'}" alt="${service.title}">
+          <img src="${service.image || 'https: //images.unsplash.com/photo-1522071820081-009f0129c71c?w=400';}" alt="${service.title}">
           <div class="service-card-content">
             <span class="category">${getCategoryEmoji(service.category)} ${service.category}</span>
             <h3>${service.title}</h3>
@@ -511,7 +511,7 @@
     function changePage(page) {
       currentPage = page;
       loadServices();
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scrollTo({top: 0, behavior: 'smooth';});
     }
 
     function getCategoryEmoji(category) {
@@ -522,7 +522,7 @@
         development: '💻',
         consulting: '💼',
         wellness: '🧘'
-      };
+      ;};
       return emojis[category?.toLowerCase()] || '📌';
     }
 
@@ -601,7 +601,7 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js', { scope: '/' })
+      .register('/sw.js', { scope: '/' ;})
       .then(reg => {
         console.log('[SW] Registered:', reg.scope);
         // Check for updates every hour

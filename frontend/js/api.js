@@ -113,7 +113,7 @@ async function apiFetch(url, options = {}) {
 }
 
 // ── AUTH API ──────────────────────────────────────────────────
-const authAPI = {
+// // // // // // // // // // // // // // // // // // const authAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async register(userData) {
     const res = await apiFetch('/auth/register', {
       method: 'POST',
@@ -175,7 +175,7 @@ const authAPI = {
 };
 
 // ── SERVICES / LISTINGS API ───────────────────────────────────
-const listingsAPI = {
+// // // // // // // // // // // // // // // // // // const listingsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async getAll(params = {}) {
     const query = new URLSearchParams(params).toString();
     const res = await apiFetch(`/services${query ? '?' + query : ''}`);
@@ -223,7 +223,7 @@ const listingsAPI = {
 };
 
 // ── BOOKINGS API ──────────────────────────────────────────────
-const bookingsAPI = {
+// // // // // // // // // // // // // // // // // // const bookingsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async create(bookingData) {
     const res = await apiFetch('/bookings', {
       method: 'POST',
@@ -252,7 +252,7 @@ const bookingsAPI = {
 };
 
 // ── PAYMENTS API ──────────────────────────────────────────────
-const paymentsAPI = {
+// // // // // // // // // // // // // // // // // // const paymentsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async createCheckout(bookingId) {
     const res = await apiFetch('/payments/create-checkout', {
       method: 'POST',
@@ -263,7 +263,7 @@ const paymentsAPI = {
 };
 
 // ── REVIEWS API ───────────────────────────────────────────────
-const reviewsAPI = {
+// // // // // // // // // // // // // // // // // // const reviewsAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async create(bookingId, rating, comment) {
     const res = await apiFetch('/reviews', {
       method: 'POST',
@@ -274,7 +274,7 @@ const reviewsAPI = {
 };
 
 // ── USERS API ─────────────────────────────────────────────────
-const usersAPI = {
+// // // // // // // // // // // // // // // // // // const usersAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async getProfile() {
     const res = await apiFetch('/users/profile');
     return res.json();
@@ -295,7 +295,7 @@ const usersAPI = {
 };
 
 // ── AVAILABILITY API ──────────────────────────────────────────
-const availabilityAPI = {
+// // // // // // // // // // // // // // // // // // const availabilityAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async getByProvider(providerId) {
     const res = await apiFetch(`/availability/${providerId}`);
     return res.json();
@@ -319,7 +319,7 @@ const availabilityAPI = {
 };
 
 // ── CHECK-IN API ──────────────────────────────────────────────
-const checkinAPI = {
+// // // // // // // // // // // // // // // // // // const checkinAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async generateQR(bookingId) {
     const res = await apiFetch('/checkin/generate', {
       method: 'POST',
@@ -351,7 +351,7 @@ const checkinAPI = {
 };
 
 // ── HEALTH CHECK ──────────────────────────────────────────────
-const healthAPI = {
+// // // // // // // // // // // // // // // // // // const healthAPI = { // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
   async check() {
     const res = await fetch('/health');
     return res.json();

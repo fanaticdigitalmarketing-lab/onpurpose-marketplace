@@ -1,17 +1,23 @@
-functionsDirectory = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\no-functions"
-functionsDirectoryOrigin = "config-v1"
 headersOrigin = "config"
 redirectsOrigin = "config"
+
+[functions]
+
+[functions."*"]
+
+[[plugins]]
+origin = "ui"
+package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
+
+[plugins.inputs]
 
 [build]
 publish = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\frontend"
 publishOrigin = "config"
 commandOrigin = "config"
-command = "echo 'No build step needed'"
-functions = "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\no-functions"
+command = "echo 'static site'"
 
 [build.environment]
-NODE_VERSION = "18"
 
 [build.processing]
 
@@ -24,16 +30,6 @@ NODE_VERSION = "18"
 [build.processing.js]
 
 [build.services]
-
-[functions]
-
-[functions."*"]
-
-[[plugins]]
-origin = "ui"
-package = "@21yunbox/netlify-plugin-21yunbox-deploy-to-china-cdn"
-
-[plugins.inputs]
 
 [[headers]]
 for = "/*"
@@ -100,10 +96,10 @@ for = "*.css"
 Cache-Control = "public, max-age=86400"
 
 [[redirects]]
-from = "/service-detail.html"
-to = "/service-detail.html"
+from = "/api/*"
+to = "https://onpurpose-backend-clean-production.up.railway.app/api/:splat"
 status = 200.0
-force = false
+force = true
 
 [redirects.query]
 
@@ -122,6 +118,9 @@ force = true
 [redirects.conditions]
 
 [redirects.headers]
+Authorization = ":request_Authorization"
+X-Forwarded-For = ":client-ip"
+Content-Type = ":request_Content-Type"
 
 [[redirects]]
 from = "/health"
@@ -136,10 +135,10 @@ force = true
 [redirects.headers]
 
 [[redirects]]
-from = "/api/webhooks/stripe"
-to = "https://onpurpose-backend-clean-production.up.railway.app/api/webhooks/stripe"
+from = "/dashboard.html"
+to = "/dashboard.html"
 status = 200.0
-force = true
+force = false
 
 [redirects.query]
 
@@ -148,8 +147,8 @@ force = true
 [redirects.headers]
 
 [[redirects]]
-from = "/dashboard.html"
-to = "/dashboard.html"
+from = "/services.html"
+to = "/services.html"
 status = 200.0
 force = false
 

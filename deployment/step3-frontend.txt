@@ -1,0 +1,30 @@
+Step 3: Frontend Build Verification
+==================================================
+Command: dir frontend && echo "Frontend files checked"
+
+Output:
+ Volume in drive C has no label.
+ Volume Serial Number is 3072-F875
+
+ Directory of C:\Users\tyler\CascadeProjects\OnPurpose\frontend
+
+03/31/2026  03:08 PM    <DIR>          .
+03/31/2026  06:06 PM    <DIR>          ..
+03/31/2026  05:54 PM    <DIR>          assets
+03/31/2026  06:04 PM            21,160 contact.html
+03/31/2026  06:00 PM           288,067 dashboard.html
+03/31/2026  05:59 PM            25,198 index.html
+03/30/2026  01:16 PM    <DIR>          js
+03/31/2026  01:18 PM             9,603 privacy.html
+03/31/2026  06:01 PM            28,934 provider.html
+03/31/2026  05:06 PM            27,172 service-detail.html
+03/31/2026  06:00 PM            25,794 services.html
+03/31/2026  01:18 PM             8,123 terms.html
+03/30/2026  11:07 AM               482 _headers
+03/31/2026  05:21 PM               243 _redirects
+              10 File(s)        434,776 bytes
+               4 Dir(s)  143,086,489,600 bytes free
+"Frontend files checked"
+
+
+Timestamp: 2026-03-31T22:07:06.463Z

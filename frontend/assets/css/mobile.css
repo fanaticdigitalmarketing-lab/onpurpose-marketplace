@@ -1,0 +1,308 @@
+/*
+ * OnPurpose Mobile Enhancement Layer
+ * All rules here are additive — they extend, never override base styles
+ * in ways that affect desktop.
+ */
+
+/* ── Global Mobile Baseline ───────────────────────────────────────── */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+
+input, textarea, select, button {
+  font-size: 16px !important; /* prevents iOS zoom on focus */
+}
+
+body {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Safe Area Support (iPhone notch / Dynamic Island) ────────────── */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+nav {
+  padding-top: calc(0px + env(safe-area-inset-top));
+}
+
+/* ── Touch Targets — minimum 44×44px ──────────────────────────────── */
+.btn-primary, .btn-outline, .btn-main, .btn-ghost,
+.btn-sm, .nbtn, button {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.cat {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+nav a, .nav-links a, .sb-nav a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Prevent iOS Momentum Scroll Issues on Modals ─────────────────── */
+.mo.open {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md {
+  max-height: 92dvh; /* dynamic viewport height — avoids browser chrome */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── Fix 100vh on mobile (browser chrome issue) ───────────────────── */
+.hero, .full-height {
+  min-height: 100svh; /* small viewport height — excludes browser chrome */
+}
+
+/* ── Service Cards — readable on small screens ────────────────────── */
+@media (max-width: 480px) {
+  .card-img { height: 140px; font-size: 40px; }
+  .card-title { font-size: 15px; }
+  .card-body { padding: 12px; }
+  .price { font-size: 18px; }
+}
+
+/* ── Mobile Navigation ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+  nav {
+    padding: 0 1rem;
+    height: 60px;
+  }
+
+  .nav-links { display: none; }
+
+  .logo-name { font-size: 17px; }
+
+  .btn-ghost,
+  .btn-main {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  /* Show hamburger icon on mobile nav */
+  .nav-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 8px;
+  }
+}
+
+/* ── Mobile Hero ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero {
+    padding: 88px 1.25rem 2.5rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .hero-right { order: -1; }
+
+  .hero-logo-display {
+    width: 120px;
+    height: 120px;
+  }
+
+  .hero h1 { font-size: clamp(32px, 9vw, 52px); }
+  .hero-sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+
+  .hero-btns {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .hero-btns button {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .slogan-pill { justify-content: center; }
+  .hero-eyebrow { margin-left: auto; margin-right: auto; }
+}
+
+/* ── Mobile Stats Bar ──────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .stats-inner {
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+  .stat-n { font-size: 24px; }
+  .stat-l { font-size: 11px; }
+}
+
+/* ── Mobile Search ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sbar {
+    border-radius: 14px;
+    padding: 6px;
+  }
+  .sbar select { display: none; }
+  .sbar input { font-size: 16px; }
+
+  .cats {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .cats::-webkit-scrollbar { display: none; }
+  .cat { white-space: nowrap; flex-shrink: 0; }
+}
+
+/* ── Mobile Service Grid ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Mobile Modals ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .mo { align-items: flex-end; padding: 0; }
+
+  .md {
+    border-radius: 24px 24px 0 0;
+    max-height: 95dvh;
+    width: 100%;
+  }
+
+  .mb { padding: 1.25rem; }
+  .mh { padding: 1rem 1.25rem; }
+  .fr { grid-template-columns: 1fr; }
+}
+
+/* ── Dashboard Mobile ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  .layout {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  /* Sidebar becomes bottom tab bar on mobile */
+  .sb {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: auto;
+    border-right: none;
+    border-top: 1px solid var(--bdr);
+    padding: 0;
+    z-index: 99;
+    background: var(--white);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .sb-user { display: none; }
+  .sb-logo { display: none; }
+
+  .sb-nav {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sb-nav::-webkit-scrollbar { display: none; }
+
+  .sb-nav a {
+    flex-direction: column;
+    gap: 2px;
+    font-size: 9px;
+    min-width: 64px;
+    padding: 8px 4px;
+    border-left: none;
+    border-top: 3px solid transparent;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .sb-nav a.on {
+    border-left: none;
+    border-top-color: var(--blue);
+    background: var(--blue-l);
+  }
+
+  .main {
+    padding: 1.25rem;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    margin-top: 64px;
+  }
+
+  .sg {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cf {
+    max-width: 100%;
+  }
+}
+
+/* ── Provider Page Mobile ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .wrap { padding: 1rem; }
+  .card { border-radius: 18px; padding: 1.5rem; }
+  .prog { margin-bottom: 1.25rem; }
+  .prog-step { font-size: 11px; padding: 7px 4px; }
+}
+
+/* ── Contact Page Mobile ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+    padding: 0 1.25rem 3rem;
+  }
+}
+
+/* ── Footer Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .foot-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem 2rem;
+  }
+}
+
+/* ── Toast — safe area aware ───────────────────────────────────────── */
+.toast {
+  bottom: calc(2rem + env(safe-area-inset-bottom));
+}
+
+/* ── Capacitor / Native App Adjustments ───────────────────────────── */
+/* Applied when running inside Capacitor native container */
+.capacitor-app nav {
+  padding-top: var(--cap-status-bar-height, 0px);
+  height: calc(68px + var(--cap-status-bar-height, 0px));
+}
+
+/* Hide browser-specific UI when in native mode */
+.capacitor-app .pwa-install-prompt {
+  display: none !important;
+}

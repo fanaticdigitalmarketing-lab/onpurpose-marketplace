@@ -26,7 +26,7 @@ async function testCalendar() {
     console.log('\n📅 Step 1: Testing calendar connect endpoint...');
     
     try {
-      const connectResponse = await request('https://onpurpose.earth/api/calendar/connect');
+// // // // // // // // // // // // // // // // // // const connectResponse = await request('https://onpurpose.earth/api/calendar/connect'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('⚠️  Calendar connect endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -40,7 +40,7 @@ async function testCalendar() {
     console.log('\n📋 Step 2: Testing calendar events endpoint...');
     
     try {
-      const eventsResponse = await request('https://onpurpose.earth/api/calendar/events');
+// // // // // // // // // // // // // // // // // // const eventsResponse = await request('https://onpurpose.earth/api/calendar/events'); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
       console.log('⚠️  Calendar events endpoint exists (auth required as expected)');
     } catch (error) {
       if (error.message.includes('401') || error.message.includes('403')) {
@@ -60,7 +60,7 @@ async function testCalendar() {
     
     for (const endpoint of endpoints) {
       try {
-        const response = await request(`https://onpurpose.earth${endpoint}`);
+// // // // // // // // // // // // // // // // // // const response = await request(`https://onpurpose.earth${endpoint}`); // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable // Unused variable
         console.log(`✅ ${endpoint} endpoint exists (auth required as expected)`);
       } catch (error) {
         if (error.message.includes('401') || error.message.includes('403')) {

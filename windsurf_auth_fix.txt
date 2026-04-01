@@ -1,0 +1,79 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║        O N P U R P O S E  —  A U T H  S Y S T E M  F I X           ║
+║           Registration · Login · Email · Subscribers                 ║
+║                      onpurpose.earth                                 ║
+║                                                                      ║
+║  This document fixes one thing: authentication.                      ║
+║  Registration must work. Login must work. Emails must send.          ║
+║  Subscriber logs must save. Every existing user must still           ║
+║  be able to log in. Nothing else changes.                            ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+══════════════════════════════════════════════════════════════════════
+STEP 0 — FIND THE ACTUAL ERROR FIRST
+Do not touch any code until you know what the error is.
+══════════════════════════════════════════════════════════════════════
+
+Run this command and show me the FULL raw output:
+
+  curl -v -X POST https://onpurpose.earth/api/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{
+      "name": "Diagnostic Test",
+      "email": "diag_test_'$(date +%s)'@testfix.com",
+      "password": "TestPass123!",
+      "role": "customer"
+    }'
+
+The -v flag shows EVERYTHING: DNS, connection, headers, body.
+Show me the complete output including the status code.
+
+Then run this for login:
+
+  curl -v -X POST https://onpurpose.earth/api/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "diag_test@testfix.com",
+      "password": "TestPass123!"
+    }'
+
+Then check Railway logs:
+  Open railway.app → your project → Deployments → View Logs
+  Show me the last 50 lines.
+
+The error message tells us exactly what to fix.
+Do not guess. Read the error. Fix that specific thing.
+
+──────────────────────────────────────────────────────────────────────
+COMMON ERROR → ROOT CAUSE → EXACT FIX
+──────────────────────────────────────────────────────────────────────
+
+Error: "Network error" / "Failed to fetch" in browser
+  Cause: Server is not running, or CORS is blocking the request
+  Fix:   See Section 1 (server) and Section 2 (CORS)
+
+Error: {"success":false,"error":"jwt secret not set"} or server crash
+  Cause: JWT_SECRET missing or too short in Railway Variables
+  Fix:   See Section 3 (environment variables)
+
+Error: {"success":false,"error":"SequelizeConnectionError"}
+  Cause: Database not connected or migration not run
+  Fix:   See Section 4 (database)
+
+Error: {"success":false,"error":"Column 'verifyToken' does not exist"}
+  Cause: Missing columns — migration not run after model changes
+  Fix:   See Section 4 (database)
+
+Error: 404 on /api/auth/register
+  Cause: Route not registered, or Netlify not proxying correctly
+  Fix:   See Section 5 (routing)
+
+Error: Registration succeeds but login returns 401 "Invalid password"
+  Cause: PEPPER changed after accounts were created, or bcrypt mismatch
+  Fix:   See Section 6 (password mismatch)
+
+Error: Emails not arriving
+  Cause: RESEND_API_KEY missing or domain not verified
+  Fix:   See Section 7 (email)
