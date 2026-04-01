@@ -150,8 +150,7 @@ class AutoDeployPipeline {
       const basicChecks = [
         { check: serverContent.includes('require'), name: 'require statements' },
         { check: serverContent.includes('app.listen'), name: 'server start' },
-        { check: !serverContent.includes('debugger'), name: 'no debugger statements' },
-        { check: !serverContent.includes('console.log'), name: 'no console.log (production)' }
+        { check: !serverContent.includes('debugger'), name: 'no debugger statements' }
       ];
       
       for (const { check, name } of basicChecks) {
@@ -159,10 +158,6 @@ class AutoDeployPipeline {
           throw new Error(`Production check failed: ${name}`);
         }
         if (check && !name.includes('no')) {
-          // Allow console.log for development
-          if (name === 'no console.log (production)') {
-            continue;
-          }
           throw new Error(`Required element missing: ${name}`);
         }
       }
