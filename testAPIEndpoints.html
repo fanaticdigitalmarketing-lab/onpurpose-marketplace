@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Learning Engine API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        .info {
+            border-color: #17a2b8;
+            background: #d1ecf1;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #007bff;
+        }
+        .endpoint {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Self-Learning Engine API Test</h1>
+        
+        <div class="info">
+            <strong>🌐 Production Backend:</strong>
+            <div class="endpoint">https://onpurpose-backend-clean-production.up.railway.app</div>
+        </div>
+
+        <div class="button-group">
+            <button onclick="testRules()">📋 Get Rules</button>
+            <button onclick="testHistory()">📜 Get History</button>
+            <button onclick="testEngine()">🔧 Run Engine</button>
+            <button onclick="testAll()">🔄 Test All</button>
+            <button onclick="clearResults()">🗑️ Clear</button>
+        </div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-number" id="rulesCount">0</div>
+                <div class="stat-label">Learned Rules</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="fixesCount">0</div>
+                <div class="stat-label">Applied Fixes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="successRate">0%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="lastUpdate">-</div>
+                <div class="stat-label">Last Update</div>
+            </div>
+        </div>
+
+        <div class="result" id="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const BASE_URL = 'https://onpurpose-backend-clean-production.up.railway.app';
+        
+        async function testRules() {
+            showLoading('📋 Fetching learned rules...');
+            try {
+                const response = await fetch(`${BASE_URL}/api/rules`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(data, 'success', '📋 LEARNED RULES');
+                    updateStats({ rules: data.length });
+                } else {
+                    showResult(`Error: ${response.status} - ${data.error || 'Unknown error'}`, 'error', '❌ Rules API Error');
+                }
+            } catch (error) {
+                showResult(`Network Error: ${error.message}`, 'error', '❌ Network Error');
+            }
+        }
+
+        async function testHistory() {
+            showLoading('📜 Fetching fix history...');
+            try {
+                const response = await fetch(`${BASE_URL}/api/history`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(data, 'success', '📜 FIX HISTORY');
+                    const successCount = data.filter(fix => fix.success).length;
+                    updateStats({ fixes: data.length, successRate: ((successCount/data.length)*100).toFixed(1) });
+                } else {
+                    showResult(`Error: ${response.status} - ${data.error || 'Unknown error'}`, 'error', '❌ History API Error');
+                }
+            } catch (error) {
+                showResult(`Network Error: ${error.message}`, 'error', '❌ Network Error');
+            }
+        }
+
+        async function testEngine() {
+            showLoading('🔧 Running Self-Learning Engine...');
+            try {
+                const response = await fetch(`${BASE_URL}/api/engine/run`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(data, 'success', '🔧 ENGINE EXECUTION RESULTS');
+                    if (data.result) {
+                        updateStats({ 
+                            fixes: data.result.fixesApplied,
+                            lastUpdate: new Date().toLocaleTimeString()
+                        });
+                    }
+                } else {
+                    showResult(`Error: ${response.status} - ${data.error || 'Unknown error'}`, 'error', '❌ Engine API Error');
+                }
+            } catch (error) {
+                showResult(`Network Error: ${error.message}`, 'error', '❌ Network Error');
+            }
+        }
+
+        async function testAll() {
+            showLoading('🔄 Testing all endpoints...');
+            
+            try {
+                const [rulesResponse, historyResponse, engineResponse] = await Promise.all([
+                    fetch(`${BASE_URL}/api/rules`),
+                    fetch(`${BASE_URL}/api/history`),
+                    fetch(`${BASE_URL}/api/engine/run`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({})
+                    })
+                ]);
+
+                const [rulesData, historyData, engineData] = await Promise.all([
+                    rulesResponse.json(),
+                    historyResponse.json(),
+                    engineResponse.json()
+                ]);
+
+                const results = {
+                    rules: { status: rulesResponse.status, data: rulesResponse.ok ? rulesData : null },
+                    history: { status: historyResponse.status, data: historyResponse.ok ? historyData : null },
+                    engine: { status: engineResponse.status, data: engineResponse.ok ? engineData : null }
+                };
+
+                showResult(results, 'info', '🔄 ALL ENDPOINTS TEST RESULTS');
+                
+                // Update stats if successful
+                if (rulesResponse.ok && historyResponse.ok) {
+                    const successCount = historyData.filter(fix => fix.success).length;
+                    updateStats({
+                        rules: rulesData.length,
+                        fixes: historyData.length,
+                        successRate: ((successCount/historyData.length)*100).toFixed(1),
+                        lastUpdate: new Date().toLocaleTimeString()
+                    });
+                }
+                
+            } catch (error) {
+                showResult(`Network Error: ${error.message}`, 'error', '❌ Network Error');
+            }
+        }
+
+        function showLoading(message) {
+            const result = document.getElementById('result');
+            result.className = 'result loading';
+            result.innerHTML = message;
+            result.style.display = 'block';
+        }
+
+        function showResult(data, type, title) {
+            const result = document.getElementById('result');
+            result.className = `result ${type}`;
+            result.innerHTML = `${title}\n\n${JSON.stringify(data, null, 2)}`;
+            result.style.display = 'block';
+        }
+
+        function updateStats(stats) {
+            const statsDiv = document.getElementById('stats');
+            statsDiv.style.display = 'grid';
+            
+            if (stats.rules !== undefined) {
+                document.getElementById('rulesCount').textContent = stats.rules;
+            }
+            if (stats.fixes !== undefined) {
+                document.getElementById('fixesCount').textContent = stats.fixes;
+            }
+            if (stats.successRate !== undefined) {
+                document.getElementById('successRate').textContent = stats.successRate + '%';
+            }
+            if (stats.lastUpdate !== undefined) {
+                document.getElementById('lastUpdate').textContent = stats.lastUpdate;
+            }
+        }
+
+        function clearResults() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('stats').style.display = 'none';
+        }
+
+        // Auto-test on page load
+        window.addEventListener('load', () => {
+            console.log('🌐 Self-Learning Engine API Test loaded');
+            console.log('🔗 Base URL:', BASE_URL);
+            console.log('📊 Click buttons to test endpoints');
+        });
+    </script>
+</body>
+</html>
