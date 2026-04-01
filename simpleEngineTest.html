@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engine Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            text-align: left;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading {
+            color: #007bff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Self-Learning Hotfix Engine</h1>
+    
+    <button onclick="runEngine()" id="runButton">Run Engine</button>
+    
+    <div id="result"></div>
+
+    <script>
+        async function runEngine() {
+            const button = document.getElementById('runButton');
+            const result = document.getElementById('result');
+            
+            button.disabled = true;
+            result.innerHTML = '<div class="loading">🔄 Running engine...</div>';
+            
+            try {
+                const res = await fetch('https://onpurpose-backend-clean-production.up.railway.app/api/engine/run', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                const data = await res.json();
+                console.log(data);
+                
+                if (res.ok && data.success) {
+                    result.innerHTML = `✅ SUCCESS!\\n\\n${JSON.stringify(data, null, 2)}`;
+                    alert("Engine executed successfully!");
+                } else {
+                    result.innerHTML = `❌ ERROR\\n\\nStatus: ${res.status}\\n\\n${JSON.stringify(data, null, 2)}`;
+                    alert("Engine execution failed!");
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                result.innerHTML = `❌ NETWORK ERROR\\n\\n${error.message}`;
+                alert("Network error - endpoint may not be deployed yet!");
+            } finally {
+                button.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

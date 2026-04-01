@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Learning Hotfix Engine - Browser Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
+            margin: 10px;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238, 90, 36, 0.6);
+        }
+        .button:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .status {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .result {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+        }
+        .error {
+            background: rgba(244, 67, 54, 0.3);
+            border: 1px solid rgba(244, 67, 54, 0.5);
+        }
+        .info {
+            background: rgba(33, 150, 243, 0.3);
+            border: 1px solid rgba(33, 150, 243, 0.5);
+        }
+        .endpoint {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Self-Learning Hotfix Engine</h1>
+        
+        <div class="status info">
+            <strong>🌐 Production Endpoint:</strong><br>
+            <div class="endpoint">https://onpurpose-backend-clean-production.up.railway.app/api/engine/run</div>
+        </div>
+
+        <button class="button" onclick="runEngine()" id="runButton">
+            🔧 Run Engine
+        </button>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>🔄 Executing Self-Learning Hotfix Engine...</p>
+            <p>This may take 10-30 seconds</p>
+        </div>
+
+        <div class="status" id="status" style="display: none;"></div>
+
+        <div class="result" id="result" style="display: none;"></div>
+
+        <div class="status info">
+            <strong>📊 Expected Results:</strong><br>
+            • Issues Detected: System errors found<br>
+            • Fixes Applied: Automatic fixes completed<br>
+            • Learned Rules: New patterns learned<br>
+            • System Health: Overall health score<br>
+            • Duration: Execution time
+        </div>
+    </div>
+
+    <script>
+        async function runEngine() {
+            const button = document.getElementById('runButton');
+            const loading = document.getElementById('loading');
+            const status = document.getElementById('status');
+            const result = document.getElementById('result');
+
+            // Disable button and show loading
+            button.disabled = true;
+            loading.style.display = 'block';
+            status.style.display = 'none';
+            result.style.display = 'none';
+
+            try {
+                console.log('🚀 Starting Self-Learning Hotfix Engine...');
+                
+                const res = await fetch('https://onpurpose-backend-clean-production.up.railway.app/api/engine/run', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'User-Agent': 'OnPurpose-Engine-Browser/1.0'
+                    },
+                    body: JSON.stringify({})
+                });
+
+                console.log('📊 Response status:', res.status);
+                console.log('📊 Response headers:', res.headers);
+
+                const data = await res.json();
+                console.log('📊 Engine results:', data);
+
+                // Hide loading
+                loading.style.display = 'none';
+
+                if (res.ok && data.success) {
+                    // Success
+                    status.className = 'status success';
+                    status.innerHTML = `
+                        <h3>✅ Engine Executed Successfully!</h3>
+                        <p><strong>Message:</strong> ${data.message}</p>
+                    `;
+                    
+                    // Show detailed results
+                    let resultText = '📊 ENGINE EXECUTION RESULTS:\\n\\n';
+                    resultText += `✅ Success: ${data.success}\\n`;
+                    resultText += `📝 Message: ${data.message}\\n\\n`;
+                    
+                    if (data.result) {
+                        resultText += '🔍 DETAILED ANALYSIS:\\n';
+                        resultText += `🐛 Issues Detected: ${data.result.issuesDetected || 'N/A'}\\n`;
+                        resultText += `🔧 Fixes Applied: ${data.result.fixesApplied || 'N/A'}\\n`;
+                        resultText += `🧠 Learned Rules: ${data.result.learnedRules || 'N/A'}\\n`;
+                        resultText += `🏥 System Health: ${data.result.systemHealth || 'N/A'}/100\\n`;
+                        resultText += `⏱️ Duration: ${data.result.duration || 'N/A'}\\n`;
+                    }
+                    
+                    result.textContent = resultText;
+                    result.style.display = 'block';
+                    
+                    alert("✅ Engine executed successfully! Check results below.");
+                } else {
+                    // Error
+                    status.className = 'status error';
+                    status.innerHTML = `
+                        <h3>❌ Engine Execution Failed</h3>
+                        <p><strong>Status:</strong> ${res.status}</p>
+                        <p><strong>Error:</strong> ${data.error || 'Unknown error'}</p>
+                    `;
+                    
+                    result.textContent = JSON.stringify(data, null, 2);
+                    result.style.display = 'block';
+                    
+                    alert("❌ Engine execution failed. Check results for details.");
+                }
+
+            } catch (error) {
+                console.error('❌ Engine execution error:', error);
+                
+                loading.style.display = 'none';
+                status.className = 'status error';
+                status.innerHTML = `
+                    <h3>❌ Network Error</h3>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                    <p>The endpoint may not be deployed yet.</p>
+                `;
+                status.style.display = 'block';
+                
+                result.textContent = error.toString();
+                result.style.display = 'block';
+                
+                alert("❌ Network error. The endpoint may not be deployed yet.");
+            } finally {
+                // Re-enable button
+                button.disabled = false;
+            }
+        }
+
+        // Auto-run on page load for testing
+        window.addEventListener('load', () => {
+            console.log('🌐 Self-Learning Hotfix Engine Browser Test loaded');
+            console.log('🔗 Endpoint: https://onpurpose-backend-clean-production.up.railway.app/api/engine/run');
+            console.log('🚀 Click "Run Engine" to test the endpoint');
+        });
+    </script>
+</body>
+</html>
