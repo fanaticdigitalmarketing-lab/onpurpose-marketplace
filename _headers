@@ -1,8 +1,5 @@
 /*
   Content-Security-Policy: default-src 'self' https:; connect-src 'self' https://api.stripe.com https://onpurpose.earth https://onpurpose-backend-clean-production.up.railway.app;
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
 
 /og-image.jpg
   Content-Type: image/jpeg
