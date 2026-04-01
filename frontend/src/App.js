@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 
+// Import unified configuration
+const CONFIG = {
+  API_URL: window.location.hostname === 'localhost'
+    ? 'http://localhost:3000'
+    : 'https://onpurpose-backend-clean-production.up.railway.app'
+};
+
 function App() {
   const [skillInput, setSkillInput] = useState('');
   const [nicheInput, setNicheInput] = useState('');
@@ -9,10 +16,6 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-
-  const API_BASE_URL = window.location.hostname === 'localhost' 
-    ? 'https://onpurpose-backend-clean-production.up.railway.app' 
-    : 'https://onpurpose-backend-clean-production.up.railway.app';
 
   useEffect(() => {
     loadStats();

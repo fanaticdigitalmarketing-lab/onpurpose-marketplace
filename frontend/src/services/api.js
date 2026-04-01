@@ -23,8 +23,8 @@ api.interceptors.response.use(
   (error) => {
     // Handle 401 unauthorized
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('op_token');
+      localStorage.removeItem('op_user');
       window.location.href = '/auth';
     }
     return Promise.reject(error);

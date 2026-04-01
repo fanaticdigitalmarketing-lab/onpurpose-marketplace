@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('op_token');
     if (token) {
       // You could add a token validation endpoint here
-      const userData = localStorage.getItem('user');
+      const userData = localStorage.getItem('op_user');
       if (userData) {
         setUser(JSON.parse(userData));
       }
@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }) => {
       const response = await authAPI.login(credentials);
       const { token, user } = response.data;
       
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('op_token', token);
+      localStorage.setItem('op_user', JSON.stringify(user));
       setUser(user);
       
       return { success: true };
@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }) => {
       const response = await authAPI.register(userData);
       const { token, user } = response.data;
       
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('op_token', token);
+      localStorage.setItem('op_user', JSON.stringify(user));
       setUser(user);
       
       return { success: true };
@@ -64,8 +64,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('op_token');
+    localStorage.removeItem('op_user');
     setUser(null);
   };
 
