@@ -31,18 +31,18 @@ function App() {
 
   const loadStats = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/stats`);
+      const response = await fetch(`${CONFIG.API_URL}/api/stats`);
       if (response.ok) {
         const stats = await response.json();
         updateStats(stats);
       }
     } catch (error) {
-      console.log('Using demo stats');
+      console.error('Stats failed:', error);
     }
   };
 
   const updateStats = (stats) => {
-    if (stats.hosts) document.getElementById('hostsCount').textContent = stats.hosts;
+    if (stats.providers) document.getElementById('hostsCount').textContent = stats.providers;
     if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
     if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
   };
@@ -92,7 +92,7 @@ function App() {
     }
     
     try {
-      const response = await fetch(`${API_BASE_URL}/api/early-access`, {
+      const response = await fetch(`${CONFIG.API_URL}/api/early-access`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -121,7 +121,7 @@ function App() {
     setShowResults(false);
     
     try {
-      const response = await fetch(`${API_BASE_URL}/api/ideas/generate`, {
+      const response = await fetch(`${CONFIG.API_URL}/api/ideas/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ skill: skillInput, niche: nicheInput })

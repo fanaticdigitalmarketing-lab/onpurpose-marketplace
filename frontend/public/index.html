@@ -620,12 +620,10 @@
     </footer>
   </div>
 
+  <script src="config.js"></script>
+  <script src="api.js"></script>
   <script>
-    // API Configuration
-    const API_BASE_URL = window.location.hostname === 'localhost' 
-      ? 'https://onpurpose-backend-clean-production.up.railway.app' 
-      : 'https://onpurpose-backend-clean-production.up.railway.app';
-
+    
     // Form submission handler
     document.getElementById('earlyAccessForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -647,20 +645,13 @@
       
       try {
         // Simulate API call (replace with actual endpoint)
-        const response = await fetch(`${API_BASE_URL}/api/early-access`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email })
+        await api('/api/early-access', { 
+          method: 'POST', 
+          body: { email } 
         });
         
-        if (response.ok) {
-          showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
-          emailInput.value = '';
-        } else {
-          throw new Error('Failed to join early access');
-        }
+        showMessage('🎉 Welcome! You\'re on the early access list.', 'success');
+        emailInput.value = '';
       } catch (error) {
         // For demo purposes, show success even if API fails
         console.log('Early access signup (demo mode):', email);
@@ -687,19 +678,15 @@
     // Load platform stats
     async function loadStats() {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/stats`);
-        if (response.ok) {
-          const stats = await response.json();
-          updateStats(stats);
-        }
+        const stats = await api('/api/stats');
+        updateStats(stats);
       } catch (error) {
-        console.log('Using demo stats');
-        // Demo stats are already displayed
+        console.error('Stats failed:', error);
       }
     }
 
     function updateStats(stats) {
-      if (stats.hosts) document.getElementById('hostsCount').textContent = stats.hosts;
+      if (stats.providers) document.getElementById('hostsCount').textContent = stats.providers;
       if (stats.bookings) document.getElementById('bookingsCount').textContent = stats.bookings;
       if (stats.countries) document.getElementById('countriesCount').textContent = stats.countries;
     }
@@ -769,26 +756,18 @@
         }
         
         // Call AI API
-        const response = await fetch(`${API_BASE_URL}/api/ideas/generate`, {
+        const data = await api('/api/ideas/generate', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ skill, niche })
+          body: { skill, niche }
         });
         
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.data && data.data.ideas) {
-            currentIdeas = data.data.ideas;
-            // Cache the results
-            ideaCache.set(cacheKey, currentIdeas);
-            displayIdeas(currentIdeas);
-          } else {
-            throw new Error('Invalid response format');
-          }
+        if (data.success && data.data && data.data.ideas) {
+          currentIdeas = data.data.ideas;
+          // Cache the results
+          ideaCache.set(cacheKey, currentIdeas);
+          displayIdeas(currentIdeas);
         } else {
-          throw new Error('API request failed');
+          throw new Error('Invalid response format');
         }
       } catch (error) {
         console.log('AI API error, using fallback ideas:', error);

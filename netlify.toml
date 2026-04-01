@@ -5,7 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  # Force rebuild - 2024-04-01-14-50
+  # Force rebuild - 2024-04-01-14-55
 
 [[redirects]]
   from = "/*"
@@ -21,4 +21,4 @@
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
-    Content-Security-Policy = "connect-src 'self' https://api.stripe.com https://onpurpose.earth https://onpurpose-backend-clean-production.up.railway.app"
+    Content-Security-Policy = "default-src 'self' https:; connect-src 'self' https://api.stripe.com https://onpurpose.earth https://onpurpose-backend-clean-production.up.railway.app"

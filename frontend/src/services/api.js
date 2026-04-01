@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-// In production, use Railway backend URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://onpurpose-backend-clean-production.up.railway.app';
-
+// Use unified API configuration from config.js
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: CONFIG.API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,7 +10,7 @@ const api = axios.create({
 
 // Add auth token to requests
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('op_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
