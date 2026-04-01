@@ -1,2 +1,6 @@
 /*
   Content-Security-Policy: connect-src 'self' https://api.stripe.com https://onpurpose.earth https://onpurpose-backend-clean-production.up.railway.app;
+
+/og-image.png
+  Content-Type: image/png
+  Cache-Control: public, max-age=31536000, immutable
