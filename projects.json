@@ -1,0 +1,14 @@
+[
+  {
+    "name": "OnPurpose",
+    "users": 120,
+    "revenue": 500,
+    "growth": 20
+  },
+  {
+    "name": "AnotherStartup",
+    "users": 300,
+    "revenue": 100,
+    "growth": 10
+  }
+]
