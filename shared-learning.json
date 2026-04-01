@@ -1,0 +1,56 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-04-01T09:37:46.569Z",
+  "ruleClusters": [
+    {
+      "id": "cluster_1775036266221_p0urhmujv",
+      "type": "missing_form_validation",
+      "patterns": [
+        "Form without validation"
+      ],
+      "fixes": [
+        "<form id=\"testForm\" required>"
+      ],
+      "successRate": 0.8,
+      "usageCount": 1,
+      "createdAt": "2026-04-01T09:37:46.223Z",
+      "lastUsed": "2026-04-01T09:37:46.223Z",
+      "contributingProjects": [
+        "C:\\Users\\tyler\\CascadeProjects\\OnPurpose"
+      ],
+      "metadata": {
+        "firstSeenIn": "OnPurpose",
+        "evolution": "new"
+      }
+    },
+    {
+      "id": "cluster_1775036266569_dq2rw9w5v",
+      "type": "missing_charset",
+      "patterns": [
+        "Missing charset meta tag"
+      ],
+      "fixes": [
+        "Added UTF-8 charset meta tag"
+      ],
+      "successRate": 0.9,
+      "usageCount": 1,
+      "createdAt": "2026-04-01T09:37:46.569Z",
+      "lastUsed": "2026-04-01T09:37:46.569Z",
+      "contributingProjects": [
+        "C:\\Users\\tyler\\CascadeProjects\\OnPurpose"
+      ],
+      "metadata": {
+        "firstSeenIn": "OnPurpose",
+        "evolution": "new"
+      }
+    }
+  ],
+  "globalStats": {
+    "totalRules": 2,
+    "totalUsage": 2,
+    "averageSuccessRate": 0.8500000000000001,
+    "contributingProjects": [
+      "C:\\Users\\tyler\\CascadeProjects\\OnPurpose"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "rule_console_error_001",
+    "type": "prevention",
+    "trigger": "console_error",
+    "condition": "error type: console_error",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T09:04:37.413Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_api_error_handling_001",
+    "type": "prevention",
+    "trigger": "api_error_handling",
+    "condition": "error type: api_error_handling",
+    "action": "Added error handling to API route",
+    "severity": "high",
+    "createdAt": "2026-04-01T09:04:37.433Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_button_without_handler_001",
+    "type": "prevention",
+    "trigger": "button_without_handler",
+    "condition": "button element without click handler",
+    "action": "Added onclick handler to button",
+    "severity": "medium",
+    "createdAt": "2026-04-01T09:04:37.444Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_form_without_validation_001",
+    "type": "prevention",
+    "trigger": "form_without_validation",
+    "condition": "error type: form_without_validation",
+    "action": "No auto-fix available for this error type",
+    "severity": "low",
+    "createdAt": "2026-04-01T09:04:37.445Z",
+    "applications": 0
+  },
+  {
+    "id": "rule_missing_charset_001",
+    "type": "prevention",
+    "trigger": "missing_charset",
+    "condition": "error type: missing_charset",
+    "action": "No auto-fix available for this error type",
+    "severity": "medium",
+    "createdAt": "2026-04-01T09:04:37.449Z",
+    "applications": 0
+  }
+]

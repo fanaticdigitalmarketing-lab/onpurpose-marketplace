@@ -1,0 +1,1364 @@
+{
+  "timestamp": "2026-04-01T09:28:59.432Z",
+  "auditResults": {
+    "security": {
+      "issues": [
+        {
+          "type": "missing_validation_library",
+          "severity": "critical",
+          "file": "server.js",
+          "description": "express-validator library not installed",
+          "fix": "npm install express-validator",
+          "code": "const { body, validationResult } = require(\"express-validator\");"
+        },
+        {
+          "type": "weak_jwt_secret",
+          "severity": "critical",
+          "file": "server.js",
+          "description": "Using fallback JWT secret in production",
+          "fix": "Set strong JWT_SECRET in environment variables",
+          "code": "process.env.JWT_SECRET || \"fallback-secret\""
+        },
+        {
+          "type": "missing_cors",
+          "severity": "high",
+          "file": "server.js",
+          "description": "CORS not configured",
+          "fix": "Add CORS middleware",
+          "code": "app.use(cors());"
+        }
+      ],
+      "score": 35,
+      "status": "FAIL"
+    },
+    "performance": {
+      "issues": [
+        {
+          "type": "large_file",
+          "severity": "critical",
+          "file": "frontend/dashboard.html",
+          "description": "Large file (289KB)",
+          "fix": "Split into smaller files or externalize CSS/JS",
+          "code": "Size: 289KB"
+        },
+        {
+          "type": "inline_assets",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Inline CSS/JS detected",
+          "fix": "Move to external .css and .js files",
+          "code": "Styles: 1, Scripts: 2"
+        },
+        {
+          "type": "inline_assets",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Inline CSS/JS detected",
+          "fix": "Move to external .css and .js files",
+          "code": "Styles: 1, Scripts: 2"
+        },
+        {
+          "type": "inline_assets",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Inline CSS/JS detected",
+          "fix": "Move to external .css and .js files",
+          "code": "Styles: 1, Scripts: 3"
+        },
+        {
+          "type": "missing_caching",
+          "severity": "low",
+          "file": "server.js",
+          "description": "No caching headers configured",
+          "fix": "Add caching headers for static assets",
+          "code": "res.set(\"Cache-Control\", \"public, max-age=31536000\");"
+        }
+      ],
+      "score": 60,
+      "status": "FAIL"
+    },
+    "accessibility": {
+      "issues": [
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"submit\" id=\"submitBtn\" onclick=\"console.log('Button clicked');\">\n          Join Early Access\n        </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n            id=\"generateIdeasBtn\" \n            onclick=\"generateIdeas()\" \n            style=\"width: 100%; padding: 25px; background: rgba(255, 255, 255, 0.25); color: white; border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 18px; font-size: 1.4rem; font-weight: 800; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(15px); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);\"\n            onmouseover=\"this.style.background='rgba(255, 255, 255, 0.35)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'\"\n            onmouseout=\"this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)'\"\n          >\n            🚀 Generate AI Ideas\n          </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n                  onclick=\"becomeProvider()\" \n                  style=\"padding: 18px 40px; background: white; color: #22c55e; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);\"\n                  onmouseover=\"this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 35px rgba(0,0,0,0.3)'\"\n                  onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.2)'\"\n                >\n                  🎯 Become a Provider\n                </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n                  onclick=\"generateMoreIdeas()\" \n                  style=\"padding: 18px 40px; background: transparent; color: white; border: 3px solid white; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem;\"\n                  onmouseover=\"this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(-3px)'\"\n                  onmouseout=\"this.style.background='transparent'; this.style.transform='translateY(0)'\"\n                >\n                  🔄 Generate More\n                </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"submit\" id=\"submitBtn\" onclick=\"console.log('Button clicked');\">\n          Join Early Access\n        </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n            id=\"generateIdeasBtn\" \n            onclick=\"generateIdeas()\" \n            style=\"width: 100%; padding: 25px; background: rgba(255, 255, 255, 0.25); color: white; border: 3px solid rgba(255, 255, 255, 0.5); border-radius: 18px; font-size: 1.4rem; font-weight: 800; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(15px); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);\"\n            onmouseover=\"this.style.background='rgba(255, 255, 255, 0.35)'; this.style.transform='translateY(-4px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.3)'\"\n            onmouseout=\"this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.2)'\"\n          >\n            🚀 Generate AI Ideas\n          </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n                  onclick=\"becomeProvider()\" \n                  style=\"padding: 18px 40px; background: white; color: #22c55e; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,0,0,0.2);\"\n                  onmouseover=\"this.style.transform='translateY(-3px)'; this.style.boxShadow='0 20px 35px rgba(0,0,0,0.3)'\"\n                  onmouseout=\"this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(0,0,0,0.2)'\"\n                >\n                  🎯 Become a Provider\n                </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button \n                  onclick=\"generateMoreIdeas()\" \n                  style=\"padding: 18px 40px; background: transparent; color: white; border: 3px solid white; border-radius: 15px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 1.1rem;\"\n                  onmouseover=\"this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(-3px)'\"\n                  onmouseout=\"this.style.background='transparent'; this.style.transform='translateY(0)'\"\n                >\n                  🔄 Generate More\n                </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-pill btn-primary\" onclick=\"logout()\">Log out</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"button\" class=\"remove-image-btn\" onclick=\"removeServiceImage()\">✕</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"button\" class=\"btn btn-outline\" onclick=\"document.getElementById('svcImage').click()\">\r\n                📷 Upload Image\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" style=\"width:100%;margin-top:8px\" onclick=\"addService()\">Create Service</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" onclick=\"setupStripe()\" id=\"stripe-setup-btn\"\r\n                      style=\"width:100%;padding:14px\">\r\n                Connect my bank account →\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm btn-pill\" onclick=\"setupStripe()\">\r\n              Update bank account\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" onclick=\"setupStripe()\">\r\n              Complete setup →\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadAnalytics()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" onclick=\"saveReminderSettings()\">\r\n              Save Settings\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"testReminders()\">\r\n              Test Reminders\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"modal-close\" onclick=\"closeModal('testRemindersModal')\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"sendTestReminder('EMAIL_24H')\">\r\n                Test Email 24h\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"sendTestReminder('EMAIL_2H')\">\r\n                Test Email 2h\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"sendTestReminder('SMS_2H')\">\r\n                Test SMS 2h\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"sendTestReminder('SMS_1H')\">\r\n                Test SMS 1h\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadUpcomingReminders()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadReminderAnalytics()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadRecommendations()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadRevenueOptimization()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadCompetitorAnalysis()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadServiceEnhancements()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadBusinessInsights()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadGrowthAnalytics()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadPremiumMarketing()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadBusinessIntelligence()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"downloadBIReport()\">Download CSV</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"loadExclusiveFeatures()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showCreateWorkflow()\">Create Workflow</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadWorkflows()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showCreateApiKey()\">Create API Key</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadApiKeys()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadAutomationLogs()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"generateQuickReport('performance')\">Performance</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"generateQuickReport('financial')\">Financial</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"generateQuickReport('customer')\">Customer</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"generateQuickReport('revenue')\">Revenue</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showReportBuilder()\">Create Custom Report</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadReportTemplates()\">Load Templates</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadKPIDashboard()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadAdvancedAnalytics()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showScheduleReport()\">Schedule Report</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadScheduledReports()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadReportHistory()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"editOrganization()\">Edit Organization</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadOrganizationSettings()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showAddTeamMember()\">Add Team Member</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadTeamMembers()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadEnterpriseAnalytics()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadConsolidatedRevenue()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadProviderPerformance()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-sm\" onclick=\"showUpgradeTier()\">Upgrade Tier</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary btn-sm\" onclick=\"loadEnterpriseSettings()\">Refresh</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" style=\"flex:1\" onclick=\"saveProfile()\">\r\n              💾 Save Changes\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-outline btn-pill\" onclick=\"cancelEditProfile()\">\r\n              Cancel\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-danger btn-sm btn-pill\" onclick=\"deleteAccount()\">Delete My Account</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"modal-close\" onclick=\"closeModal('reviewModal')\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary btn-pill\" style=\"width:100%\" onclick=\"submitReview()\">Submit Review</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-pill btn-primary\" onclick=\"pay(\\''+b.id+'\\',\\''+\r\n          esc(svc.title||'Service')+'\\',\\''+\r\n          parseFloat(b.totalAmount||0).toFixed(2)+\r\n        '\\')\">💳 Pay now</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-pill btn-danger\" onclick=\"cancelBooking(\\''+b.id+'\\')\">Cancel</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-pill btn-success\" onclick=\"openReview(\\''+b.id+'\\')\">Review</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"document.getElementById('pay-modal').remove()\"\r\n                    style=\"width:32px;height:32px;border-radius:50%;border:1px solid rgba(26,39,68,0.12);\r\n                           background:#f7f8fc;cursor:pointer;font-size:16px;color:#6b7a99;\r\n                           display:flex;align-items:center;justify-content:center\">×</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button id=\"pay-confirm-btn\"\r\n                    onclick=\"proceedToCheckout('${bookingId}')\"\r\n                    style=\"width:100%;background:#2563d4;color:#fff;border:none;\r\n                           padding:14px;border-radius:100px;font-size:15px;\r\n                           font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;\r\n                           transition:all .2s;box-shadow:0 2px 8px rgba(37,99,212,0.3)\">\r\n              Continue to Secure Checkout →\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"tier-upgrade\" onclick=\"upgradeTier('${nextTier.name}')\" ${!canUpgrade ? 'disabled' : ''}>\r\n              ${canUpgrade ? `Upgrade to ${nextTier.name}` : 'Requirements not met'}\r\n            </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary\" onclick=\"showCreateWorkflow()\">Create Workflow</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"workflow-action-btn\" onclick=\"editWorkflow('${workflow.id}')\">Edit</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"workflow-action-btn\" onclick=\"toggleWorkflow('${workflow.id}', ${workflow.isActive})\">\r\n                ${workflow.isActive ? 'Disable' : 'Enable'}\r\n              </button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"workflow-action-btn\" onclick=\"deleteWorkflow('${workflow.id}')\">Delete</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"automation-modal-close\" onclick=\"closeWorkflowModal()\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"button\" class=\"workflow-action-btn\" onclick=\"removeWorkflowAction(${index})\">Remove</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"button\" class=\"add-action-btn\" onclick=\"addWorkflowAction()\">Add Action</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">${workflow ? 'Update Workflow' : 'Create Workflow'}</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button type=\"button\" class=\"workflow-action-btn\" onclick=\"removeWorkflowAction(${actionIndex})\">Remove</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary\" onclick=\"showCreateApiKey()\">Create API Key</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"workflow-action-btn\" onclick=\"revokeApiKey('${key.id}')\">Revoke</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"automation-modal-close\" onclick=\"closeApiKeyModal()\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Create API Key</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"report-modal-close\" onclick=\"closeReportModal()\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-primary\" onclick=\"exportReport('${reportType}', 'csv')\">Export CSV</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-secondary\" onclick=\"exportReport('${reportType}', 'pdf')\">Export PDF</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-primary\" onclick=\"useTemplate('${template.id}')\">Use Template</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"report-modal-close\" onclick=\"closeReportModal()\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Generate Report</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-secondary\" onclick=\"editScheduledReport('${report.id}')\">Edit</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-danger\" onclick=\"deleteScheduledReport('${report.id}')\">Delete</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"report-modal-close\" onclick=\"closeReportModal()\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Schedule Report</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-primary\" onclick=\"downloadReport('${report.id}', '${report.format}')\">Download</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"enterprise-modal-close\" onclick=\"closeModal(this)\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Update Organization</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-secondary\" onclick=\"editTeamMember('${member.id}')\">Edit</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"btn btn-sm btn-danger\" onclick=\"removeTeamMember('${member.id}')\">Remove</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"enterprise-modal-close\" onclick=\"closeModal(this)\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Send Invitation</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button class=\"enterprise-modal-close\" onclick=\"closeModal(this)\">&times;</button>"
+        },
+        {
+          "type": "missing_aria_label",
+          "severity": "medium",
+          "file": "frontend/dashboard.html",
+          "description": "Interactive element missing aria attributes",
+          "fix": "Add aria-label or aria-describedby",
+          "code": "<button onclick=\"console.log('Button clicked');\" type=\"submit\" class=\"btn btn-primary\">Upgrade Tier</button>"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n          type=\"email\" \n          id=\"emailInput\"\n          placeholder=\"Enter your email\" \n          required\n        />"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n                type=\"text\" \n                id=\"skillInput\" \n                placeholder=\"e.g. Web Development, Marketing, Design...\" \n                style=\"width: 100%; padding: 18px; border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.15); color: white; font-size: 1.1rem; backdrop-filter: blur(15px); transition: all 0.3s; font-weight: 500;\"\n                onfocus=\"this.style.borderColor='rgba(255, 255, 255, 0.8)'; this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'\"\n                onblur=\"this.style.borderColor='rgba(255, 255, 255, 0.4)'; this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(0)'\"\n              />"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n                type=\"text\" \n                id=\"nicheInput\" \n                placeholder=\"e.g. Small Businesses, Startups, Creators...\" \n                style=\"width: 100%; padding: 18px; border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.15); color: white; font-size: 1.1rem; backdrop-filter: blur(15px); transition: all 0.3s; font-weight: 500;\"\n                onfocus=\"this.style.borderColor='rgba(255, 255, 255, 0.8)'; this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'\"\n                onblur=\"this.style.borderColor='rgba(255, 255, 255, 0.4)'; this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(0)'\"\n              />"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n          type=\"email\" \n          id=\"emailInput\"\n          placeholder=\"Enter your email\" \n          required\n        />"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n                type=\"text\" \n                id=\"skillInput\" \n                placeholder=\"e.g. Web Development, Marketing, Design...\" \n                style=\"width: 100%; padding: 18px; border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.15); color: white; font-size: 1.1rem; backdrop-filter: blur(15px); transition: all 0.3s; font-weight: 500;\"\n                onfocus=\"this.style.borderColor='rgba(255, 255, 255, 0.8)'; this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'\"\n                onblur=\"this.style.borderColor='rgba(255, 255, 255, 0.4)'; this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(0)'\"\n              />"
+        },
+        {
+          "type": "missing_form_label",
+          "severity": "medium",
+          "file": "frontend/index.html",
+          "description": "Form input missing associated label",
+          "fix": "Add label with for attribute or use aria-label",
+          "code": "<input \n                type=\"text\" \n                id=\"nicheInput\" \n                placeholder=\"e.g. Small Businesses, Startups, Creators...\" \n                style=\"width: 100%; padding: 18px; border: 3px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.15); color: white; font-size: 1.1rem; backdrop-filter: blur(15px); transition: all 0.3s; font-weight: 500;\"\n                onfocus=\"this.style.borderColor='rgba(255, 255, 255, 0.8)'; this.style.background='rgba(255, 255, 255, 0.25)'; this.style.transform='translateY(-2px)'\"\n                onblur=\"this.style.borderColor='rgba(255, 255, 255, 0.4)'; this.style.background='rgba(255, 255, 255, 0.15)'; this.style.transform='translateY(0)'\"\n              />"
+        },
+        {
+          "type": "missing_keyboard_navigation",
+          "severity": "low",
+          "file": "index.html",
+          "description": "Interactive elements may not be keyboard accessible",
+          "fix": "Add tabindex attributes or ensure natural tab order",
+          "code": "Add tabindex=\"0\" to interactive elements"
+        },
+        {
+          "type": "missing_keyboard_navigation",
+          "severity": "low",
+          "file": "frontend/index.html",
+          "description": "Interactive elements may not be keyboard accessible",
+          "fix": "Add tabindex attributes or ensure natural tab order",
+          "code": "Add tabindex=\"0\" to interactive elements"
+        }
+      ],
+      "score": 0,
+      "status": "PASS"
+    },
+    "codeQuality": {
+      "issues": [
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: console_error - No auto-fix available for this error type"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: console_error - No auto-fix available for this error type"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: console_error - No auto-fix available for this error type"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "duplicate_rule",
+          "severity": "low",
+          "file": "learned-rules.json",
+          "description": "Duplicate rule detected",
+          "fix": "Remove duplicate rule entries",
+          "code": "Rule: api_error_handling - Added error handling to API route"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "console_log_statement",
+          "severity": "low",
+          "file": "server.js",
+          "description": "console.log statement in production code",
+          "fix": "Replace with proper logging or remove",
+          "code": "console.log"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/android",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/android"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/app",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/app"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/cli",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/cli"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/core",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/core"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/ios",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/ios"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/splash-screen",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/splash-screen"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: @capacitor/status-bar",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "@capacitor/status-bar"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: bcrypt",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "bcrypt"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: cheerio",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "cheerio"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: crypto",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "crypto"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: express-validator",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "express-validator"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: multer",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "multer"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: pg",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "pg"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: pg-hstore",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "pg-hstore"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: resend",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "resend"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: sqlite3",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "sqlite3"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: stripe",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "stripe"
+        },
+        {
+          "type": "unused_dependency",
+          "severity": "low",
+          "file": "package.json",
+          "description": "Unused dependency: uuid",
+          "fix": "Remove unused dependency or add to devDependencies",
+          "code": "uuid"
+        }
+      ],
+      "score": 10,
+      "status": "PASS"
+    },
+    "deployment": {
+      "issues": [],
+      "score": 100,
+      "status": "PASS"
+    },
+    "overall": {
+      "score": 41,
+      "status": "NEEDS IMPROVEMENT",
+      "totalIssues": 164,
+      "criticalIssues": 3,
+      "categoryScores": {
+        "security": 35,
+        "performance": 60,
+        "accessibility": 0,
+        "codeQuality": 10,
+        "deployment": 100
+      }
+    }
+  },
+  "engineStats": {
+    "learnedRules": 24,
+    "fixHistory": 45,
+    "successRate": 100
+  }
+}

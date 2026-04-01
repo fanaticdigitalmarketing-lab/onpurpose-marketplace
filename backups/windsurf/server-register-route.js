@@ -250,6 +250,9 @@ try {
 app.post('/api/webhooks/stripe',
   express.raw({ type: 'application/json' }),
   async (req, res) => {
+    try {
+    try {
+    try {
     if (!stripe) return res.status(501).json({ success: false, message: 'Stripe not configured' });
     const sig = req.headers['stripe-signature'];
     let event;
@@ -706,6 +709,9 @@ app.post('/api/services',
 );
 
 app.get('/api/services/my-services', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const services = await Service.findAll({
       where: { providerId: req.userId },
@@ -811,6 +817,9 @@ app.get('/api/bookings/my-bookings', authenticate, async (req, res) => {
 });
 
 app.get('/api/bookings/provider-bookings', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const serviceIds = (await Service.findAll({ where: { providerId: req.userId }, attributes: ['id'] })).map(s => s.id);
     const bookings = await Booking.findAll({
@@ -919,6 +928,9 @@ app.post('/api/payments/connect/create',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       if (!stripe) {
         return res.status(501).json({
           success: false,
@@ -978,6 +990,9 @@ app.get('/api/payments/connect/status',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       if (!stripe) return res.json({ success: true, data: { connected: false } });
 
       const user = await User.findByPk(req.userId);
@@ -1011,6 +1026,9 @@ app.get('/api/admin/subscribers',
   authenticate,
   requireRole('admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const { role, verified, limit = 100, offset = 0 } = req.query;
       const where = {};
@@ -1152,6 +1170,9 @@ app.post('/api/availability',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const { dayOfWeek, startTime, endTime } = req.body;
       const avail = await Availability.create({
         providerId: req.userId, dayOfWeek, startTime, endTime
@@ -1185,6 +1206,9 @@ app.use('/api/checkin', checkinRouter);
 /* ═══════════════════ ADMIN ROUTES ═══════════════════ */
 
 app.get('/api/stats', authenticate, requireRole('admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const [totalUsers, totalServices, totalBookings, totalRevenue] = await Promise.all([
       User.count(),

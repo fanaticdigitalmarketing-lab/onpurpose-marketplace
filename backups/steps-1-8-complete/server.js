@@ -288,6 +288,9 @@ try {
 app.post('/api/webhooks/stripe',
   express.raw({ type: 'application/json' }),
   async (req, res) => {
+    try {
+    try {
+    try {
     if (!stripe) return res.status(501).json({ success: false, message: 'Stripe not configured' });
     const sig = req.headers['stripe-signature'];
     let event;
@@ -744,6 +747,9 @@ app.post('/api/services',
 );
 
 app.get('/api/services/my-services', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const services = await Service.findAll({
       where: { providerId: req.userId },
@@ -850,6 +856,9 @@ app.get('/api/bookings/my-bookings', authenticate, async (req, res) => {
 });
 
 app.get('/api/bookings/provider-bookings', authenticate, requireRole('provider', 'admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const serviceIds = (await Service.findAll({ where: { providerId: req.userId }, attributes: ['id'] })).map(s => s.id);
     const bookings = await Booking.findAll({
@@ -1045,6 +1054,9 @@ app.post('/api/payments/connect/create',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       if (!stripe) {
         return res.status(501).json({
           success: false,
@@ -1104,6 +1116,9 @@ app.get('/api/payments/connect/status',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       if (!stripe) return res.json({ success: true, data: { connected: false } });
 
       const user = await User.findByPk(req.userId);
@@ -1137,6 +1152,9 @@ app.get('/api/admin/subscribers',
   authenticate,
   requireRole('admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const { role, verified, limit = 100, offset = 0 } = req.query;
       const where = {};
@@ -1278,6 +1296,9 @@ app.post('/api/availability',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const { dayOfWeek, startTime, endTime } = req.body;
       const avail = await Availability.create({
         providerId: req.userId, dayOfWeek, startTime, endTime
@@ -1311,6 +1332,9 @@ app.use('/api/checkin', checkinRouter);
 /* ═══════════════════ ADMIN ROUTES ═══════════════════ */
 
 app.get('/api/stats', authenticate, requireRole('admin'), async (req, res) => {
+    try {
+    try {
+    try {
   try {
     const [totalUsers, totalServices, totalBookings, totalRevenue] = await Promise.all([
       User.count(),
@@ -1449,6 +1473,9 @@ app.get('/api/analytics/provider',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { period = '30' } = req.query; // days
       const daysAgo = new Date();
@@ -1574,6 +1601,9 @@ app.get('/api/analytics/provider/views',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       // Placeholder for future view tracking implementation
       res.json({
         success: true,
@@ -1594,6 +1624,9 @@ app.get('/api/analytics/provider/customers',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { period = '30' } = req.query;
@@ -1705,6 +1738,9 @@ app.get('/api/calendar/connect',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       // Generate Google OAuth URL for calendar access
       const clientId = process.env.GOOGLE_CLIENT_ID;
       const redirectUri = `${process.env.FRONTEND_URL}/dashboard.html?calendar=connected`;
@@ -1736,6 +1772,9 @@ app.post('/api/calendar/callback',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const { code } = req.body;
       const providerId = req.userId;
@@ -1784,6 +1823,9 @@ app.get('/api/calendar/events',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const provider = await User.findByPk(req.userId);
       
       if (!provider.googleCalendarConnected || !provider.googleAccessToken) {
@@ -1825,6 +1867,9 @@ app.post('/api/calendar/sync-availability',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const provider = await User.findByPk(req.userId);
       
@@ -1895,6 +1940,9 @@ app.delete('/api/calendar/disconnect',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       // Remove calendar connection
       await User.update(
@@ -1978,6 +2026,9 @@ app.get('/api/reminders/settings',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Get provider's reminder settings
@@ -2027,6 +2078,9 @@ app.put('/api/reminders/settings',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { settings } = req.body;
       
@@ -2064,6 +2118,9 @@ app.get('/api/reminders/upcoming',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { days = 7 } = req.query;
@@ -2149,6 +2206,9 @@ app.get('/api/reminders/analytics',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { period = '30' } = req.query;
       const daysAgo = new Date();
@@ -2233,6 +2293,9 @@ app.post('/api/reminders/test',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const { reminderType, testEmail, testPhone } = req.body;
       
       if (!REMINDER_TYPES[reminderType]) {
@@ -2307,6 +2370,9 @@ app.post('/api/reminders/trigger',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const { bookingId, reminderType } = req.body;
       
@@ -2391,6 +2457,9 @@ app.get('/api/recommendations/provider',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Get provider's services and performance data
@@ -2440,6 +2509,9 @@ app.get('/api/revenue-optimization/provider',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Get provider's revenue data
@@ -2481,6 +2553,9 @@ app.get('/api/competitor-analysis/provider',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       
@@ -2534,6 +2609,9 @@ app.get('/api/service-enhancement/provider',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Get provider's services with performance data
@@ -2579,6 +2657,9 @@ app.get('/api/business-insights/provider',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { period = '30' } = req.query;
@@ -3083,6 +3164,9 @@ app.get('/api/provider/tier',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Get provider's current tier
@@ -3124,6 +3208,9 @@ app.post('/api/provider/upgrade-tier',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { targetTier } = req.body;
@@ -3170,6 +3257,9 @@ app.get('/api/analytics/growth',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { period = '90' } = req.query;
@@ -3221,6 +3311,9 @@ app.get('/api/marketing/premium',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       // Check if provider has premium features
@@ -3271,6 +3364,9 @@ app.get('/api/analytics/business-intelligence',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { period = '90', format = 'json' } = req.query;
       
@@ -3311,6 +3407,9 @@ app.get('/api/provider/exclusive-features',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       
@@ -3668,6 +3767,9 @@ app.get('/api/automation/workflows',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       const workflows = await WorkflowAutomation.findAll({
@@ -3691,6 +3793,9 @@ app.post('/api/automation/workflows',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { name, description, trigger, conditions, actions, isActive } = req.body;
@@ -3746,6 +3851,9 @@ app.put('/api/automation/workflows/:id',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { id } = req.params;
       const { name, description, trigger, conditions, actions, isActive } = req.body;
@@ -3793,6 +3901,9 @@ app.delete('/api/automation/workflows/:id',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { id } = req.params;
       
@@ -3830,6 +3941,9 @@ app.get('/api/automation/logs',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { limit = '50', offset = '0' } = req.query;
@@ -4241,6 +4355,9 @@ app.get('/api/integrations/api-keys',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       const apiKeys = await ApiKey.findAll({
@@ -4264,6 +4381,9 @@ app.post('/api/integrations/api-keys',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { name, permissions, expiresIn } = req.body;
@@ -4335,6 +4455,9 @@ app.get('/api/reports/templates',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       const templates = await ReportTemplate.findAll({
@@ -4358,6 +4481,9 @@ app.post('/api/reports/generate',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { reportType, dateRange, filters, format = 'json' } = req.body;
@@ -4441,6 +4567,9 @@ app.get('/api/reports/history',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { limit = '50', offset = '0' } = req.query;
       
@@ -4467,6 +4596,9 @@ app.post('/api/reports/schedule',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { name, reportType, schedule, recipients, filters, format = 'json' } = req.body;
@@ -4507,6 +4639,9 @@ app.get('/api/reports/scheduled',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       
       const scheduledReports = await ScheduledReport.findAll({
@@ -4530,6 +4665,9 @@ app.put('/api/reports/scheduled/:id',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { id } = req.params;
@@ -4571,6 +4709,9 @@ app.delete('/api/reports/scheduled/:id',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { id } = req.params;
       
@@ -4601,6 +4742,9 @@ app.get('/api/analytics/advanced',
   requireRole('provider', 'admin'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const providerId = req.userId;
       const { period = '90', metrics = 'all' } = req.query;
       
@@ -4622,6 +4766,9 @@ app.get('/api/analytics/kpi',
   authenticate,
   requireRole('provider', 'admin'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const providerId = req.userId;
       const { period = '30' } = req.query;
@@ -5316,6 +5463,9 @@ app.get('/api/enterprise/organization',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       
       // Get user's organization
@@ -5373,6 +5523,9 @@ app.put('/api/enterprise/organization',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       const { name, settings, tier } = req.body;
       
@@ -5408,6 +5561,9 @@ app.get('/api/enterprise/members',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       
       const organization = await Organization.findOne({
@@ -5440,6 +5596,9 @@ app.post('/api/enterprise/members',
   authenticate,
   requireRole('admin', 'provider'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const userId = req.userId;
       const { email, role, permissions } = req.body;
@@ -5496,6 +5655,9 @@ app.put('/api/enterprise/members/:id',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       const { id } = req.params;
       const { role, permissions, isActive } = req.body;
@@ -5540,6 +5702,9 @@ app.delete('/api/enterprise/members/:id',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       const { id } = req.params;
       
@@ -5577,6 +5742,9 @@ app.get('/api/enterprise/analytics',
   authenticate,
   requireRole('admin', 'provider'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const userId = req.userId;
       const { period = '30', groupBy = 'provider' } = req.query;
@@ -5618,6 +5786,9 @@ app.get('/api/enterprise/revenue',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       const { period = '30', groupBy = 'month' } = req.query;
       
@@ -5657,6 +5828,9 @@ app.get('/api/enterprise/performance',
   authenticate,
   requireRole('admin', 'provider'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const userId = req.userId;
       const { period = '30' } = req.query;
@@ -5698,6 +5872,9 @@ app.get('/api/enterprise/settings',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       
       const organization = await Organization.findOne({
@@ -5737,6 +5914,9 @@ app.put('/api/enterprise/settings',
   requireRole('admin', 'provider'),
   async (req, res) => {
     try {
+    try {
+    try {
+    try {
       const userId = req.userId;
       const { settings } = req.body;
       
@@ -5769,6 +5949,9 @@ app.post('/api/enterprise/upgrade',
   authenticate,
   requireRole('admin', 'provider'),
   async (req, res) => {
+    try {
+    try {
+    try {
     try {
       const userId = req.userId;
       const { tier, paymentMethodId } = req.body;

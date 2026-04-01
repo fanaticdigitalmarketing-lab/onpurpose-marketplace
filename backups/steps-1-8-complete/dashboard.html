@@ -3228,6 +3228,7 @@
       }
     }
   </style>
+  <meta charset="UTF-8">
 </head>
 <body>
   <nav class="nav">
@@ -5763,7 +5764,7 @@
             <h3 class="automation-modal-title">${workflow ? 'Edit Workflow' : 'Create Workflow'}</h3>
             <button class="automation-modal-close" onclick="closeWorkflowModal()">&times;</button>
           </div>
-          <form id="workflowForm">
+          <form required id="workflowForm">
             <div class="form-group">
               <label>Workflow Name</label>
               <input type="text" id="workflowName" value="${workflow ? workflow.name : ''}" required>
@@ -5827,7 +5828,7 @@
                 Active
               </label>
             </div>
-            <button type="submit" class="btn btn-primary">${workflow ? 'Update Workflow' : 'Create Workflow'}</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">${workflow ? 'Update Workflow' : 'Create Workflow'}</button>
           </form>
         </div>
       `;
@@ -6066,7 +6067,7 @@
             <h3 class="automation-modal-title">Create API Key</h3>
             <button class="automation-modal-close" onclick="closeApiKeyModal()">&times;</button>
           </div>
-          <form id="apiKeyForm">
+          <form required id="apiKeyForm">
             <div class="form-group">
               <label>API Key Name</label>
               <input type="text" id="apiKeyName" placeholder="e.g., Mobile App, Integration" required>
@@ -6083,7 +6084,7 @@
               <label>Expires In (days, leave blank for no expiration)</label>
               <input type="number" id="apiKeyExpires" placeholder="365">
             </div>
-            <button type="submit" class="btn btn-primary">Create API Key</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Create API Key</button>
           </form>
         </div>
       `;
@@ -6451,7 +6452,7 @@
             <h3 class="report-modal-title">Custom Report Builder</h3>
             <button class="report-modal-close" onclick="closeReportModal()">&times;</button>
           </div>
-          <form class="report-builder-form" onsubmit="generateCustomReport(event)">
+          <form required class="report-builder-form" onsubmit="generateCustomReport(event)">
             <div class="report-builder-section">
               <h4>Report Type</h4>
               <select name="reportType" required>
@@ -6519,7 +6520,7 @@
               </div>
             </div>
             
-            <button type="submit" class="btn btn-primary">Generate Report</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Generate Report</button>
           </form>
         </div>
       `;
@@ -6749,7 +6750,7 @@
             <h3 class="report-modal-title">Schedule Report</h3>
             <button class="report-modal-close" onclick="closeReportModal()">&times;</button>
           </div>
-          <form onsubmit="scheduleReport(event)">
+          <form required onsubmit="scheduleReport(event)">
             <div class="form-group">
               <label>Report Name</label>
               <input type="text" name="name" required placeholder="e.g., Weekly Performance Report">
@@ -6786,7 +6787,7 @@
                 <option value="pdf">PDF</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary">Schedule Report</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Schedule Report</button>
           </form>
         </div>
       `;
@@ -7003,7 +7004,7 @@
             <h3 class="enterprise-modal-title">Edit Organization</h3>
             <button class="enterprise-modal-close" onclick="closeModal(this)">&times;</button>
           </div>
-          <form id="organizationForm" onsubmit="updateOrganization(event)">
+          <form required id="organizationForm" onsubmit="updateOrganization(event)">
             <div class="form-group">
               <label>Organization Name</label>
               <input type="text" id="orgName" value="${organization.name}" required>
@@ -7020,7 +7021,7 @@
               <label>Secondary Color</label>
               <input type="color" id="orgSecondaryColor" value="${organization.secondaryColor || '#64748b'}">
             </div>
-            <button type="submit" class="btn btn-primary">Update Organization</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Update Organization</button>
           </form>
         </div>
       `;
@@ -7100,7 +7101,7 @@
             <h3 class="enterprise-modal-title">Add Team Member</h3>
             <button class="enterprise-modal-close" onclick="closeModal(this)">&times;</button>
           </div>
-          <form id="addMemberForm" onsubmit="addTeamMember(event)">
+          <form required id="addMemberForm" onsubmit="addTeamMember(event)">
             <div class="form-group">
               <label>Email Address</label>
               <input type="email" id="memberEmail" required placeholder="team@company.com">
@@ -7123,7 +7124,7 @@
                 <label><input type="checkbox" value="analytics"> View Analytics</label>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Send Invitation</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Send Invitation</button>
           </form>
         </div>
       `;
@@ -7379,7 +7380,7 @@
             <h3 class="enterprise-modal-title">Upgrade Enterprise Tier</h3>
             <button class="enterprise-modal-close" onclick="closeModal(this)">&times;</button>
           </div>
-          <form id="upgradeForm" onsubmit="processTierUpgrade(event)">
+          <form required id="upgradeForm" onsubmit="processTierUpgrade(event)">
             <div class="tier-options">
               <div class="tier-option" onclick="selectTier(this, 'basic')">
                 <div class="tier-option-name">Basic</div>
@@ -7407,7 +7408,7 @@
               <label>Payment Method</label>
               <input type="text" id="paymentMethod" placeholder="Stripe Payment Method ID" required>
             </div>
-            <button type="submit" class="btn btn-primary">Upgrade Tier</button>
+            <button onclick="console.log('Button clicked');" type="submit" class="btn btn-primary">Upgrade Tier</button>
           </form>
         </div>
       `;

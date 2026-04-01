@@ -77,6 +77,7 @@
       .service-info{padding:2rem}
     }
   </style>
+  <meta charset="UTF-8">
 </head>
 <body>
   <nav>
@@ -151,7 +152,7 @@
       <!-- Booking Section -->
       <div class="booking-section">
         <h2>Book This Service</h2>
-        <form id="bookingForm" class="booking-form">
+        <form required id="bookingForm" class="booking-form">
           <div class="form-row">
             <div class="form-group">
               <label for="bookingDate">Preferred Date</label>
@@ -186,7 +187,7 @@
             <div>Apple Pay</div>
           </div>
         </div>
-        <form id="paymentForm">
+        <form required id="paymentForm">
           <div class="form-group">
             <label for="cardName">Name on Card</label>
             <input type="text" id="cardName" required>

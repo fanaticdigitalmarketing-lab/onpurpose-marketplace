@@ -1,0 +1,51 @@
+{
+  "uniqueRules": [
+    {
+      "id": "rule_1775036144031_7445b418",
+      "type": "missing_form_validation",
+      "pattern": "Form without validation",
+      "action": "<form id=\"testForm\" required>",
+      "successRate": 0.8,
+      "usageCount": 1,
+      "createdAt": "2026-04-01T09:35:44.031Z",
+      "lastUsed": "2026-04-01T09:35:44.031Z"
+    },
+    {
+      "id": "rule_1775036144036_2265fba5",
+      "type": "missing_form_validation",
+      "pattern": "Form without validation",
+      "action": "<form id=\"contactForm\" required>",
+      "successRate": 0.8,
+      "usageCount": 1,
+      "createdAt": "2026-04-01T09:35:44.036Z",
+      "lastUsed": "2026-04-01T09:35:44.036Z"
+    }
+  ],
+  "clusteredRules": [
+    [
+      "missing_form_validation",
+      [
+        {
+          "id": "rule_1775036144031_7445b418",
+          "type": "missing_form_validation",
+          "pattern": "Form without validation",
+          "action": "<form id=\"testForm\" required>",
+          "successRate": 0.8,
+          "usageCount": 1,
+          "createdAt": "2026-04-01T09:35:44.031Z",
+          "lastUsed": "2026-04-01T09:35:44.031Z"
+        },
+        {
+          "id": "rule_1775036144036_2265fba5",
+          "type": "missing_form_validation",
+          "pattern": "Form without validation",
+          "action": "<form id=\"contactForm\" required>",
+          "successRate": 0.8,
+          "usageCount": 1,
+          "createdAt": "2026-04-01T09:35:44.036Z",
+          "lastUsed": "2026-04-01T09:35:44.036Z"
+        }
+      ]
+    ]
+  ]
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Provider Page</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+    <div id="test-results">Testing...</div>
+    
+    <script>
+        // Test the provider page JavaScript
+        const results = document.getElementById('test-results');
+        
+        try {
+            // Load the provider page and test for syntax errors
+            fetch('frontend/provider.html')
+                .then(response => response.text())
+                .then(html => {
+                    // Extract script content
+                    const scriptMatches = html.match(/<script[^>]*>([\s\S]*?)<\/script>/g);
+                    
+                    if (scriptMatches) {
+                        let allTestsPassed = true;
+                        let testResults = [];
+                        
+                        scriptMatches.forEach((script, index) => {
+                            const scriptContent = script.replace(/<script[^>]*>/, '').replace(/<\/script>/, '');
+                            
+                            try {
+                                // Basic syntax check
+                                new Function(scriptContent);
+                                testResults.push(`Script ${index + 1}: ✅ PASSED`);
+                            } catch (error) {
+                                testResults.push(`Script ${index + 1}: ❌ FAILED - ${error.message}`);
+                                allTestsPassed = false;
+                            }
+                        });
+                        
+                        results.innerHTML = `
+                            <h2>Provider Page JavaScript Test Results</h2>
+                            <p><strong>Overall Status:</strong> ${allTestsPassed ? '✅ ALL TESTS PASSED' : '❌ SOME TESTS FAILED'}</p>
+                            <ul>
+                                ${testResults.map(result => `<li>${result}</li>`).join('')}
+                            </ul>
+                            <p><a href="frontend/provider.html">Test Provider Page</a></p>
+                        `;
+                    } else {
+                        results.innerHTML = '<p>No script tags found in provider.html</p>';
+                    }
+                })
+                .catch(error => {
+                    results.innerHTML = `<p>Error loading provider.html: ${error.message}</p>`;
+                });
+        } catch (error) {
+            results.innerHTML = `<p>Test error: ${error.message}</p>`;
+        }
+    </script>
+</body>
+</html>

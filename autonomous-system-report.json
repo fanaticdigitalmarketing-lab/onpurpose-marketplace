@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-04-01T10:27:13.967Z",
+  "results": {
+    "autoFixed": [],
+    "rolledBack": [],
+    "manualFixes": [],
+    "ruleClusters": {
+      "totalRules": 2,
+      "clusters": 1,
+      "averageUsage": 1,
+      "averageSuccessRate": 0.8
+    },
+    "realSuccessRate": 0
+  },
+  "ruleStats": {
+    "totalRules": 2,
+    "clusters": 1,
+    "averageUsage": 1,
+    "averageSuccessRate": 0.8
+  }
+}

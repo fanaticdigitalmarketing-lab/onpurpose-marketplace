@@ -1,0 +1,707 @@
+{
+  "timestamp": "2026-04-01T10:27:19.582Z",
+  "execution": "full-autonomous-engineering-agent",
+  "results": {
+    "predictedIssues": [
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\admin\\src\\pages\\Login.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 58)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          58
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\aiFixEngine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 110)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          110
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\autonomous-system-engine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 441)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          441
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\backup_1775036266234_index.html",
+        "riskType": "missing_charset",
+        "probability": 1,
+        "riskLevel": "MEDIUM",
+        "recommendation": "Add UTF-8 charset meta tag to HTML head section",
+        "factors": [
+          "HTML file missing charset meta tag"
+        ],
+        "lineNumbers": []
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144003\\test-index.html",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 11, 18)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          11,
+          18
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144003\\test-index.html",
+        "riskType": "missing_charset",
+        "probability": 1,
+        "riskLevel": "MEDIUM",
+        "recommendation": "Add UTF-8 charset meta tag to HTML head section",
+        "factors": [
+          "HTML file missing charset meta tag"
+        ],
+        "lineNumbers": []
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144030\\test-index.html",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 11, 18)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          11,
+          18
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144030\\test-index.html",
+        "riskType": "missing_charset",
+        "probability": 1,
+        "riskLevel": "MEDIUM",
+        "recommendation": "Add UTF-8 charset meta tag to HTML head section",
+        "factors": [
+          "HTML file missing charset meta tag"
+        ],
+        "lineNumbers": []
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144032\\test-index.html",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 11, 18)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          11,
+          18
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144032\\test-index.html",
+        "riskType": "missing_charset",
+        "probability": 1,
+        "riskLevel": "MEDIUM",
+        "recommendation": "Add UTF-8 charset meta tag to HTML head section",
+        "factors": [
+          "HTML file missing charset meta tag"
+        ],
+        "lineNumbers": []
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144035\\test-index.html",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 11, 18)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          11,
+          18
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144035\\test-index.html",
+        "riskType": "missing_charset",
+        "probability": 1,
+        "riskLevel": "MEDIUM",
+        "recommendation": "Add UTF-8 charset meta tag to HTML head section",
+        "factors": [
+          "HTML file missing charset meta tag"
+        ],
+        "lineNumbers": []
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\COMPLETE_ONPURPOSE_CODE.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 904)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          904
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\fixerAgent.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 412, 417)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          412,
+          417
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\focused-system-audit.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 238)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          238
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\master-production-engine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 937)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          937
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\onpurpose-web\\src\\components\\Auth.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 136)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          136
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\predictiveEngine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 197)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          197
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\productionAutonomousEngine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 163)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          163
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\self-learning-hotfix-engine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 289)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          289
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\server-fixed.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 420)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          420
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\server-simple-secure.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 362)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          362
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\Auth.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 59)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          59
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\Booking.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 82)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          82
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\CreateListing.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 54)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          54
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\BookListing.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 89)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          89
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\CreateListing.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 53)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          53
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\Login.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 50)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          50
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\Register.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 51)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          51
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\system-audit-engine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 230)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          230
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\test-autonomous-system.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 86, 93)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          86,
+          93
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\testFullAutonomousAgent.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 94)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          94
+        ]
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\testProductionEngine.js",
+        "riskType": "missing_form_validation",
+        "probability": 1,
+        "riskLevel": "HIGH",
+        "recommendation": "Add required and pattern attributes to form inputs for validation (lines: 89)",
+        "factors": [
+          "Form without required attribute"
+        ],
+        "lineNumbers": [
+          89
+        ]
+      }
+    ],
+    "fixedAndAutoMerged": [],
+    "rolledBack": [],
+    "manualRequired": [
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\admin\\src\\pages\\Login.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\aiFixEngine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\autonomous-system-engine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\backup_1775036266234_index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144003\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144003\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144030\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144030\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144032\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144032\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144035\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\backups\\snapshot_1775036144035\\test-index.html",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\COMPLETE_ONPURPOSE_CODE.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\fixerAgent.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\focused-system-audit.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\master-production-engine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\onpurpose-web\\src\\components\\Auth.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\predictiveEngine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\productionAutonomousEngine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\self-learning-hotfix-engine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\server-fixed.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\server-simple-secure.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\Auth.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\Booking.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\frontend\\src\\components\\CreateListing.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\BookListing.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\CreateListing.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\Login.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\simple-marketplace\\minimal-frontend\\src\\pages\\Register.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\system-audit-engine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\test-autonomous-system.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\testFullAutonomousAgent.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "file": "C:\\Users\\tyler\\CascadeProjects\\OnPurpose\\testProductionEngine.js",
+        "reason": "AI fix generation failed: Cannot read properties of undefined (reading 'includes')"
+      },
+      {
+        "issue": "console_error",
+        "file": "server.js",
+        "reason": "JavaScript syntax error: Unexpected identifier 'code'"
+      }
+    ],
+    "memoryGraphUpdates": [
+      "Memory graph: +0 successful edges",
+      "Shared learning: +0 rule updates",
+      "Predictive patterns: 2 patterns updated"
+    ],
+    "systemHealthScore": 50
+  },
+  "memoryGraph": {
+    "nodes": [],
+    "edges": [],
+    "metadata": {
+      "version": "1.0.0",
+      "createdAt": "2026-04-01T10:27:19.418Z",
+      "lastUpdated": "2026-04-01T10:27:19.418Z"
+    },
+    "statistics": {
+      "totalNodes": 0,
+      "totalEdges": 0,
+      "issueNodes": 0,
+      "solutionNodes": 0,
+      "totalUsage": 0,
+      "totalSuccess": 0,
+      "averageSuccessRate": 0,
+      "averageWeight": null,
+      "lastUpdated": "2026-04-01T10:27:19.418Z"
+    },
+    "topSolutions": [],
+    "highRiskIssues": [],
+    "exportTimestamp": "2026-04-01T10:27:19.582Z"
+  },
+  "sharedLearning": {
+    "summary": {
+      "totalClusters": 2,
+      "totalUsage": 2,
+      "averageSuccessRate": 0.8500000000000001,
+      "contributingProjects": 1
+    },
+    "insights": {
+      "topPerformingClusters": [
+        {
+          "type": "missing_charset",
+          "successRate": 0.9,
+          "usageCount": 1,
+          "contributingProjects": 1
+        },
+        {
+          "type": "missing_form_validation",
+          "successRate": 0.8,
+          "usageCount": 1,
+          "contributingProjects": 1
+        }
+      ],
+      "underperformingClusters": [
+        {
+          "type": "missing_charset",
+          "successRate": 0.9,
+          "usageCount": 1,
+          "needsImprovement": true
+        },
+        {
+          "type": "missing_form_validation",
+          "successRate": 0.8,
+          "usageCount": 1,
+          "needsImprovement": true
+        }
+      ],
+      "mostUsedTypes": {
+        "missing_form_validation": 1,
+        "missing_charset": 1
+      },
+      "recentActivity": [
+        {
+          "type": "missing_form_validation",
+          "lastUsed": "2026-04-01T09:37:46.223Z",
+          "usageCount": 1
+        },
+        {
+          "type": "missing_charset",
+          "lastUsed": "2026-04-01T09:37:46.569Z",
+          "usageCount": 1
+        }
+      ]
+    },
+    "clusters": [
+      {
+        "id": "cluster_1775036266221_p0urhmujv",
+        "type": "missing_form_validation",
+        "successRate": 0.8,
+        "usageCount": 1,
+        "lastUsed": "2026-04-01T09:37:46.223Z",
+        "contributingProjects": 1
+      },
+      {
+        "id": "cluster_1775036266569_dq2rw9w5v",
+        "type": "missing_charset",
+        "successRate": 0.9,
+        "usageCount": 1,
+        "lastUsed": "2026-04-01T09:37:46.569Z",
+        "contributingProjects": 1
+      }
+    ]
+  },
+  "predictiveReport": {
+    "timestamp": "2026-04-01T10:27:19.583Z",
+    "totalRiskPatterns": 2,
+    "highRiskIssues": [
+      {
+        "type": "missing_form_validation",
+        "frequency": 0.75,
+        "count": 3,
+        "patterns": [
+          "Form without validation"
+        ]
+      }
+    ],
+    "riskDistribution": {
+      "HIGH": 1,
+      "MEDIUM": 1,
+      "LOW": 0
+    },
+    "recommendations": [
+      {
+        "priority": "HIGH",
+        "issue": "missing_form_validation",
+        "action": "Implement systematic fix for missing_form_validation (occurred 3 times)",
+        "impact": "High - frequently occurring issue"
+      }
+    ]
+  },
+  "systemInfo": {
+    "nodeVersion": "v24.7.0",
+    "platform": "win32",
+    "uptime": 0.435656
+  }
+}

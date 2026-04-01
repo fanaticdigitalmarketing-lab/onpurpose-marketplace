@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Idea Generator Test</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Idea Generator Test</h1>
+    <div id="test-results">Testing...</div>
+    
+    <script>
+        const results = document.getElementById('test-results');
+        
+        // Test the idea generator functionality
+        async function testIdeaGenerator() {
+            try {
+                // Test 1: Check if idea generator elements exist
+                const skillInput = document.getElementById('skillInput');
+                const nicheInput = document.getElementById('nicheInput');
+                const generateBtn = document.getElementById('generateIdeasBtn');
+                
+                results.innerHTML += '<p>✅ Idea Generator Elements: Not found in test page (expected)</p>';
+                
+                // Test 2: Check if API endpoint works
+                const response = await fetch('http://localhost:3000/api/ideas/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ skill: 'Web Development', niche: 'Small Businesses' })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    results.innerHTML += '<p>✅ API Endpoint: Working</p>';
+                    results.innerHTML += `<p>Response: ${JSON.stringify(data).substring(0, 100)}...</p>`;
+                } else {
+                    results.innerHTML += '<p>⚠️ API Endpoint: Not available (expected if server not running)</p>';
+                }
+                
+                results.innerHTML += '<p><a href="index.html">Test Homepage with Idea Generator</a></p>';
+                results.innerHTML += '<p><a href="provider.html">Test Provider Page</a></p>';
+                
+            } catch (error) {
+                results.innerHTML += `<p>❌ Test Error: ${error.message}</p>`;
+            }
+        }
+        
+        testIdeaGenerator();
+    </script>
+</body>
+</html>

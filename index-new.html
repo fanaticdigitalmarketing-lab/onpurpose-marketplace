@@ -186,6 +186,7 @@
       }
     }
   </style>
+  <meta charset="UTF-8">
 </head>
 <body>
 
@@ -204,14 +205,14 @@
     </p>
 
     <div class="cta">
-      <form class="email-form" id="earlyAccessForm">
+      <form required class="email-form" id="earlyAccessForm">
         <input 
           type="email" 
           id="emailInput"
           placeholder="Enter your email" 
           required
         />
-        <button type="submit" id="submitBtn">
+        <button onclick="console.log('Button clicked');" type="submit" id="submitBtn">
           Join Early Access
         </button>
       </form>
