@@ -4,7 +4,6 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
@@ -14,4 +13,13 @@ code {
 
 #root {
   min-height: 100vh;
+}
+
+/* Force consistent homepage render */
+body.loaded {
+  opacity: 1;
+}
+
+body:not(.loaded) {
+  opacity: 0.99;
 }

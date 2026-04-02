@@ -16,7 +16,4 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-// Add authenticateToken alias for compatibility
-const authenticateToken = authMiddleware;
-
-module.exports = { authMiddleware, authenticateToken };
+module.exports = authMiddleware;

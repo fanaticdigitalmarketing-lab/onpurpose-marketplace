@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css';
 
 // Import unified configuration
@@ -220,177 +221,356 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {/* Bouncing Logo */}
-      <div className="logo-container">
-        <div className="logo">OP</div>
-      </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={
+          <div className="App">
+            {/* Bouncing Logo */}
+            <div className="logo-container">
+              <div className="logo">OP</div>
+            </div>
 
-      <div className="container">
-        <h1>Book People. Not Places.</h1>
-        <h2 className="subtitle">not dating connection for skills & human services</h2>
-        
-        <div className="alert alert-red">
-          ⚡ Limited early access — first 100 users only
-        </div>
-        
-        <div className="alert alert-green">
-          ✨ Already used by 50+ early users
-        </div>
-        
-        <p>
-          OnPurpose connects you directly with real people offering real skills —
-          from coaching to creative services.
-        </p>
-
-        <div className="cta">
-          <form className="email-form" onSubmit={handleEarlyAccess}>
-            <input 
-              type="email" 
-              name="email"
-              placeholder="Enter your email" 
-              required
-            />
-            <button type="submit">
-              Join Early Access
-            </button>
-          </form>
-          {message && <div className={`message ${messageType}`}>{message}</div>}
-        </div>
-
-        {/* SERVICE CHOICE SECTION */}
-        <div className="service-choice">
-          <h3>Ready to Start Your Service Business?</h3>
-          <p>Choose how you'd like to get started with OnPurpose</p>
-          
-          <div className="service-buttons">
-            <button onClick={scrollToIdeaGenerator}>
-              <div>💡</div>
-              <div>Generate My Service</div>
-              <div>Let AI create ideas for you</div>
-            </button>
-            
-            <button onClick={goToProvider}>
-              <div>🚀</div>
-              <div>I Already Have a Service</div>
-              <div>Start listing right away</div>
-            </button>
-          </div>
-        </div>
-
-        {/* AI GENERATOR SECTION */}
-        <div className="ai-generator">
-          <div className="bg-decoration bg-1"></div>
-          <div className="bg-decoration bg-2"></div>
-          <div className="bg-decoration bg-3"></div>
-          
-          <div className="ai-content">
-            <h2>💡 AI Service Idea Generator</h2>
-            <p>
-              Discover your perfect service offering with our AI-powered idea generator.<br/>
-              <span>Tell us your skills and interests, and we'll create personalized business ideas for you.</span>
-            </p>
-            
-            <div className="idea-generator">
-              <div className="input-grid">
-                <div>
-                  <label>YOUR SKILL/EXPERTISE</label>
-                  <input 
-                    type="text" 
-                    value={skillInput}
-                    onChange={(e) => setSkillInput(e.target.value)}
-                    placeholder="e.g. Web Development, Marketing, Design..." 
-                  />
-                </div>
-                <div>
-                  <label>TARGET MARKET</label>
-                  <input 
-                    type="text" 
-                    value={nicheInput}
-                    onChange={(e) => setNicheInput(e.target.value)}
-                    placeholder="e.g. Small Businesses, Startups, Creators..." 
-                  />
-                </div>
+            <div className="container">
+              <h1>Book People. Not Places.</h1>
+              <h2 className="subtitle">not dating connection for skills & human services</h2>
+              
+              <div className="alert alert-red">
+                ⚡ Limited early access — first 100 users only
               </div>
               
-              <button onClick={generateIdeas} disabled={loading}>
-                {loading ? '🤖 AI Thinking...' : '🚀 Generate AI Ideas'}
-              </button>
+              <div className="alert alert-green">
+                ✨ Already used by 50+ early users
+              </div>
               
-              {loading && (
-                <div className="loading-state">
-                  <div>🤖 AI is generating your personalized ideas...</div>
-                  <div>This usually takes 2-3 seconds</div>
-                  <div className="spinner"></div>
+              <p>
+                OnPurpose connects you directly with real people offering real skills —
+                from coaching to creative services.
+              </p>
+
+              <div className="cta">
+                <form className="email-form" onSubmit={handleEarlyAccess}>
+                  <input 
+                    type="email" 
+                    name="email"
+                    placeholder="Enter your email" 
+                    required
+                  />
+                  <button type="submit">
+                    Join Early Access
+                  </button>
+                </form>
+                {message && <div className={`message ${messageType}`}>{message}</div>}
+              </div>
+
+              {/* SERVICE CHOICE SECTION */}
+              <div className="service-choice">
+                <h3>Ready to Start Your Service Business?</h3>
+                <p>Choose how you'd like to get started with OnPurpose</p>
+                
+                <div className="service-buttons">
+                  <button onClick={scrollToIdeaGenerator}>
+                    <div>💡</div>
+                    <div>Generate My Service</div>
+                    <div>Let AI create ideas for you</div>
+                  </button>
+                  
+                  <button onClick={goToProvider}>
+                    <div>🚀</div>
+                    <div>I Already Have a Service</div>
+                    <div>Start listing right away</div>
+                  </button>
                 </div>
-              )}
-              
-              {showResults && (
-                <div className="ideas-result">
-                  <div className="ideas-container">
-                    <h3>✨ Your AI-Generated Service Ideas</h3>
-                    <div className="ideas-list">
-                      {ideas.map((idea, index) => (
-                        <div key={idea.uniqueId || index} className="idea-card">
-                          <h4>{index + 1}. {idea.title}</h4>
-                          <p>{idea.description}</p>
-                          <div className="idea-meta">
-                            <span className="category">{idea.category}</span>
-                            <span className="price">{idea.price || 'Competitive rates'}</span>
+              </div>
+
+              {/* AI GENERATOR SECTION */}
+              <div className="ai-generator">
+                <div className="bg-decoration bg-1"></div>
+                <div className="bg-decoration bg-2"></div>
+                <div className="bg-decoration bg-3"></div>
+                
+                <div className="ai-content">
+                  <h2>💡 AI Service Idea Generator</h2>
+                  <p>
+                    Discover your perfect service offering with our AI-powered idea generator.<br/>
+                    <span>Tell us your skills and interests, and we'll create personalized business ideas for you.</span>
+                  </p>
+                  
+                  <div className="idea-generator">
+                    <div className="input-grid">
+                      <div>
+                        <label>YOUR SKILL/EXPERTISE</label>
+                        <input 
+                          type="text" 
+                          value={skillInput}
+                          onChange={(e) => setSkillInput(e.target.value)}
+                          placeholder="e.g. Web Development, Marketing, Design..." 
+                        />
+                      </div>
+                      <div>
+                        <label>TARGET MARKET</label>
+                        <input 
+                          type="text" 
+                          value={nicheInput}
+                          onChange={(e) => setNicheInput(e.target.value)}
+                          placeholder="e.g. Small Businesses, Startups, Creators..." 
+                        />
+                      </div>
+                    </div>
+                    
+                    <button onClick={generateIdeas} disabled={loading}>
+                      {loading ? '🤖 AI Thinking...' : '🚀 Generate AI Ideas'}
+                    </button>
+                    
+                    {loading && (
+                      <div className="loading-state">
+                        <div>🤖 AI is generating your personalized ideas...</div>
+                        <div>This usually takes 2-3 seconds</div>
+                        <div className="spinner"></div>
+                      </div>
+                    )}
+                    
+                    {showResults && (
+                      <div className="ideas-result">
+                        <div className="ideas-container">
+                          <h3>✨ Your AI-Generated Service Ideas</h3>
+                          <div className="ideas-list">
+                            {ideas.map((idea, index) => (
+                              <div key={idea.uniqueId || index} className="idea-card">
+                                <h4>{index + 1}. {idea.title}</h4>
+                                <p>{idea.description}</p>
+                                <div className="idea-meta">
+                                  <span className="category">{idea.category}</span>
+                                  <span className="price">{idea.price || 'Competitive rates'}</span>
+                                </div>
+                              </div>
+                            ))}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="actions">
-                    <p>Ready to turn these ideas into reality?</p>
-                    <div className="action-buttons">
-                      <button onClick={becomeProvider}>🎯 Become a Provider</button>
-                      <button onClick={generateMoreIdeas}>🔄 Generate More</button>
-                    </div>
+                        
+                        <div className="actions">
+                          <p>Ready to turn these ideas into reality?</p>
+                          <div className="action-buttons">
+                            <button onClick={becomeProvider}>🎯 Become a Provider</button>
+                            <button onClick={generateMoreIdeas}>🔄 Generate More</button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
+              </div>
+
+              <div className="stats">
+                <div className="stat">
+                  <div className="stat-number" id="hostsCount">50+</div>
+                  <div className="stat-label">Expert Hosts</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number" id="bookingsCount">100+</div>
+                  <div className="stat-label">Bookings Made</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number" id="countriesCount">12+</div>
+                  <div className="stat-label">Countries</div>
+                </div>
+              </div>
+
+              <div className="features">
+                <div className="card">
+                  <h3>🎯 Career Coaching</h3>
+                  <p>Get personalized career guidance from industry professionals.</p>
+                </div>
+                <div className="card">
+                  <h3>📣 Marketing Help</h3>
+                  <p>Boost your brand with expert marketing strategies and support.</p>
+                </div>
+                <div className="card">
+                  <h3>🎨 Design Services</h3>
+                  <p>Professional design solutions for your creative projects.</p>
+                </div>
+              </div>
+
+              <footer>
+                &copy; 2026 OnPurpose — Marketplace for human connection
+              </footer>
             </div>
           </div>
-        </div>
+        } />
+        <Route path="*" element={
+          <div className="App">
+            {/* Bouncing Logo */}
+            <div className="logo-container">
+              <div className="logo">OP</div>
+            </div>
 
-        <div className="stats">
-          <div className="stat">
-            <div className="stat-number" id="hostsCount">50+</div>
-            <div className="stat-label">Expert Hosts</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number" id="bookingsCount">100+</div>
-            <div className="stat-label">Bookings Made</div>
-          </div>
-          <div className="stat">
-            <div className="stat-number" id="countriesCount">12+</div>
-            <div className="stat-label">Countries</div>
-          </div>
-        </div>
+            <div className="container">
+              <h1>Book People. Not Places.</h1>
+              <h2 className="subtitle">not dating connection for skills & human services</h2>
+              
+              <div className="alert alert-red">
+                ⚡ Limited early access — first 100 users only
+              </div>
+              
+              <div className="alert alert-green">
+                ✨ Already used by 50+ early users
+              </div>
+              
+              <p>
+                OnPurpose connects you directly with real people offering real skills —
+                from coaching to creative services.
+              </p>
 
-        <div className="features">
-          <div className="card">
-            <h3>🎯 Career Coaching</h3>
-            <p>Get personalized career guidance from industry professionals.</p>
-          </div>
-          <div className="card">
-            <h3>📣 Marketing Help</h3>
-            <p>Boost your brand with expert marketing strategies and support.</p>
-          </div>
-          <div className="card">
-            <h3>🎨 Design Services</h3>
-            <p>Professional design solutions for your creative projects.</p>
-          </div>
-        </div>
+              <div className="cta">
+                <form className="email-form" onSubmit={handleEarlyAccess}>
+                  <input 
+                    type="email" 
+                    name="email"
+                    placeholder="Enter your email" 
+                    required
+                  />
+                  <button type="submit">
+                    Join Early Access
+                  </button>
+                </form>
+                {message && <div className={`message ${messageType}`}>{message}</div>}
+              </div>
 
-        <footer>
-          © 2026 OnPurpose — Marketplace for human connection
-        </footer>
-      </div>
-    </div>
+              {/* SERVICE CHOICE SECTION */}
+              <div className="service-choice">
+                <h3>Ready to Start Your Service Business?</h3>
+                <p>Choose how you'd like to get started with OnPurpose</p>
+                
+                <div className="service-buttons">
+                  <button onClick={scrollToIdeaGenerator}>
+                    <div>💡</div>
+                    <div>Generate My Service</div>
+                    <div>Let AI create ideas for you</div>
+                  </button>
+                  
+                  <button onClick={goToProvider}>
+                    <div>🚀</div>
+                    <div>I Already Have a Service</div>
+                    <div>Start listing right away</div>
+                  </button>
+                </div>
+              </div>
+
+              {/* AI GENERATOR SECTION */}
+              <div className="ai-generator">
+                <div className="bg-decoration bg-1"></div>
+                <div className="bg-decoration bg-2"></div>
+                <div className="bg-decoration bg-3"></div>
+                
+                <div className="ai-content">
+                  <h2>💡 AI Service Idea Generator</h2>
+                  <p>
+                    Discover your perfect service offering with our AI-powered idea generator.<br/>
+                    <span>Tell us your skills and interests, and we'll create personalized business ideas for you.</span>
+                  </p>
+                  
+                  <div className="idea-generator">
+                    <div className="input-grid">
+                      <div>
+                        <label>YOUR SKILL/EXPERTISE</label>
+                        <input 
+                          type="text" 
+                          value={skillInput}
+                          onChange={(e) => setSkillInput(e.target.value)}
+                          placeholder="e.g. Web Development, Marketing, Design..." 
+                        />
+                      </div>
+                      <div>
+                        <label>TARGET MARKET</label>
+                        <input 
+                          type="text" 
+                          value={nicheInput}
+                          onChange={(e) => setNicheInput(e.target.value)}
+                          placeholder="e.g. Small Businesses, Startups, Creators..." 
+                        />
+                      </div>
+                    </div>
+                    
+                    <button onClick={generateIdeas} disabled={loading}>
+                      {loading ? '🤖 AI Thinking...' : '🚀 Generate AI Ideas'}
+                    </button>
+                    
+                    {loading && (
+                      <div className="loading-state">
+                        <div>🤖 AI is generating your personalized ideas...</div>
+                        <div>This usually takes 2-3 seconds</div>
+                        <div className="spinner"></div>
+                      </div>
+                    )}
+                    
+                    {showResults && (
+                      <div className="ideas-result">
+                        <div className="ideas-container">
+                          <h3>✨ Your AI-Generated Service Ideas</h3>
+                          <div className="ideas-list">
+                            {ideas.map((idea, index) => (
+                              <div key={idea.uniqueId || index} className="idea-card">
+                                <h4>{index + 1}. {idea.title}</h4>
+                                <p>{idea.description}</p>
+                                <div className="idea-meta">
+                                  <span className="category">{idea.category}</span>
+                                  <span className="price">{idea.price || 'Competitive rates'}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="actions">
+                          <p>Ready to turn these ideas into reality?</p>
+                          <div className="action-buttons">
+                            <button onClick={becomeProvider}>🎯 Become a Provider</button>
+                            <button onClick={generateMoreIdeas}>🔄 Generate More</button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="stats">
+                <div className="stat">
+                  <div className="stat-number" id="hostsCount">50+</div>
+                  <div className="stat-label">Expert Hosts</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number" id="bookingsCount">100+</div>
+                  <div className="stat-label">Bookings Made</div>
+                </div>
+                <div className="stat">
+                  <div className="stat-number" id="countriesCount">12+</div>
+                  <div className="stat-label">Countries</div>
+                </div>
+              </div>
+
+              <div className="features">
+                <div className="card">
+                  <h3>🎯 Career Coaching</h3>
+                  <p>Get personalized career guidance from industry professionals.</p>
+                </div>
+                <div className="card">
+                  <h3>📣 Marketing Help</h3>
+                  <p>Boost your brand with expert marketing strategies and support.</p>
+                </div>
+                <div className="card">
+                  <h3>🎨 Design Services</h3>
+                  <p>Professional design solutions for your creative projects.</p>
+                </div>
+              </div>
+
+              <footer>
+                &copy; 2026 OnPurpose — Marketplace for human connection
+              </footer>
+            </div>
+          </div>
+        } />
+      </Routes>
+    </Router>
   );
 }
 
