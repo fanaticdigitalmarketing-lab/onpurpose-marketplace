@@ -5,7 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "18"
-  # Force rebuild - 2024-04-02-00-04
+  # Force rebuild - 2024-04-02-00-30-FINAL-CACHE-CLEAR
 
 [[redirects]]
   from = "/api/*"
