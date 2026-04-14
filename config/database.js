@@ -4,22 +4,22 @@ require('dotenv').config();
 const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  console.warn('⚠️  DATABASE_URL environment variable is not set');
-  console.warn('The application will start but database features will not work');
+  throw new Error(
+    'DATABASE_URL environment variable is required. ' +
+    'Please set it in your Railway environment variables with your PostgreSQL connection string.'
+  );
 }
 
-const sequelize = new Sequelize(databaseUrl || 'sqlite::memory:', {
-  dialect: databaseUrl ? 'postgres' : 'sqlite',
-  protocol: databaseUrl ? 'postgres' : undefined,
+const sequelize = new Sequelize(databaseUrl, {
+  dialect: 'postgres',
+  protocol: 'postgres',
   logging: false,
-  ...(databaseUrl && {
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
     }
-  })
+  }
 });
 
 module.exports = sequelize;
